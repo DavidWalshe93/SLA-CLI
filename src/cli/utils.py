@@ -7,8 +7,9 @@ import logging
 import os
 from functools import wraps
 from typing import Dict
+import json
 
-import yaml
+from src.schema.db import DB
 
 logger = logging.getLogger(__name__)
 
@@ -48,3 +49,11 @@ def load_context(params) -> Dict[str, any]:
 
     else:
         raise FileNotFoundError(f"Could not find configuration file: '{config_file}'")
+
+
+def load_db() -> DB:
+    """
+    Loads the content of the db.json file into memory.
+
+    :return: The contents of the db file as a dictionary.
+    """

@@ -26,4 +26,3 @@ def ls(params: LsParameters):
     """
     Shows the tools available datasets.
     """
-    print("HERE")

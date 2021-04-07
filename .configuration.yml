@@ -1,0 +1,157 @@
+# David Walshe
+# 07/04/2021
+
+
+urls:
+    isic: 'https://isic-archive.com/api/v1'
+    dermaquest_dermis:
+        - "https://uwaterloo.ca/vision-image-processing-lab/sites/ca.vision-image-processing-lab/files/uploads/files/skin_image_data_set-1.zip"
+        - "https://uwaterloo.ca/vision-image-processing-lab/sites/ca.vision-image-processing-lab/files/uploads/files/skin_image_data_set-2.zip"
+    ph2: "https://www.dropbox.com/s/k88qukc20ljnbuo/PH2Dataset.rar?dl=1"
+    mednode: "http://www.cs.rug.nl/~imaging/databases/melanoma_naevi/complete_mednode_dataset.zip"
+    pad_ufes_20: "https://md-datasets-cache-zipfiles-prod.s3.eu-west-1.amazonaws.com/zr7vgbcyr2-1.zip"
+
+
+datasets:
+    Atlas of Dermoscopy:
+        unknown: 2000
+    PH2:
+        melanoma: 40
+        nevus: 160
+    DermIS:
+        melanoma: 43
+        non-melanoma: 26
+    DermQuest:
+        melanoma: 76
+        non-melanoma: 62
+    MEDNODE:
+        melanoma: 70
+        nevus: 100
+    PAD-UFES-20:
+        actinic keratosis: 730
+        basal cell carcinoma: 845
+        melanoma: 52
+        nevus: 244
+        squamous cell carcinoma: 192
+        seborrheic keratosis: 235
+    MClass-D:
+        melanoma: 20
+        nevus: 80
+    MClass-ND:
+        melanoma: 20
+        nevus: 80
+    DERMOFIT:
+        actinic keratosis: 45
+        basal cell carcinoma: 239
+        nevi: 331
+        seborrhoeic keratosis: 257
+        squamous cell carcinoma: 88
+        intraepithelial carcinoma: 78
+        pyogenic granuloma: 78
+        haemangioma: 97
+        dermatofibroma: 65
+        melanoma: 76
+    MSK-1:
+        unkwown: 191
+        angiofibroma or fibrous papule: 1
+        angioma: 11
+        atypical melanocytic proliferation: 2
+        basal cell carcinoma: 27
+        dermatofibroma: 5
+        lentigo simplex: 15
+        melanoma: 258
+        nevus: 532
+        other: 10
+        scar: 1
+        seborrheic keratosis: 29
+        solar lentigo: 13
+        squamous cell carcinoma: 5
+    MSK-2:
+        unknown: 51
+        actinic keratosis: 2
+        atypical melanocytic proliferation: 11
+        basal cell carcinoma: 3
+        lentigo NOS: 71
+        lentigo simplex: 12
+        melanoma: 334
+        nevus: 1004
+        seborrheic keratosis: 3
+        solar lentigo: 44
+    MSK-3:
+        melanoma: 19
+        nevus: 123
+        seborrheic keratosis: 83
+    MSK-4:
+        melanoma: 215
+        nevus: 543
+        seborrheic keratosis: 189
+    MSK-5:
+        angioma: 2
+        seborrheic keratosis: 109
+    UDA-1:
+        unknown: 2
+        melanoma: 159
+        nevus: 396
+    UDA-2:
+        angioma: 2
+        basal cell carcinoma: 3
+        dermatofibroma: 2
+        lichenoid keratosis: 1
+        melanoma: 34
+        nevus: 12
+        seborrheic keratosis: 6
+    JID Editorial Images 2018:
+        basal cell carcinoma: 40
+        melanoma: 37
+        squamous cell carcinoma: 23
+    HAM10000:
+        actinic keratosis: 130
+        basal cell carcinoma: 514
+        dermatofibroma: 115
+        melanoma: 1113
+        nevus: 6705
+        pigmented benign keratosis: 1099
+        squamous cell carcinoma: 197
+        vascular lesion: 142
+    BCN_20000:
+        actinic keratosis: 737
+        basal cell carcinoma: 2809
+        dermatofibroma: 124
+        melanoma: 2857
+        nevus: 4206
+        seborrheic keratosis: 929
+        solar lentigo: 209
+        squamous cell carcinoma: 431
+        vascular lesion: 111
+    BCN_2020_Challenge:
+        unknown: 7132
+        melanoma: 179
+    SONIC:
+        nevus: 9251
+    DERMOSCOPEDIA (CC-BY):
+        unknown: 5
+    ISIC_2020_VIENNA_PART_1:
+        melanoma: 17
+        nevus: 2214
+    ISIC_2020_VIENNA_PART_2:
+        melanoma: 26
+        nevus: 2117
+    ISIC 2020 CHALLENGE - MSKCC CONTRIBUTION:
+        unknown: 10111
+        lentigo NOS: 34
+        lichenoid keratosis: 28
+        melanoma: 216
+        nevus: 614
+        seborrheic keratosis: 105
+    BRISBANE ISIC CHALLENGE 2020:
+        unknown: 8449
+    SYDNEY (MIA / SMDC) 2020 ISIC CHALLENGE CONTRIBUTION:
+        unknown: 1563
+        atypical melanocytic proliferation: 1
+        cafe-au-lait macule: 1
+        lentigo NOS: 6
+        lichenoid keratosis: 3
+        melanoma: 134
+        nevus: 161
+        seborrheic keratosis: 11
+        solar lentigo: 4
