@@ -61,10 +61,17 @@ class Datasets:
     uda_1: Dict[str, int] = attr.ib(instance_of(dict))
     uda_2: Dict[str, int] = attr.ib(instance_of(dict))
 
-    def names(self):
+    def names(self, tablefmt: str = "simple"):
         """Returns only the dataset names as a formatted table."""
-        names = [[item] for item in list(self.__dict__.keys())]
-        return tabulate(names, headers=["Datasets"], tablefmt="simple")
+        names = [[name] for name in list(self.__dict__.keys())]
+
+        return tabulate(names, headers=["Dataset Name"], tablefmt=tablefmt)
+
+    def names_and_overall_images(self, tablefmt: str = "simple"):
+        """Returns the names and overall total instance counts of each dataset."""
+        data = [[name, sum(images.values())] for name, images in self.__dict__.items()]
+
+        return tabulate(data, headers=["Dataset Name", "No. Images"], tablefmt=tablefmt)
 
 
 @attr.s

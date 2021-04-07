@@ -17,13 +17,22 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class LsParameters:
-    pass
+    verbose: str
+    tablefmt: str
 
 
 @click.command(**COMMAND_CONTEXT_SETTINGS, short_help="Lists the available datasets.")
+@click.option("-v", "--verbose", type=click.Choice(["totals"], case_sensitive=False), default=None, help="The level of verbosity of the output.")
+@click.option("-t", "--tablefmt", default="simple", help="Any format available for tabulate, 'https://github.com/astanin/python-tabulate#table-format'")
 @kwargs_to_dataclass(LsParameters)
 def ls(params: LsParameters):
     """
-    Shows the tools available datasets.
+    Shows the available datasets in various forms of verbosity.
     """
-    print(DB.get_db().datasets.names())
+    func = {
+
+        "totals": DB.get_db().datasets.names_and_overall_images
+
+    }.get(params.verbose, DB.get_db().datasets.names)
+
+    print(func(tablefmt=params.tablefmt))
