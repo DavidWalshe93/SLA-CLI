@@ -20,3 +20,8 @@ class Path:
             current_dir = os.path.dirname(current_dir)
 
         return current_dir
+
+    @staticmethod
+    def db():
+        """Returns the path to the DB file."""
+        return os.path.join(Path.root_dir(), "db.json")
