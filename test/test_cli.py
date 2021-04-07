@@ -8,12 +8,17 @@ import pytest
 from cli import cli
 
 
-def test_version(cli_runner, caplog):
+@pytest.mark.parametrize("switch",
+                         [
+                             "-v",
+                             "--version"
+                         ])
+def test_version(switch, cli_runner, caplog):
     """
     :GIVEN: Nothing.
     :WHEN:  Checking the version of the tool.
     :THEN:  Check the correct output is observed.
     """
-    cli_runner.invoke(cli, ["--version"])
+    cli_runner.invoke(cli, [switch])
 
     assert caplog.messages[0] == "Version: 0.0.1"
