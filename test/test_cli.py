@@ -9,7 +9,11 @@ from cli import cli
 
 
 def test_version(cli_runner, caplog):
-    result = cli_runner.invoke(cli, ["--version"])
+    """
+    :GIVEN: Nothing.
+    :WHEN:  Checking the version of the tool.
+    :THEN:  Check the correct output is observed.
+    """
+    cli_runner.invoke(cli, ["--version"])
 
     assert caplog.messages[0] == "Version: 0.0.1"
-
