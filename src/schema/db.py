@@ -9,6 +9,7 @@ import json
 
 import attr
 from attr.validators import instance_of
+from tabulate import tabulate
 
 from src.common.path import Path
 
@@ -32,9 +33,9 @@ class Datasets:
     """
     Maps to the available dataset statistics in the db file.
     """
-    altas_of_dermoscopy: Dict[str, int] = attr.ib(instance_of(dict))
-    bnc_20000: Dict[str, int] = attr.ib(instance_of(dict))
-    bnc_20000_challenge: Dict[str, int] = attr.ib(instance_of(dict))
+    atlas_of_dermoscopy: Dict[str, int] = attr.ib(instance_of(dict))
+    bcn_20000: Dict[str, int] = attr.ib(instance_of(dict))
+    bcn_2020_challenge: Dict[str, int] = attr.ib(instance_of(dict))
     brisbane_isic_challenge_2020: Dict[str, int] = attr.ib(instance_of(dict))
     dermofit: Dict[str, int] = attr.ib(instance_of(dict))
     dermoscopedia_cc_by: Dict[str, int] = attr.ib(instance_of(dict))
@@ -59,6 +60,11 @@ class Datasets:
     sydney_mia_smdc_2020_isic_challenge_contribution: Dict[str, int] = attr.ib(instance_of(dict))
     uda_1: Dict[str, int] = attr.ib(instance_of(dict))
     uda_2: Dict[str, int] = attr.ib(instance_of(dict))
+
+    def names(self):
+        """Returns only the dataset names as a formatted table."""
+        names = [[item] for item in list(self.__dict__.keys())]
+        return tabulate(names, headers=["Datasets"], tablefmt="simple")
 
 
 @attr.s

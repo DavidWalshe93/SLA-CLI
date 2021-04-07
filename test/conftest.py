@@ -7,6 +7,7 @@ import pytest
 import logging
 
 from click.testing import CliRunner
+from cli import cli
 
 
 @pytest.fixture(autouse=True)
@@ -19,3 +20,9 @@ def set_log_level(caplog):
 def cli_runner() -> CliRunner:
     """Returns a Click CLI Runner object."""
     return CliRunner()
+
+
+@pytest.fixture
+def cli() -> callable:
+    """Returns the root CLI callable command."""
+    return cli

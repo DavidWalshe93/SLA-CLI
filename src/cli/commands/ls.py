@@ -10,14 +10,14 @@ import click
 
 from src.cli.context import COMMAND_CONTEXT_SETTINGS
 from src.cli.utils import kwargs_to_dataclass
+from src.schema.db import DB
 
 logger = logging.getLogger(__name__)
 
 
 @dataclass
 class LsParameters:
-    target: str
-    # output_name: str
+    pass
 
 
 @click.command(**COMMAND_CONTEXT_SETTINGS, short_help="Lists the available datasets.")
@@ -26,3 +26,4 @@ def ls(params: LsParameters):
     """
     Shows the tools available datasets.
     """
+    print(DB.get_db().datasets.names())
