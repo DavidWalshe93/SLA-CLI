@@ -20,6 +20,7 @@ logger = logging.getLogger(__name__)
 __version__ = "0.0.1"
 
 
+@dataclass
 class CliParameters:
     version: bool = False
 
