@@ -4,10 +4,18 @@ Date:       07 April 2021
 """
 
 import pytest
+import logging
 
 from click.testing import CliRunner
 
 
+@pytest.fixture(autouse=True)
+def set_log_level(caplog):
+    """Set the log level for the test session."""
+    caplog.set_level(logging.INFO)
+
+
+@pytest.fixture
 def cli_runner() -> CliRunner:
     """Returns a Click CLI Runner object."""
     return CliRunner()
