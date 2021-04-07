@@ -7,7 +7,7 @@ import logging
 
 import click
 
-from src.cli.config import GROUP_CONTEXT_SETTINGS
+from src.cli.context import GROUP_CONTEXT_SETTINGS
 
 logger = logging.getLogger(__name__)
 
