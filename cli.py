@@ -9,6 +9,9 @@ import click
 
 from src.cli.context import GROUP_CONTEXT_SETTINGS
 
+# Commands
+from src.cli.commands.ls import ls
+
 logger = logging.getLogger(__name__)
 
 
@@ -34,6 +37,7 @@ for group in groups:
 # Add CLI commands
 # ==================================================
 commands = [
+    ls
 ]
 
 for command in commands:
