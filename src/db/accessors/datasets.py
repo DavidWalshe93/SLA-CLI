@@ -13,6 +13,7 @@ from tabulate import tabulate
 from colorama import init, Fore, Back
 
 from src.db.accessors.base import Accessor
+from src.common.regex import compile_regex
 import src.db as db
 
 logger = logging.getLogger(__name__)
@@ -43,10 +44,11 @@ class Datasets(Accessor):
 
         :param tablefmt: The console output format.
         :param output_file: If specified, the output is redirected to a file instead of to the console.
+        :param regex: Regex search term to filter the return content.
         :return: If not output_file is specified contents are printed to the screen, else the content
                  saved to the specified file.
         """
-        pattern = re.compile(rf"{regex}", re.IGNORECASE | re.MULTILINE)
+        pattern = compile_regex(regex)
         names = [[name] for name in list(self.datasets.as_dict.keys()) if bool(pattern.search(name))]
 
         if output_file:
@@ -56,16 +58,18 @@ class Datasets(Accessor):
         else:
             return tabulate(names, headers=["Dataset Name"], tablefmt=tablefmt, showindex=True)
 
-    def names_and_overall_images(self, tablefmt: str = "simple", output_file: str = None):
+    def names_and_overall_images(self, tablefmt: str = "simple", output_file: str = None, regex: str = r".*"):
         """
         Returns the names of the datasets available and the total number of images within the dataset.
 
         :param tablefmt: The console output format.
         :param output_file: If specified, the output is redirected to a file instead of to the console.
+        :param regex: Regex search term to filter the return content.
         :return: If not output_file is specified contents are printed to the screen, else the content
                  saved to the specified file.
         """
-        data = [[name, sum(labels.values())] for name, labels in self.datasets.labels.items()]
+        pattern = compile_regex(regex)
+        data = [[name, sum(labels.values())] for name, labels in self.datasets.labels.items() if bool(pattern.search(name))]
 
         if output_file:
             df = pd.DataFrame(data, columns=["Dataset Name", "No. Images"])
@@ -75,18 +79,22 @@ class Datasets(Accessor):
             return tabulate(data, headers=["Dataset Name", "No. Images"], tablefmt=tablefmt, showindex=True)
 
     @init_colorama
-    def names_and_distribution(self, tablefmt: str = "simple", output_file: str = None) -> str:
+    def names_and_distribution(self, tablefmt: str = "simple", output_file: str = None, regex: str = r".*") -> str:
         """
         Returns the names and number of each class in each dataset.
 
         :param tablefmt: The console output format.
         :param output_file: If specified, the output is redirected to a file instead of to the console.
+        :param regex: Regex search term to filter the return content.
         :return: If not output_file is specified contents are printed to the screen, else the content
                  saved to the specified file.
         """
+        pattern = compile_regex(regex)
+        dataset_labels = {dataset: labels for dataset, labels in self.datasets.labels.items() if bool(pattern.search(dataset))}
+
         data = []
         # Begin to capture each row.
-        for dataset, values in self.datasets.labels.items():
+        for dataset, values in dataset_labels.items():
             row = [dataset]
             headers = ["Dataset"]
             # For each row capture each dx count.

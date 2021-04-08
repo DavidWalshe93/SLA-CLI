@@ -26,7 +26,7 @@ class LsParameters:
 
 
 @click.command(**COMMAND_CONTEXT_SETTINGS, short_help="Lists the available datasets.")
-@click.argument("regex", type=click.STRING, nargs=1, default=(r".*",))
+@click.argument("regex", type=click.STRING, nargs=1, default=r".*")
 @click.option("-v", "--verbose", type=click.Choice(["totals", "all", "url"], case_sensitive=False), default=None, help="The level of verbosity of the output.")
 @click.option("-o", "--output", type=str, default=None, help="Saves the output to the file path specified, if unused contents are printed to the console.")
 @click.option("-t", "--tablefmt", default="simple", help="Any format available for tabulate, 'https://github.com/astanin/python-tabulate#table-format'")
