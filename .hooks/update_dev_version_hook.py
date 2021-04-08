@@ -16,7 +16,7 @@ def version_file_path() -> str:
     """
     Returns the version file path.
     """
-    return os.path.join(os.path.dirname(os.path.dirname(__file__)), "../../.versioning.json")
+    return os.path.join(os.path.dirname(os.path.dirname(__file__)), ".versioning.json")
 
 
 def read_versioning_file() -> Dict[str, any]:
@@ -52,3 +52,7 @@ def update_micro_version() -> None:
 
     # Write new version back to file.
     write_versioning_file(content)
+
+
+if __name__ == '__main__':
+    update_micro_version()
