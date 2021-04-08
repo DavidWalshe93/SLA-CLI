@@ -4,7 +4,6 @@
 language: python
 cache: pip
 python:
-    - "3.6"
     - "3.7"
     - "3.8"
     - "3.9"
@@ -19,7 +18,12 @@ after_success:
 #    - py -m build
 deploy:
     provider: pypi
-     # Remove for deployment to official PyPi repo
+    # Remove for deployment to official PyPi repo
     server: https://testpypi.python.org/pypi
     username: "__token__"
-    password: $PYPI_TEST_TOKEN
+    password: "$PYPI_TEST_TOKEN"
+    on:
+        repo: "DavidWalshe93/SL-CLI"
+        branches:
+            only:
+                - main
