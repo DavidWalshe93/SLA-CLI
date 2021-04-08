@@ -7,6 +7,7 @@ import os
 from setuptools import setup
 from setuptools import find_packages
 
+
 # Utility function to read the README file.
 # Used for the long_description.  It's nice, because now 1) we have a top level
 # README file and 2) it's easier to type in the README file than to put a raw
@@ -15,15 +16,17 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 
+__version__ = "0.0.1"
+
 setup(
     name="sla-cli",  # Replace with your own username
-    version="0.0.1",
+    version=__version__,
     author="David Walshe",
     author_email="david.walshe93@gmail.com",
     description="A CLI tool designed to help source data for skin lesion research.",
     long_description=read('README.md'),
     long_description_content_type="text/markdown",
-    url="https://github.com/pypa/sampleproject",
+    url="https://github.com/DavidWalshe93/SL-CLI",
     project_urls={
         "Homepage": "https://github.com/DavidWalshe93/SL-CLI",
         "Bug Tracker": "https://github.com/DavidWalshe93/SL-CLI/issues",
@@ -51,15 +54,23 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
 
-
         "Operating System :: OS Independent",
     ],
-    package_dir={"": "src"},
-    packages=find_packages(where="src"),
-    python_requires=">=3.6",
-    data_files=[("", ['LICENSE'])],
     keywords="cancer-research cancer skin-lesion skin lesion melanoma datasets data "
              "data-acquisition research skin-cancer utility tool academic download "
              "downloader isic MEDNODE DermIS DermQuest PAD-UFES-20 MClass "
              "Atlas-of-Dermascopy HAM10000 BCN20000 DERMOFIT cli command-line-tool".split(),
+
+    # Python centric setup.
+    packages=find_packages(),
+    python_requires=">=3.6",
+    data_files=[("", ['LICENSE'])],
+    include_package_data=True,
+    install_requires=[
+        "Click",
+    ],
+    entry_points='''
+        [console_scripts]
+        sla-cli=sla_cli:cli
+    '''
 )

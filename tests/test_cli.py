@@ -5,7 +5,7 @@ Date:       07 April 2021
 
 import pytest
 
-from cli import cli
+from sla_cli import cli
 
 
 @pytest.mark.parametrize("switch",

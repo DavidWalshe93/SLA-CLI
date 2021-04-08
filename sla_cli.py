@@ -9,8 +9,11 @@ from dataclasses import dataclass
 import click
 from click import Context
 
+from src.common.logger.init_logger import init_logger
 from src.cli.context import GROUP_CONTEXT_SETTINGS
 from src.cli.utils import kwargs_to_dataclass
+
+# from setup import __version__
 
 # Commands
 from src.cli.commands.ls import ls
@@ -26,16 +29,17 @@ class CliParameters:
 
 
 @click.group(**GROUP_CONTEXT_SETTINGS)
-@click.option("-v", "--version", is_flag=True)
+@click.option("-v", "--version", is_flag=True, help="Show the current version of the tool.")
 @kwargs_to_dataclass(CliParameters)
 @click.pass_context
 def cli(ctx: Context, params: CliParameters):
     """
     Base SL-CLI command.
     """
+    init_logger()
     if not ctx.invoked_subcommand:
         if params.version:
-            logger.info(f"Version: {__version__}")
+            print(f"Version: {__version__}")
 
 
 # ==================================================
