@@ -6,6 +6,7 @@ Date:       08 April 2021
 import logging
 from functools import wraps
 from typing import Union
+import re
 
 import pandas as pd
 from tabulate import tabulate
@@ -36,7 +37,7 @@ class Datasets(Accessor):
         """Helper reference to access database attribute."""
         return self.db.datasets
 
-    def names(self, tablefmt: str = "simple", output_file: str = None) -> Union[str, None]:
+    def names(self, tablefmt: str = "simple", output_file: str = None, regex: str = r".*") -> Union[str, None]:
         """
         Returns only the names of the datasets available.
 
@@ -45,14 +46,15 @@ class Datasets(Accessor):
         :return: If not output_file is specified contents are printed to the screen, else the content
                  saved to the specified file.
         """
-        names = [[name] for name in list(self.datasets.as_dict.keys())]
+        pattern = re.compile(rf"{regex}", re.IGNORECASE | re.MULTILINE)
+        names = [[name] for name in list(self.datasets.as_dict.keys()) if bool(pattern.search(name))]
 
         if output_file:
             df = pd.DataFrame(names, columns=["Dataset Name"])
             df.to_csv(output_file, index=None)
             return f"Saved to '{output_file}'"
         else:
-            return tabulate(names, headers=["Dataset Name"], tablefmt=tablefmt)
+            return tabulate(names, headers=["Dataset Name"], tablefmt=tablefmt, showindex=True)
 
     def names_and_overall_images(self, tablefmt: str = "simple", output_file: str = None):
         """
@@ -70,7 +72,7 @@ class Datasets(Accessor):
             df.to_csv(output_file, index=None)
             return f"Saved to '{output_file}'"
         else:
-            return tabulate(data, headers=["Dataset Name", "No. Images"], tablefmt=tablefmt)
+            return tabulate(data, headers=["Dataset Name", "No. Images"], tablefmt=tablefmt, showindex=True)
 
     @init_colorama
     def names_and_distribution(self, tablefmt: str = "simple", output_file: str = None) -> str:

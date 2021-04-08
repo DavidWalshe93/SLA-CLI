@@ -1,6 +1,8 @@
 """
 Author:     David Walshe
 Date:       08 April 2021
+
+Git Hook to update the micro version of the tool each time a push is made.
 """
 
 import os

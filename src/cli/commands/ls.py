@@ -18,15 +18,15 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class LsParameters:
-    datasets: tuple
     verbose: str
     output: str
     legend: bool
     tablefmt: str
+    regex: str = ".*"
 
 
 @click.command(**COMMAND_CONTEXT_SETTINGS, short_help="Lists the available datasets.")
-@click.argument("datasets", type=click.STRING, nargs=-1, autocompletion=auto_complete_datasets)
+@click.argument("regex", type=click.STRING, nargs=1, default=(r".*",))
 @click.option("-v", "--verbose", type=click.Choice(["totals", "all", "url"], case_sensitive=False), default=None, help="The level of verbosity of the output.")
 @click.option("-o", "--output", type=str, default=None, help="Saves the output to the file path specified, if unused contents are printed to the console.")
 @click.option("-t", "--tablefmt", default="simple", help="Any format available for tabulate, 'https://github.com/astanin/python-tabulate#table-format'")
@@ -36,6 +36,7 @@ def ls(params: LsParameters):
     """
     Shows the available datasets in various forms of verbosity.
     """
+    print(params.regex)
     if params.legend:
         abbrev = AccessorFactory.create_abbreviation()
         print(abbrev.abbreviations(tablefmt=params.tablefmt))
@@ -49,4 +50,4 @@ def ls(params: LsParameters):
 
         }.get(params.verbose, datasets.names)
 
-        print(func(tablefmt=params.tablefmt, output_file=params.output))
+        print(func(tablefmt=params.tablefmt, output_file=params.output, regex=params.regex))
