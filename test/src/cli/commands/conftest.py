@@ -49,3 +49,21 @@ def dataset_names_totals_print():
 def dataset_names_totals_csv():
     """Returns the number of images for each dataset"""
     return resource_loader("dataset_names_totals.csv")
+
+
+@pytest.fixture
+def dataset_names_all_print():
+    """Returns the distribution of images for each dataset"""
+    return resource_loader("dataset_names_all_print.txt")
+
+
+@pytest.fixture
+def dataset_names_all_csv():
+    """Returns the distribution of images for each dataset"""
+    return resource_loader("dataset_names_all.csv")
+
+
+@pytest.fixture
+def legend_print():
+    """Returns the distribution of images for each dataset"""
+    return resource_loader("legend_print.txt")

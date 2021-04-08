@@ -19,6 +19,7 @@ logger = logging.getLogger(__name__)
 class LsParameters:
     verbose: str
     output: str
+    legend: bool
     tablefmt: str
 
 
@@ -26,6 +27,7 @@ class LsParameters:
 @click.option("-v", "--verbose", type=click.Choice(["totals", "all"], case_sensitive=False), default=None, help="The level of verbosity of the output.")
 @click.option("-o", "--output", type=str, default=None, help="Saves the output to the file path specified, if unused contents are printed to the console.")
 @click.option("-t", "--tablefmt", default="simple", help="Any format available for tabulate, 'https://github.com/astanin/python-tabulate#table-format'")
+@click.option("--legend", is_flag=True, help="Shows the abbreviation legend for each diagnosis.")
 @kwargs_to_dataclass(LsParameters)
 def ls(params: LsParameters):
     """
@@ -33,11 +35,14 @@ def ls(params: LsParameters):
     """
     db = DB.get_db()
 
-    func = {
+    if params.legend:
+        print(db.datasets.abbreviations(tablefmt=params.tablefmt))
+    else:
+        func = {
 
-        "totals": db.datasets.names_and_overall_images,
-        "all": db.datasets.names_and_distribution,
+            "totals": db.datasets.names_and_overall_images,
+            "all": db.datasets.names_and_distribution,
 
-    }.get(params.verbose, db.datasets.names)
+        }.get(params.verbose, db.datasets.names)
 
-    print(func(tablefmt=params.tablefmt, output_file=params.output))
+        print(func(tablefmt=params.tablefmt, output_file=params.output))

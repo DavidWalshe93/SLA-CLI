@@ -1,0 +1,24 @@
+Abbrev.    Diagnosis
+---------  ----------------------------------
+AKIEC      actinic keratosis
+AFP        angiofibroma or fibrous papule
+ANG        angioma
+AMP        atypical melanocytic proliferation
+BCC        basal cell carcinoma
+CALM       cafe-au-lait macule
+DF         dermatofibroma
+HAE        haemangioma
+IC         intraepithelial carcinoma
+LNOS       lentigo NOS
+LS         lentigo simplex
+LK         lichenoid keratosis
+MEL        melanoma
+NV         melanocytic nevi
+OTH        other
+PG         pyogenic granuloma
+SCR        scar
+SL         solar lentigo
+SK         seborrheic keratosis
+SCC        squamous cell carcinoma
+VL         vascular lesion
+UNK        unknown

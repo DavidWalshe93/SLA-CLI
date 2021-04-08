@@ -135,8 +135,7 @@ class Datasets(Schema):
             df.to_csv(output_file, index=None)
             return f"Saved to '{output_file}'"
         else:
-            data_table = tabulate(data, headers=headers, tablefmt=tablefmt)
-            return f"{data_table}\n{self.abbreviations(tablefmt=tablefmt)}"
+            return tabulate(data, headers=headers, tablefmt=tablefmt)
 
     def abbreviations(self, tablefmt: str = "simple") -> str:
         """Returns the abbreviation table."""
