@@ -19,7 +19,7 @@ after_success:
 deploy:
     provider: pypi
     # Remove for deployment to official PyPi repo
-    server: https://testpypi.python.org/pypi
+    server: https://test.pypi.org
     username: "__token__"
     password: $PYPI_TEST_TOKEN
     on:
