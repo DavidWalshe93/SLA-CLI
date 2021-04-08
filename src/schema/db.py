@@ -13,7 +13,10 @@ from tabulate import tabulate
 
 import pandas as pd
 
+from colorama import Fore
+
 from src.common.path import Path
+from src.schema.utils import init_colorama
 
 logger = logging.getLogger(__name__)
 
@@ -106,11 +109,38 @@ class Datasets(Schema):
         else:
             return tabulate(data, headers=["Dataset Name", "No. Images"], tablefmt=tablefmt)
 
-    def names_and_distribution(self, tablefmt: str = "simple", output_file: str = None):
+    @init_colorama
+    def names_and_distribution(self, tablefmt: str = "simple", output_file: str = None) -> str:
         """Returns the names and totals of each class in each dataset."""
-        abbrev = self.db.abbrev
+        data = []
+        # Begin to capture each row.
+        for dataset, values in self.as_dict().items():
+            row = [dataset]
+            headers = ["Dataset"]
+            # For each row capture each dx count.
+            for dx, abbrev in self.db.abbrev.items():
+                item = values.get(dx, 0)
+                # If showing to the console, add some color.
+                if output_file is None:
+                    color = Fore.RED if item == 0 else Fore.GREEN
+                    item = f"{color}{item}{Fore.RESET}"
+                # Add the item to the row collector.
+                row.append(item)
+                headers.append(abbrev)
+            # Add the row to the data collector.
+            data.append(row)
 
-        print(abbrev)
+        if output_file:
+            df = pd.DataFrame(data, columns=headers)
+            df.to_csv(output_file, index=None)
+            return f"Saved to '{output_file}'"
+        else:
+            data_table = tabulate(data, headers=headers, tablefmt=tablefmt)
+            return f"{data_table}\n{self.abbreviations(tablefmt=tablefmt)}"
+
+    def abbreviations(self, tablefmt: str = "simple") -> str:
+        """Returns the abbreviation table."""
+        return tabulate([(abbrev, dataset) for dataset, abbrev in self.db.abbrev.items()], headers=["Abbrev.", "Diagnosis"], tablefmt=tablefmt)
 
     def as_dict(self):
         """Returns all scalar and collect objects for this class, objects are removed."""

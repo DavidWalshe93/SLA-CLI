@@ -1,0 +1,6 @@
+[run]
+branch=true
+source=src
+
+[html]
+directory = htmlcov
