@@ -4,12 +4,14 @@ Date:       07 April 2021
 """
 
 import logging
-from typing import Dict, List
+from typing import Dict, List, Union
 import json
 
 import attr
 from attr.validators import instance_of
 from tabulate import tabulate
+
+import pandas as pd
 
 from src.common.path import Path
 
@@ -17,7 +19,12 @@ logger = logging.getLogger(__name__)
 
 
 @attr.s
-class Urls:
+class Schema:
+    pass
+
+
+@attr.s
+class Urls(Schema):
     """
     Maps to the available dataset urls in the db file.
     """
@@ -29,7 +36,7 @@ class Urls:
 
 
 @attr.s
-class Datasets:
+class Datasets(Schema):
     """
     Maps to the available dataset statistics in the db file.
     """
@@ -60,27 +67,68 @@ class Datasets:
     sydney_mia_smdc_2020_isic_challenge_contribution: Dict[str, int] = attr.ib(instance_of(dict))
     uda_1: Dict[str, int] = attr.ib(instance_of(dict))
     uda_2: Dict[str, int] = attr.ib(instance_of(dict))
+    # Populated after initialisation.
+    db = attr.ib(default=None)
 
-    def names(self, tablefmt: str = "simple"):
-        """Returns only the dataset names as a formatted table."""
-        names = [[name] for name in list(self.__dict__.keys())]
+    def names(self, tablefmt: str = "simple", output_file: str = None) -> Union[str, None]:
+        """
+        Returns only the names of the datasets available.
 
-        return tabulate(names, headers=["Dataset Name"], tablefmt=tablefmt)
+        :param tablefmt: The console output format.
+        :param output_file: If specified, the output is redirected to a file instead of to the console.
+        :return: If not output_file is specified contents are printed to the screen, else the content
+                 saved to the specified file.
+        """
+        names = [[name] for name in list(self.as_dict().keys())]
 
-    def names_and_overall_images(self, tablefmt: str = "simple"):
-        """Returns the names and overall total instance counts of each dataset."""
-        data = [[name, sum(images.values())] for name, images in self.__dict__.items()]
+        if output_file:
+            df = pd.DataFrame(names, columns=["Dataset Name"])
+            df.to_csv(output_file, index=None)
+            return f"Saved to '{output_file}'"
+        else:
+            return tabulate(names, headers=["Dataset Name"], tablefmt=tablefmt)
 
-        return tabulate(data, headers=["Dataset Name", "No. Images"], tablefmt=tablefmt)
+    def names_and_overall_images(self, tablefmt: str = "simple", output_file: str = None):
+        """
+        Returns the names of the datasets available and the total number of images within the dataset.
+
+        :param tablefmt: The console output format.
+        :param output_file: If specified, the output is redirected to a file instead of to the console.
+        :return: If not output_file is specified contents are printed to the screen, else the content
+                 saved to the specified file.
+        """
+        data = [[name, sum(images.values())] for name, images in self.as_dict().items()]
+
+        if output_file:
+            df = pd.DataFrame(data, columns=["Dataset Name", "No. Images"])
+            df.to_csv(output_file, index=None)
+            return f"Saved to '{output_file}'"
+        else:
+            return tabulate(data, headers=["Dataset Name", "No. Images"], tablefmt=tablefmt)
+
+    def names_and_distribution(self, tablefmt: str = "simple", output_file: str = None):
+        """Returns the names and totals of each class in each dataset."""
+        abbrev = self.db.abbrev
+
+        print(abbrev)
+
+    def as_dict(self):
+        """Returns all scalar and collect objects for this class, objects are removed."""
+        return {key: value for key, value in self.__dict__.items() if not isinstance(value, Schema)}
 
 
 @attr.s
-class DB:
+class DB(Schema):
     """
     Maps to the db.json file.
     """
     urls: Urls = attr.ib(validator=instance_of(Urls), converter=lambda config: Urls(**config))
     datasets: Datasets = attr.ib(validator=instance_of(Datasets), converter=lambda config: Datasets(**config))
+    abbrev: Dict[str, str] = attr.ib(validator=instance_of(dict))
+
+    def __attrs_post_init__(self):
+        """Adds DB reference to children."""
+        self.datasets.db = self
 
     @staticmethod
     def get_db():

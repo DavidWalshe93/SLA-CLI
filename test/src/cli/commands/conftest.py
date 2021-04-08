@@ -7,6 +7,20 @@ import os
 import pytest
 
 
+@pytest.fixture
+def read_actual_csv() -> callable:
+    """
+    Function to read the actual output content of a ls command and
+    returns the content as a string.
+    """
+
+    def read() -> str:
+        with open("test.csv") as fh:
+            return fh.read()
+
+    return read
+
+
 def resource_loader(resource: str) -> str:
     """Loads a resource from the resource folder."""
     with open(os.path.join(os.path.dirname(__file__), "res", resource)) as fh:
@@ -14,12 +28,24 @@ def resource_loader(resource: str) -> str:
 
 
 @pytest.fixture
-def dataset_names():
+def dataset_names_print():
     """Returns the expected dataset names included in the tool."""
-    return resource_loader("dataset_names.txt")
+    return resource_loader("dataset_names_print.txt")
 
 
 @pytest.fixture
-def dataset_names_totals():
+def dataset_names_csv():
+    """Returns the expected dataset names included in the tool."""
+    return resource_loader("dataset_names.csv")
+
+
+@pytest.fixture
+def dataset_names_totals_print():
     """Returns the number of images for each dataset"""
-    return resource_loader("dataset_names_totals.txt")
+    return resource_loader("dataset_names_totals_print.txt")
+
+
+@pytest.fixture
+def dataset_names_totals_csv():
+    """Returns the number of images for each dataset"""
+    return resource_loader("dataset_names_totals.csv")
