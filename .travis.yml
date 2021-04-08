@@ -23,5 +23,4 @@ deploy:
     username: "__token__"
     password: $PYPI_TEST_TOKEN
     on:
-        repo: "DavidWalshe93/SL-CLI"
         branch: main
