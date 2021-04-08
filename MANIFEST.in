@@ -1,0 +1,3 @@
+include .versioning.json
+include db.json
+include LICENSE

@@ -4,6 +4,7 @@ Date:       08 April 2021
 """
 
 import os
+import json
 from setuptools import setup
 from setuptools import find_packages
 
@@ -12,19 +13,30 @@ from setuptools import find_packages
 # Used for the long_description.  It's nice, because now 1) we have a top level
 # README file and 2) it's easier to type in the README file than to put a raw
 # string in below ...
-def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+def read_readme() -> str:
+    """
+    Returns the content of the README.md.
+    """
+    return open(os.path.join(os.path.dirname(__file__), "README.md")).read()
 
 
-__version__ = "0.0.1"
+def __version__() -> str:
+    """Returns the current tool version"""
+    version_file_path = os.path.join(os.path.dirname(__file__), ".versioning.json")
+
+    with open(version_file_path) as fh:
+        content = json.load(fh)
+
+    return content["version"]
+
 
 setup(
     name="sla-cli",  # Replace with your own username
-    version=__version__,
+    version=__version__(),
     author="David Walshe",
     author_email="david.walshe93@gmail.com",
     description="A CLI tool designed to help source data for skin lesion research.",
-    long_description=read('README.md'),
+    long_description=read_readme(),
     long_description_content_type="text/markdown",
     url="https://github.com/DavidWalshe93/SL-CLI",
     project_urls={
@@ -71,6 +83,6 @@ setup(
     ],
     entry_points='''
         [console_scripts]
-        sla-cli=sla_cli:cli
+        sla-cli=cli:cli
     '''
 )

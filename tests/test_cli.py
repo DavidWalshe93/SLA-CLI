@@ -5,7 +5,9 @@ Date:       07 April 2021
 
 import pytest
 
-from sla_cli import cli
+from cli import cli
+
+from src.common.versioning import __version__
 
 
 @pytest.mark.parametrize("switch",
@@ -21,5 +23,5 @@ def test_version(switch, cli_runner, caplog):
     """
     res = cli_runner.invoke(cli, [switch])
 
-    assert res.output.strip() == "Version: 0.0.1"
+    assert res.output.strip() == f"Version: {__version__()}"
     assert res.exit_code == 0

@@ -12,15 +12,12 @@ from click import Context
 from src.common.logger.init_logger import init_logger
 from src.cli.context import GROUP_CONTEXT_SETTINGS
 from src.cli.utils import kwargs_to_dataclass
-
-# from setup import __version__
+from src.common.versioning import __version__
 
 # Commands
 from src.cli.commands.ls import ls
 
 logger = logging.getLogger(__name__)
-
-__version__ = "0.0.1"
 
 
 @dataclass
@@ -39,7 +36,7 @@ def cli(ctx: Context, params: CliParameters):
     init_logger()
     if not ctx.invoked_subcommand:
         if params.version:
-            print(f"Version: {__version__}")
+            print(f"Version: {__version__()}")
 
 
 # ==================================================

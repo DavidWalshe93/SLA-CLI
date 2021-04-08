@@ -5,7 +5,7 @@ Date:       07 April 2021
 
 import pytest
 
-from sla_cli import cli
+from cli import cli
 
 
 def test_ls_print(cli_runner, dataset_names_print):
