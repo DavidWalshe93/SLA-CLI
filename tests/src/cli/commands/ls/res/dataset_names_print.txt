@@ -1,0 +1,29 @@
+    Dataset Name
+--  ------------------------------------------------
+ 0  atlas_of_dermoscopy
+ 1  bcn_20000
+ 2  bcn_2020_challenge
+ 3  brisbane_isic_challenge_2020
+ 4  dermofit
+ 5  dermoscopedia_cc_by
+ 6  dermis
+ 7  dermquest
+ 8  ham10000
+ 9  isic_2020_challenge_mskcc_contribution
+10  isic_2020_vienna_part_1
+11  isic_2020_vienna_part_2
+12  jid_editorial_images_2018
+13  mclass_d
+14  mclass_nd
+15  mednode
+16  msk_1
+17  msk_2
+18  msk_3
+19  msk_4
+20  msk_5
+21  pad_ufes_20
+22  ph2
+23  sonic
+24  sydney_mia_smdc_2020_isic_challenge_contribution
+25  uda_1
+26  uda_2

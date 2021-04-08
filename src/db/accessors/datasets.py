@@ -115,4 +115,4 @@ class Datasets(Accessor):
             df.to_csv(output_file, index=None)
             return f"Saved to '{output_file}'"
         else:
-            return tabulate(data, headers=headers, tablefmt=tablefmt)
+            return tabulate(data, headers=headers, tablefmt=tablefmt, showindex=True)

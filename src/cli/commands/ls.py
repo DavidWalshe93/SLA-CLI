@@ -36,7 +36,6 @@ def ls(params: LsParameters):
     """
     Shows the available datasets in various forms of verbosity.
     """
-    print(params.regex)
     if params.legend:
         abbrev = AccessorFactory.create_abbreviation()
         print(abbrev.abbreviations(tablefmt=params.tablefmt))
