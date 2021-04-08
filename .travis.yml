@@ -5,8 +5,8 @@ language: python
 cache: pip
 python:
     - "3.7"
-    - "3.8"
-    - "3.9"
+#    - "3.8"
+#    - "3.9"
 install:
     - pip install -r requirements.txt
 #    - py -m pip install --upgrade build
@@ -21,7 +21,7 @@ deploy:
     # Remove for deployment to official PyPi repo
     server: https://testpypi.python.org/pypi
     username: "__token__"
-    password: "$PYPI_TEST_TOKEN"
+    password: $PYPI_TEST_TOKEN
     on:
         repo: "DavidWalshe93/SL-CLI"
         branch: main
