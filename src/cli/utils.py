@@ -9,7 +9,7 @@ from functools import wraps
 from typing import Dict
 import json
 
-from src.schema.db import DB
+from src.db.schema import DB
 
 logger = logging.getLogger(__name__)
 
