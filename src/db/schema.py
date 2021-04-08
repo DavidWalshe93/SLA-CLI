@@ -77,8 +77,6 @@ class Datasets(Schema):
     sydney_mia_smdc_2020_isic_challenge_contribution: Dataset = attr.ib(validator=instance_of(Dataset), converter=lambda config: Dataset(**config))
     uda_1: Dataset = attr.ib(validator=instance_of(Dataset), converter=lambda config: Dataset(**config))
     uda_2: Dataset = attr.ib(validator=instance_of(Dataset), converter=lambda config: Dataset(**config))
-    # Populated after initialisation.
-    db = attr.ib(default=None)
 
     @property
     def as_dict(self):
@@ -87,10 +85,12 @@ class Datasets(Schema):
 
     @property
     def labels(self):
+        """Retrieves all the label entries for dataset objects."""
         return {key: value.labels for key, value in self.as_dict.items()}
 
     @property
     def info(self):
+        """Retrieves all the info entries for the dataset objects."""
         return {key: value.info for key, value in self.as_dict.items()}
 
 
@@ -101,10 +101,6 @@ class DB(Schema):
     """
     datasets: Datasets = attr.ib(validator=instance_of(Datasets), converter=lambda config: Datasets(**config))
     abbrev: Dict[str, str] = attr.ib(validator=instance_of(dict))
-
-    def __attrs_post_init__(self):
-        """Adds DB reference to children."""
-        self.datasets.db = self
 
     @staticmethod
     def get_db():
