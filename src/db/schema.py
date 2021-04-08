@@ -93,6 +93,11 @@ class Datasets(Schema):
         """Retrieves all the info entries for the dataset objects."""
         return {key: value.info for key, value in self.as_dict.items()}
 
+    @property
+    def names(self):
+        """Returns a list of all dataset names."""
+        return list(self.as_dict.keys())
+
 
 @attr.s
 class DB(Schema):

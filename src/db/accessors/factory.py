@@ -15,10 +15,10 @@ class AccessorFactory:
     Accessor Factory Class.
     """
 
-    @property
-    def datasets(self) -> Datasets:
+    @staticmethod
+    def create_datasets() -> Datasets:
         return Datasets()
 
-    @property
-    def abbrev(self) -> Abbreviations:
+    @staticmethod
+    def create_abbreviation() -> Abbreviations:
         return Abbreviations()

@@ -10,6 +10,7 @@ import click
 
 from src.cli.context import COMMAND_CONTEXT_SETTINGS
 from src.cli.utils import kwargs_to_dataclass
+from src.cli.autocompletion import auto_complete_datasets
 from src.db.accessors import AccessorFactory
 
 logger = logging.getLogger(__name__)
@@ -17,6 +18,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class LsParameters:
+    datasets: tuple
     verbose: str
     output: str
     legend: bool
@@ -24,6 +26,7 @@ class LsParameters:
 
 
 @click.command(**COMMAND_CONTEXT_SETTINGS, short_help="Lists the available datasets.")
+@click.argument("datasets", type=click.STRING, nargs=-1, autocompletion=auto_complete_datasets)
 @click.option("-v", "--verbose", type=click.Choice(["totals", "all", "url"], case_sensitive=False), default=None, help="The level of verbosity of the output.")
 @click.option("-o", "--output", type=str, default=None, help="Saves the output to the file path specified, if unused contents are printed to the console.")
 @click.option("-t", "--tablefmt", default="simple", help="Any format available for tabulate, 'https://github.com/astanin/python-tabulate#table-format'")
@@ -33,16 +36,17 @@ def ls(params: LsParameters):
     """
     Shows the available datasets in various forms of verbosity.
     """
-    factory = AccessorFactory()
-
     if params.legend:
-        print(factory.abbrev.abbreviations(tablefmt=params.tablefmt))
+        abbrev = AccessorFactory.create_abbreviation()
+        print(abbrev.abbreviations(tablefmt=params.tablefmt))
+
     else:
+        datasets = AccessorFactory.create_datasets()
         func = {
 
-            "totals": factory.datasets.names_and_overall_images,
-            "all": factory.datasets.names_and_distribution,
+            "totals": datasets.names_and_overall_images,
+            "all": datasets.names_and_distribution,
 
-        }.get(params.verbose, factory.datasets.names)
+        }.get(params.verbose, datasets.names)
 
         print(func(tablefmt=params.tablefmt, output_file=params.output))

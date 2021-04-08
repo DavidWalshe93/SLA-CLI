@@ -32,7 +32,7 @@ def init_colorama(func):
 class Datasets(Accessor):
 
     @property
-    def datasets(self) -> db.Dataset:
+    def datasets(self) -> db.Datasets:
         """Helper reference to access database attribute."""
         return self.db.datasets
 

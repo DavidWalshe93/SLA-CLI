@@ -26,7 +26,7 @@ def kwargs_to_dataclass(data_class):
         def _kwargs_to_dataclass_wrapper(*args, **kwargs):
             command_args = data_class(**kwargs)
 
-            return func(command_args)
+            return func(*args, command_args)
 
         return _kwargs_to_dataclass_wrapper
 

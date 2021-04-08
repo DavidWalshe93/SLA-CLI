@@ -4,10 +4,22 @@
 language: python
 cache: pip
 python:
+    - "3.6"
     - "3.7"
+    - "3.8"
+    - "3.9"
 install:
     - pip install -r requirements.txt
+#    - py -m pip install --upgrade build
+#    - py -m pip install --upgrade twine
 script:
     - pytest --cov=src --cov-report=term-missing
 after_success:
     - coveralls
+#    - py -m build
+deploy:
+    provider: pypi
+     # Remove for deployment to official PyPi repo
+    server: https://testpypi.python.org/pypi
+    username: "__token__"
+    password: $PYPI_TEST_TOKEN
