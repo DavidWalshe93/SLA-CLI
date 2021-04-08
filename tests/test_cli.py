@@ -19,6 +19,7 @@ def test_version(switch, cli_runner, caplog):
     :WHEN:  Checking the version of the tool.
     :THEN:  Check the correct output is observed.
     """
-    cli_runner.invoke(cli, [switch])
+    res = cli_runner.invoke(cli, [switch])
 
-    assert caplog.messages[0] == "Version: 0.0.1"
+    assert res.output.strip() == "Version: 0.0.1"
+    assert res.exit_code == 0
