@@ -17,7 +17,7 @@ datasets:
         unknown: 2000
     PH2:
         melanoma: 40
-        nevus: 160
+        melanocytic nevi: 160
     DermIS:
         melanoma: 43
         non-melanoma: 26
@@ -26,20 +26,20 @@ datasets:
         non-melanoma: 62
     MEDNODE:
         melanoma: 70
-        nevus: 100
+        melanocytic nevi: 100
     PAD-UFES-20:
         actinic keratosis: 730
         basal cell carcinoma: 845
         melanoma: 52
-        nevus: 244
+        melanocytic nevi: 244
         squamous cell carcinoma: 192
         seborrheic keratosis: 235
     MClass-D:
         melanoma: 20
-        nevus: 80
+        melanocytic nevi: 80
     MClass-ND:
         melanoma: 20
-        nevus: 80
+        melanocytic nevi: 80
     DERMOFIT:
         actinic keratosis: 45
         basal cell carcinoma: 239
@@ -60,7 +60,7 @@ datasets:
         dermatofibroma: 5
         lentigo simplex: 15
         melanoma: 258
-        nevus: 532
+        melanocytic nevi: 532
         other: 10
         scar: 1
         seborrheic keratosis: 29
@@ -74,16 +74,16 @@ datasets:
         lentigo NOS: 71
         lentigo simplex: 12
         melanoma: 334
-        nevus: 1004
+        melanocytic nevi: 1004
         seborrheic keratosis: 3
         solar lentigo: 44
     MSK-3:
         melanoma: 19
-        nevus: 123
+        melanocytic nevi: 123
         seborrheic keratosis: 83
     MSK-4:
         melanoma: 215
-        nevus: 543
+        melanocytic nevi: 543
         seborrheic keratosis: 189
     MSK-5:
         angioma: 2
@@ -91,14 +91,14 @@ datasets:
     UDA-1:
         unknown: 2
         melanoma: 159
-        nevus: 396
+        melanocytic nevi: 396
     UDA-2:
         angioma: 2
         basal cell carcinoma: 3
         dermatofibroma: 2
         lichenoid keratosis: 1
         melanoma: 34
-        nevus: 12
+        melanocytic nevi: 12
         seborrheic keratosis: 6
     JID Editorial Images 2018:
         basal cell carcinoma: 40
@@ -109,7 +109,7 @@ datasets:
         basal cell carcinoma: 514
         dermatofibroma: 115
         melanoma: 1113
-        nevus: 6705
+        melanocytic nevi: 6705
         pigmented benign keratosis: 1099
         squamous cell carcinoma: 197
         vascular lesion: 142
@@ -118,7 +118,7 @@ datasets:
         basal cell carcinoma: 2809
         dermatofibroma: 124
         melanoma: 2857
-        nevus: 4206
+        melanocytic nevi: 4206
         seborrheic keratosis: 929
         solar lentigo: 209
         squamous cell carcinoma: 431
@@ -127,21 +127,21 @@ datasets:
         unknown: 7132
         melanoma: 179
     SONIC:
-        nevus: 9251
+        melanocytic nevi: 9251
     DERMOSCOPEDIA (CC-BY):
         unknown: 5
     ISIC_2020_VIENNA_PART_1:
         melanoma: 17
-        nevus: 2214
+        melanocytic nevi: 2214
     ISIC_2020_VIENNA_PART_2:
         melanoma: 26
-        nevus: 2117
+        melanocytic nevi: 2117
     ISIC 2020 CHALLENGE - MSKCC CONTRIBUTION:
         unknown: 10111
         lentigo NOS: 34
         lichenoid keratosis: 28
         melanoma: 216
-        nevus: 614
+        melanocytic nevi: 614
         seborrheic keratosis: 105
     BRISBANE ISIC CHALLENGE 2020:
         unknown: 8449
@@ -152,6 +152,30 @@ datasets:
         lentigo NOS: 6
         lichenoid keratosis: 3
         melanoma: 134
-        nevus: 161
+        melanocytic nevi: 161
         seborrheic keratosis: 11
         solar lentigo: 4
+
+abbrev:
+    actinic keratosis: AKIEC
+    angiofibroma or fibrous papule: AFP
+    angioma: ANG
+    atypical melanocytic proliferation: AMP
+    basal cell carcinoma: BCC
+    cafe-au-lait macule: CALM
+    dermatofibroma: DF
+    haemangioma: HAE
+    intraepithelial carcinoma: IC
+    lentigo NOS: LNOS
+    lentigo simplex: LS
+    lichenoid keratosis: LK
+    melanoma: MEL
+    melanocytic nevi: NV
+    other: OTH
+    pyogenic granuloma: PG
+    scar: SCR
+    solar lentigo: SL
+    seborrheic keratosis: SK
+    squamous cell carcinoma: SCC
+    vascular lesion: VL
+    unknown: UNK
