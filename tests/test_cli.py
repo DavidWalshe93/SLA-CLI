@@ -5,7 +5,7 @@ Date:       07 April 2021
 
 import pytest
 
-from entry import cli
+from sla_cli.entry import cli
 
 from sla_cli.src.common.versioning import get_version
 
