@@ -18,7 +18,7 @@ def version_file_path() -> str:
     """
     Returns the version file path.
     """
-    return os.path.join(os.path.dirname(os.path.dirname(__file__)), ".versioning.json")
+    return os.path.join(os.path.dirname(os.path.dirname(__file__)),  "sla_cli", ".versioning.json")
 
 
 def read_versioning_file() -> Dict[str, any]:
