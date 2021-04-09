@@ -5,7 +5,7 @@ Date:       07 April 2021
 
 import pytest
 
-from cli import cli
+from src.cli import cli
 
 
 def test_ls_print(cli_runner, dataset_names_print):
@@ -112,7 +112,6 @@ def test_ls_all_save(verbose, output, cli_runner, dataset_names_all_csv, tmpdir)
     :WHEN:  Using the 'ls' command to view the available datasets and all their available data distributions.
     :THEN:  Verify the correct output is saved to disk.
     """
-    import os
     with tmpdir.as_cwd():
         res = cli_runner.invoke(cli, ["ls", verbose, "all", output, "test.csv"])
 

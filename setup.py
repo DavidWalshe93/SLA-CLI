@@ -89,6 +89,6 @@ setup(
     ],
     entry_points='''
         [console_scripts]
-        sla-cli=cli:cli
+        sla-cli=src.sla_cli:cli
     '''
 )
