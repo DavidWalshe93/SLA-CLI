@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 def read_init():
-    with codecs.open(os.path.join(Path.root_dir(), "__init__.py"), 'r') as fh:
+    with codecs.open(os.path.join(Path.src_root(), "__init__.py"), 'r') as fh:
         return fh.read()
 
 

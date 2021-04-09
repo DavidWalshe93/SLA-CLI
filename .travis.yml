@@ -12,7 +12,7 @@ install:
 #    - py -m pip install --upgrade build
 #    - py -m pip install --upgrade twine
 script:
-    - pytest --cov=sla-cli --cov-report=term-missing
+    - pytest --cov=sla_cli --cov-report=term-missing
 after_success:
     - coveralls
 #    - py -m build

@@ -16,7 +16,7 @@ def test_root_dir():
     """
     expected = os.path.join(os.getcwd(), "sla_cli", "src")
 
-    assert sut.Path.root_dir() == expected
+    assert sut.Path.src_root() == expected
     
 
 def test_db():
@@ -25,6 +25,6 @@ def test_db():
     :WHEN:  Getting the path to the DB JSON file.
     :THEN:  Verify the correct path is returned.
     """
-    expected = os.path.join(os.getcwd(), "sla_cli", "src", "db.json")
+    expected = os.path.join(os.getcwd(), "sla_cli", "db", "db.json")
 
     assert sut.Path.db() == expected

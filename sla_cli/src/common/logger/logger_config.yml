@@ -23,7 +23,7 @@ handlers:
     class: logging.handlers.RotatingFileHandler
     level: INFO
     formatter: file
-    filename: .sl-sla_cli.log
+    filename: .sla_cli.log
     maxBytes: 10486760
     backupCount: 20
     encoding: utf8
