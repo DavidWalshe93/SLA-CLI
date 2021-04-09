@@ -60,6 +60,6 @@ sla-cli ls -v all [regex: '.*']       # Shows a list of dataset names and a full
 
 A sample of the **sla-cli ls -v all** output is shown below:
 
-![img.png](img.png)
+![img.png](docs/img.png)
 *Sample output of 'sla-cli ls -v all' command.*
 
