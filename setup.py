@@ -118,6 +118,6 @@ if __name__ == '__main__':
         install_requires=INSTALL_REQUIRES,
         entry_points='''
             [console_scripts]
-            sla-cli=entry:cli
+            sla-cli=sla_cli.entry:cli
         '''
     )

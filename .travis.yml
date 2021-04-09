@@ -9,8 +9,6 @@ python:
 #    - "3.9"
 install:
     - pip install -r requirements.txt
-#    - py -m pip install --upgrade build
-#    - py -m pip install --upgrade twine
 script:
     - pytest --cov=sla_cli --cov-report=term-missing
 after_success:
