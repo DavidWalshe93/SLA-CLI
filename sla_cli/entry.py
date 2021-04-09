@@ -6,16 +6,17 @@ Date:       07 April 2021
 import os
 import sys
 
-# Update PYTHONPATH for project imports.
-current_path = os.path.dirname(__file__)
-parent_path = os.path.dirname(current_path)
-sys.path.append(parent_path)
-
 import logging
 from dataclasses import dataclass
 
 import click
 from click import Context
+
+if __name__ == '__main__':
+    # Update PYTHONPATH for project imports.
+    current_path = os.path.dirname(__file__)
+    parent_path = os.path.dirname(current_path)
+    sys.path.append(parent_path)
 
 from sla_cli.src.common.logger.init_logger import init_logger
 from sla_cli.src.cli.context import GROUP_CONTEXT_SETTINGS
@@ -23,7 +24,7 @@ from sla_cli.src.cli.utils import kwargs_to_dataclass
 from sla_cli.src.common.versioning import get_version
 
 # Commands
-from src.cli.commands.ls import ls
+from sla_cli.src.cli.commands.ls import ls
 
 logger = logging.getLogger(__name__)
 
