@@ -291,7 +291,8 @@ datasets:
                 - "https://challenge2019.isic-archive.com/data.html"
                 - "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive"
                 - "https://isic-archive.com"
-            download: "https://isic-archive.com/api/v1"
+            download:
+                - "https://isic-archive.com/api/v1"
         labels:
             unknown: 7132
             melanoma: 179
@@ -364,7 +365,8 @@ datasets:
             references:
                 - "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive"
                 - "https://isic-archive.com"
-            download: "https://isic-archive.com/api/v1"
+            download:
+                - "https://isic-archive.com/api/v1"
         labels:
             unknown: 8449
     SYDNEY (MIA / SMDC) 2020 ISIC CHALLENGE CONTRIBUTION:

@@ -10,25 +10,14 @@ import re
 
 import pandas as pd
 from tabulate import tabulate
-from colorama import init, Fore, Back
+from colorama import Fore, Back
 
 from src.db.accessors.base import Accessor
 from src.common.regex import compile_regex
+from src.common.console import make_header
 import src.db as db
 
 logger = logging.getLogger(__name__)
-
-
-def init_colorama(func):
-    """Initialises colorama before usage."""
-
-    @wraps(func)
-    def init_colorama_wrapper(*args, **kwargs):
-        init()
-
-        return func(*args, **kwargs)
-
-    return init_colorama_wrapper
 
 
 class Datasets(Accessor):
@@ -78,7 +67,6 @@ class Datasets(Accessor):
         else:
             return tabulate(data, headers=["Dataset Name", "No. Images"], tablefmt=tablefmt, showindex=True)
 
-    @init_colorama
     def names_and_distribution(self, tablefmt: str = "simple", output_file: str = None, regex: str = r".*") -> str:
         """
         Returns the names and number of each class in each dataset.
@@ -121,8 +109,9 @@ class Datasets(Accessor):
         pattern = compile_regex(regex)
         dataset_info = {dataset: info for dataset, info in self.datasets.info.items() if bool(pattern.search(dataset))}
 
+        collector = []
         for dataset, info in dataset_info.items():
-            print("=" * 100)
-            print(f"{dataset}")
-            print("=" * 100)
-            print(info.__str__())
+            collector.append(make_header(f"{dataset}"))
+            collector.append(info.__str__())
+
+        return "\n".join(collector)

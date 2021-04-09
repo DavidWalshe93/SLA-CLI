@@ -8,6 +8,8 @@ from dataclasses import dataclass
 
 import click
 
+from src.common.console import init_colorama
+
 from src.cli.context import COMMAND_CONTEXT_SETTINGS
 from src.cli.utils import kwargs_to_dataclass
 from src.cli.autocompletion import auto_complete_datasets
@@ -25,6 +27,7 @@ class LsParameters:
     regex: str = ".*"
 
 
+
 @click.command(**COMMAND_CONTEXT_SETTINGS, short_help="Lists the available datasets.")
 @click.argument("regex", type=click.STRING, nargs=1, default=r".*")
 @click.option("-v", "--verbose", type=click.Choice(["totals", "all", "info"], case_sensitive=False), default=None, help="The level of verbosity of the output.")
@@ -32,6 +35,7 @@ class LsParameters:
 @click.option("-t", "--tablefmt", default="simple", help="Any format available for tabulate, 'https://github.com/astanin/python-tabulate#table-format'")
 @click.option("--legend", is_flag=True, help="Shows the abbreviation legend for each diagnosis.")
 @kwargs_to_dataclass(LsParameters)
+@init_colorama
 def ls(params: LsParameters):
     """
     Shows the available datasets in various forms of verbosity.
