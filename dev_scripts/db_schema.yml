@@ -4,8 +4,8 @@
 datasets:
     Atlas of Dermoscopy:
         info:
-            type: private
-            kind: dermoscopy
+            availability: private
+            capture_method: dermoscopy
             references:
                 - "http://www.dermoscopy.org/atlas/order_cd.asp"
             download:
@@ -13,8 +13,8 @@ datasets:
             unknown: 2000
     PH2:
         info:
-            type: public
-            kind: dermoscopy
+            availability: public
+            capture_method: dermoscopy
             references:
                 - "https://www.fc.up.pt/addi/ph2%20database.html"
             download:
@@ -24,8 +24,8 @@ datasets:
             melanocytic nevi: 160
     DermIS:
         info:
-            type: public
-            kind: camera
+            availability: public
+            capture_method: camera
             references:
                 - "https://www.dermis.net/dermisroot/en/home/index.htm"
                 - "https://uwaterloo.ca/vision-image-processing-lab/research-demos/skin-cancer-detection"
@@ -37,8 +37,8 @@ datasets:
             non-melanoma: 26
     DermQuest:
         info:
-            type: public
-            kind: camera
+            availability: public
+            capture_method: camera
             references:
                 - "https://www.emailmeform.com/builder/form/Ne0j8da9bb7U4h6t1f"
                 - "https://uwaterloo.ca/vision-image-processing-lab/research-demos/skin-cancer-detection"
@@ -50,8 +50,8 @@ datasets:
             non-melanoma: 62
     MEDNODE:
         info:
-            type: public
-            kind: camera
+            availability: public
+            capture_method: camera
             references:
                 - "http://www.cs.rug.nl/~imaging/databases/melanoma_naevi/"
             download:
@@ -61,8 +61,8 @@ datasets:
             melanocytic nevi: 100
     PAD-UFES-20:
         info:
-            type: public
-            kind: camera
+            availability: public
+            capture_method: camera
             references:
                 - "https://www.sciencedirect.com/science/article/pii/S235234092031115X"
             download:
@@ -76,8 +76,8 @@ datasets:
             seborrheic keratosis: 235
     MClass-D:
         info:
-            type: public
-            kind: dermoscopy
+            availability: public
+            capture_method: dermoscopy
             references:
                 - "https://www.ejcancer.com/article/S0959-8049(18)31562-4/fulltext"
                 - "https://skinclass.de/mclass/"
@@ -88,8 +88,8 @@ datasets:
             melanocytic nevi: 80
     MClass-ND:
         info:
-            type: public
-            kind: camera
+            availability: public
+            capture_method: camera
             references:
                 - "https://www.ejcancer.com/article/S0959-8049(18)31562-4/fulltext"
                 - "https://skinclass.de/mclass/"
@@ -100,8 +100,8 @@ datasets:
             melanocytic nevi: 80
     DERMOFIT:
         info:
-            type: private
-            kind: dermoscopy
+            availability: private
+            capture_method: dermoscopy
             references:
                 - "https://licensing.edinburgh-innovations.ed.ac.uk/i/software/dermofit-image-library.html"
             download:
@@ -118,8 +118,8 @@ datasets:
             melanoma: 76
     MSK-1:
         info:
-            type: public
-            kind: dermoscopy
+            availability: public
+            capture_method: dermoscopy
             references:
                 - "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive"
                 - "https://challenge2019.isic-archive.com/data.html"
@@ -142,8 +142,8 @@ datasets:
             squamous cell carcinoma: 5
     MSK-2:
         info:
-            type: public
-            kind: dermoscopy
+            availability: public
+            capture_method: dermoscopy
             references:
                 - "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive"
                 - "https://challenge2019.isic-archive.com/data.html"
@@ -162,8 +162,8 @@ datasets:
             solar lentigo: 44
     MSK-3:
         info:
-            type: public
-            kind: dermoscopy
+            availability: public
+            capture_method: dermoscopy
             references:
                 - "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive"
                 - "https://challenge2019.isic-archive.com/data.html"
@@ -175,8 +175,8 @@ datasets:
             seborrheic keratosis: 83
     MSK-4:
         info:
-            type: public
-            kind: dermoscopy
+            availability: public
+            capture_method: dermoscopy
             references:
                 - "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive"
                 - "https://challenge2019.isic-archive.com/data.html"
@@ -188,8 +188,8 @@ datasets:
             seborrheic keratosis: 189
     MSK-5:
         info:
-            type: public
-            kind: dermoscopy
+            availability: public
+            capture_method: dermoscopy
             references:
                 - "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive"
                 - "https://challenge2019.isic-archive.com/data.html"
@@ -200,8 +200,8 @@ datasets:
             seborrheic keratosis: 109
     UDA-1:
         info:
-            type: public
-            kind: dermoscopy
+            availability: public
+            capture_method: dermoscopy
             references:
                 - "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive"
                 - "https://isic-archive.com"
@@ -213,8 +213,8 @@ datasets:
             melanocytic nevi: 396
     UDA-2:
         info:
-            type: public
-            kind: dermoscopy
+            availability: public
+            capture_method: dermoscopy
             references:
                 - "https://isic-archive.com"
                 - "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive"
@@ -230,8 +230,8 @@ datasets:
             seborrheic keratosis: 6
     JID Editorial Images 2018:
         info:
-            type: public
-            kind: dermoscopy
+            availability: public
+            capture_method: dermoscopy
             references:
                 - "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive"
                 - "https://isic-archive.com"
@@ -243,8 +243,8 @@ datasets:
             squamous cell carcinoma: 23
     HAM10000:
         info:
-            type: public
-            kind: dermoscopy
+            availability: public
+            capture_method: dermoscopy
             references:
                 - "https://www.nature.com/articles/sdata2018161"
                 - "https://challenge2019.isic-archive.com/data.html"
@@ -263,8 +263,8 @@ datasets:
             vascular lesion: 142
     BCN_20000:
         info:
-            type: public
-            kind: dermoscopy
+            availability: public
+            capture_method: dermoscopy
             references:
                 - "https://arxiv.org/abs/1908.02288"
                 - "https://challenge2019.isic-archive.com/data.html"
@@ -284,8 +284,8 @@ datasets:
             vascular lesion: 111
     BCN_2020_Challenge:
         info:
-            type: public
-            kind: dermoscopy
+            availability: public
+            capture_method: dermoscopy
             references:
                 - "https://arxiv.org/abs/1908.02288"
                 - "https://challenge2019.isic-archive.com/data.html"
@@ -298,8 +298,8 @@ datasets:
             melanoma: 179
     SONIC:
         info:
-            type: public
-            kind: dermoscopy
+            availability: public
+            capture_method: dermoscopy
             references:
                 - "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive"
                 - "https://isic-archive.com"
@@ -309,8 +309,8 @@ datasets:
             melanocytic nevi: 9251
     DERMOSCOPEDIA (CC-BY):
         info:
-            type: public
-            kind: dermoscopy
+            availability: public
+            capture_method: dermoscopy
             references:
                 - "https://isic-archive.com"
             download:
@@ -320,8 +320,8 @@ datasets:
             unknown: 5
     ISIC_2020_VIENNA_PART_1:
         info:
-            type: public
-            kind: dermoscopy
+            availability: public
+            capture_method: dermoscopy
             references:
                 - "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive"
                 - "https://isic-archive.com"
@@ -332,8 +332,8 @@ datasets:
             melanocytic nevi: 2214
     ISIC_2020_VIENNA_PART_2:
         info:
-            type: public
-            kind: dermoscopy
+            availability: public
+            capture_method: dermoscopy
             references:
                 - "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive"
                 - "https://isic-archive.com"
@@ -344,8 +344,8 @@ datasets:
             melanocytic nevi: 2117
     ISIC 2020 CHALLENGE - MSKCC CONTRIBUTION:
         info:
-            type: public
-            kind: dermoscopy
+            availability: public
+            capture_method: dermoscopy
             references:
                 - "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive"
                 - "https://isic-archive.com"
@@ -360,8 +360,8 @@ datasets:
             seborrheic keratosis: 105
     BRISBANE ISIC CHALLENGE 2020:
         info:
-            type: public
-            kind: dermoscopy
+            availability: public
+            capture_method: dermoscopy
             references:
                 - "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive"
                 - "https://isic-archive.com"
@@ -371,8 +371,8 @@ datasets:
             unknown: 8449
     SYDNEY (MIA / SMDC) 2020 ISIC CHALLENGE CONTRIBUTION:
         info:
-            type: public
-            kind: dermoscopy
+            availability: public
+            capture_method: dermoscopy
             references:
                 - "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive"
                 - "https://isic-archive.com"
