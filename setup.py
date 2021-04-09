@@ -46,12 +46,16 @@ KEYWORDS = "cancer-research cancer skin-lesion skin lesion melanoma datasets dat
            "Atlas-of-Dermascopy HAM10000 BCN20000 DERMOFIT cli command-line-tool".split()
 
 INSTALL_REQUIRES = [
-    "Click",
-    "PyYAML",
-    "Pandas",
-    "tabulate",
     "attrs",
-    "colorama"
+    "click",
+    "colorama",
+    "coverage",
+    "matplotlib",
+    "numpy",
+    "packaging",
+    "pandas",
+    "PyYAML",
+    "tabulate"
 ]
 
 CWD = os.path.abspath(os.path.dirname(__file__))
@@ -86,12 +90,6 @@ def read_readme() -> str:
         return fh.read()
 
 
-def get_requirements():
-    """Get the module requirements."""
-    with open(os.path.join(CWD, "requirements.txt"), encoding='utf-8') as reader:
-        return list(map(lambda x: x.strip(), reader.readlines()))
-
-
 if __name__ == '__main__':
     setup(
         name="sla-cli",
@@ -111,13 +109,13 @@ if __name__ == '__main__':
         python_requires=">=3.6",
         data_files=[
             ("", ['LICENSE']),
-            ("sla_cli/db", [os.path.join(CWD, "sla_cli", "db", "db.json")]),
-            ("sla_cli/src/common/logger", [os.path.join(CWD, "sla_cli", "src", "common", "logger", "logger_config.yml")]),
-            ("requirements", [os.path.join(CWD, "requirements", "prod.txt")]),
-            ("", [os.path.join(CWD, "requirements.txt")])
+            ("sla_cli/db", ["sla_cli/db/db.json"]),
+            ("sla_cli/src/common/logger", ["sla_cli/src/common/logger/logger_config.yml"]),
+            ("requirements", ["requirements/prod.txt"]),
+            ("", ["requirements.txt"])
         ],
         include_package_data=True,
-        install_requires=get_requirements(),
+        install_requires=INSTALL_REQUIRES,
         entry_points='''
             [console_scripts]
             sla-cli=sla_cli.entry:cli
