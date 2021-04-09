@@ -7,7 +7,7 @@ import logging
 
 from tabulate import tabulate
 
-from src.db.accessors.base import Accessor
+from sla_cli.src.db.accessors.base import Accessor
 
 logger = logging.getLogger(__name__)
 
