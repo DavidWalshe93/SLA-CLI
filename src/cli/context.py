@@ -12,7 +12,8 @@ logger = logging.getLogger(__name__)
 # ===========================================================
 COMMAND_CONTEXT_SETTINGS = {
     "context_settings": {
-        "help_option_names": ["-h", "--help"]
+        "help_option_names": ["-h", "--help"],
+        "max_content_width": 200
     }
 }
 
