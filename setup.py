@@ -111,8 +111,6 @@ if __name__ == '__main__':
             ("", ['LICENSE']),
             ("sla_cli/db", ["sla_cli/db/db.json"]),
             ("sla_cli/src/common/logger", ["sla_cli/src/common/logger/logger_config.yml"]),
-            ("requirements", ["requirements/prod.txt"]),
-            ("", ["requirements.txt"])
         ],
         include_package_data=True,
         install_requires=INSTALL_REQUIRES,
