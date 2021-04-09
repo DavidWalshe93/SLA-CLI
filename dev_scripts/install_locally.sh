@@ -1,1 +1,1 @@
-py -m build & pip install --editable .
+py -m build && pip install --editable . && echo "Installation Complete"
