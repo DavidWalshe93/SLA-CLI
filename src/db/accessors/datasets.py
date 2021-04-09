@@ -47,33 +47,45 @@ class Datasets(Accessor):
         """Returns only the dataset names that are captured using cameras."""
         return [dataset for dataset, info in self.datasets.info.items() if info["capture_method"] == "camera"]
 
-    def filter_dataset(self, datasets: Union[List[str], Dict[str, any]], *, capture_method: str, availability: str, **kwargs) -> List:
+    def availability_filter(self, key: str, default: Union[List[str], Dict[str, any]]) -> List[str]:
+        """
+        Runs a filter on the dataset, returning only those meeting the availability criteria passed.
 
-        if isinstance(datasets, dict):
-            default = list(datasets.keys())
-        else:
-            default = [dataset for dataset in datasets]
-
-        availability_filter = {
+        :param key: The criteria to check for.
+        :param default: The default value to return if no criteria matches.
+        :return: The output of the resulting.
+        """
+        return {
             "private": self.private_datasets,
             "public": self.public_datasets
-        }.get(availability, default)
+        }.get(key, default)
 
-        capture_filter = {
+    def capture_method_filter(self, key: str, default: Union[List[str], Dict[str, any]]) -> List[str]:
+        """
+        Runs a filter on the dataset, returning only those meeting the capture method criteria passed.
+
+        :param key: The criteria to check for.
+        :param default: The default value to return if no criteria matches.
+        :return: The output of the resulting.
+        """
+        return {
             "dermoscopy": self.dermoscopy_datasets,
             "camera": self.camera_datasets
-        }.get(capture_method, default)
+        }.get(key, default)
 
-        overall_filter = list([*availability_filter, *capture_filter])
+    def filter_dataset(self, datasets: Union[List[str], Dict[str, any]], *, capture_method: str, availability: str, **kwargs) -> List:
 
-        print(len(datasets))
+        default = list(datasets.keys()) if isinstance(datasets, dict) else datasets
 
+        # Filter on both capture method and availability. Return only the datasets common to both filters.
+        overall_filter = list(set(self.availability_filter(availability, default))
+                              .intersection(self.capture_method_filter(capture_method, default)))
+
+        # Create the result to meet the same type as the input.
         if isinstance(datasets, dict):
             datasets = {dataset: item for dataset, item in datasets.items() if dataset in overall_filter}
         else:
             datasets = [dataset for dataset in datasets if dataset in overall_filter]
-
-        print(len(datasets))
 
         return datasets
 
@@ -88,7 +100,7 @@ class Datasets(Accessor):
                  saved to the specified file.
         """
         pattern = compile_regex(regex)
-        datasets = self.filter_dataset([name for name in list(self.datasets.as_dict.keys())], **kwargs)
+        datasets = self.filter_dataset(list(self.datasets.as_dict.keys()), **kwargs)
         names = [[name] for name in datasets if bool(pattern.search(name))]
 
         if output_file:
@@ -98,7 +110,7 @@ class Datasets(Accessor):
         else:
             return tabulate(names, headers=["Dataset Name"], tablefmt=tablefmt, showindex=True)
 
-    def names_and_overall_images(self, tablefmt: str = "simple", output_file: str = None, regex: str = r".*"):
+    def names_and_overall_images(self, tablefmt: str = "simple", output_file: str = None, regex: str = r".*", **kwargs):
         """
         Returns the names of the datasets available and the total number of images within the dataset.
 
@@ -109,7 +121,8 @@ class Datasets(Accessor):
                  saved to the specified file.
         """
         pattern = compile_regex(regex)
-        data = [[name, sum(labels.values())] for name, labels in self.datasets.labels.items() if bool(pattern.search(name))]
+        datasets = self.filter_dataset(self.datasets.labels, **kwargs)
+        data = [[name, sum(labels.values())] for name, labels in datasets.items() if bool(pattern.search(name))]
 
         if output_file:
             df = pd.DataFrame(data, columns=["Dataset Name", "No. Images"])
@@ -118,7 +131,7 @@ class Datasets(Accessor):
         else:
             return tabulate(data, headers=["Dataset Name", "No. Images"], tablefmt=tablefmt, showindex=True)
 
-    def names_and_distribution(self, tablefmt: str = "simple", output_file: str = None, regex: str = r".*") -> str:
+    def names_and_distribution(self, tablefmt: str = "simple", output_file: str = None, regex: str = r".*", **kwargs) -> str:
         """
         Returns the names and number of each class in each dataset.
 
@@ -129,7 +142,8 @@ class Datasets(Accessor):
                  saved to the specified file.
         """
         pattern = compile_regex(regex)
-        dataset_labels = {dataset: labels for dataset, labels in self.datasets.labels.items() if bool(pattern.search(dataset))}
+        datasets = self.filter_dataset(self.datasets.labels, **kwargs)
+        dataset_labels = {dataset: labels for dataset, labels in datasets.items() if bool(pattern.search(dataset))}
 
         data, headers = [], []
         # Begin to capture each row.
@@ -157,8 +171,15 @@ class Datasets(Accessor):
             return tabulate(data, headers=headers, tablefmt=tablefmt, showindex=True)
 
     def names_information(self, regex: str = r".*", **kwargs) -> str:
+        """
+        Shows information on each dataset.
+
+        :param regex: The regex filter to limit datasets to.
+        :return: The formated information on each dataset.
+        """
         pattern = compile_regex(regex)
-        dataset_info = {dataset: info for dataset, info in self.datasets.info.items() if bool(pattern.search(dataset))}
+        datasets = self.filter_dataset(self.datasets.info, **kwargs)
+        dataset_info = {dataset: info for dataset, info in datasets.items() if bool(pattern.search(dataset))}
 
         collector = []
         for dataset, info in dataset_info.items():

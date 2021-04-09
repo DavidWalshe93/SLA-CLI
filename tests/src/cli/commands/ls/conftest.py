@@ -8,15 +8,19 @@ import pytest
 
 
 @pytest.fixture
-def read_actual_csv() -> callable:
+def read_actual_csv(tmpdir) -> callable:
     """
     Function to read the actual output content of a ls command and
     returns the content as a string.
     """
 
     def read() -> str:
-        with open("test.csv") as fh:
-            return fh.read()
+        _tmpdir = tmpdir
+        with _tmpdir.as_cwd():
+            print(os.getcwd())
+            print(os.listdir())
+            with open("./test.csv") as fh:
+                return fh.read()
 
     return read
 

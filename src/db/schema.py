@@ -39,8 +39,8 @@ class Info(Schema):
 
     def __str__(self):
         indent = "\n       - "
-        return f"   Availability:   {Fore.LIGHTGREEN_EX if self.availability.lower() == 'public' else Fore.LIGHTRED_EX}{self.type}{Fore.RESET}\n" \
-               f"   Capture method: {Fore.LIGHTCYAN_EX if self.capture_method.lower() == 'dermoscopy' else Fore.LIGHTYELLOW_EX}{self.kind}{Fore.RESET}\n" \
+        return f"   Availability:   {Fore.LIGHTGREEN_EX if self.availability.lower() == 'public' else Fore.LIGHTRED_EX}{self.availability}{Fore.RESET}\n" \
+               f"   Capture method: {Fore.LIGHTCYAN_EX if self.capture_method.lower() == 'dermoscopy' else Fore.LIGHTYELLOW_EX}{self.capture_method}{Fore.RESET}\n" \
                f"   References:\n" \
                f"       - {indent.join(self.references)}\n" \
                f"   Data source URL:\n" \

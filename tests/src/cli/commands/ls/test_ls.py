@@ -23,7 +23,7 @@ def test_ls_print(cli_runner, dataset_names_print):
 @pytest.mark.parametrize("output",
                          [
                              "-o",
-                             "--output"
+                             "--output-file"
                          ])
 def test_ls_save(output, cli_runner, read_actual_csv, dataset_names_csv, tmpdir):
     """
@@ -60,9 +60,9 @@ def test_ls_totals_print(switch, cli_runner, dataset_names_totals_print):
 @pytest.mark.parametrize("verbose, output",
                          [
                              ("-v", "-o"),
-                             ("-v", "--output"),
+                             ("-v", "--output-file"),
                              ("--verbose", "-o"),
-                             ("--verbose", "--output"),
+                             ("--verbose", "--output-file"),
                          ])
 def test_ls_totals_save(verbose, output, cli_runner, dataset_names_totals_csv, tmpdir):
     """
@@ -72,6 +72,7 @@ def test_ls_totals_save(verbose, output, cli_runner, dataset_names_totals_csv, t
     """
     import os
     with tmpdir.as_cwd():
+        print(os.getcwd())
         res = cli_runner.invoke(cli, ["ls", verbose, "totals", output, "test.csv"])
 
         with open("./test.csv") as fh:
@@ -101,9 +102,9 @@ def test_ls_all_print(switch, cli_runner, dataset_names_all_print):
 @pytest.mark.parametrize("verbose, output",
                          [
                              ("-v", "-o"),
-                             ("-v", "--output"),
+                             ("-v", "--output-file"),
                              ("--verbose", "-o"),
-                             ("--verbose", "--output"),
+                             ("--verbose", "--output-file"),
                          ])
 def test_ls_all_save(verbose, output, cli_runner, dataset_names_all_csv, tmpdir):
     """
