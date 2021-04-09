@@ -86,9 +86,9 @@ def read_readme() -> str:
         return fh.read()
 
 
-def get_requirements(*parts):
+def get_requirements():
     """Get the module requirements."""
-    with open(os.path.join(current_path, *parts), encoding='utf-8') as reader:
+    with open(os.path.join(CWD, "requirements.txt"), encoding='utf-8') as reader:
         return list(map(lambda x: x.strip(), reader.readlines()))
 
 
@@ -112,10 +112,12 @@ if __name__ == '__main__':
         data_files=[
             ("", ['LICENSE']),
             ("sla_cli/db", [os.path.join(CWD, "sla_cli", "db", "db.json")]),
-            ("sla_cli/src/common/logger", [os.path.join(CWD, "sla_cli", "src", "common", "logger")])
+            ("sla_cli/src/common/logger", [os.path.join(CWD, "sla_cli", "src", "common", "logger", "logger_config.yml")]),
+            ("requirements", [os.path.join(CWD, "requirements", "prod.txt")]),
+            ("", [os.path.join(CWD, "requirements.txt")])
         ],
         include_package_data=True,
-        install_requires=INSTALL_REQUIRES,
+        install_requires=get_requirements(),
         entry_points='''
             [console_scripts]
             sla-cli=sla_cli.entry:cli

@@ -8,7 +8,7 @@ python:
 #    - "3.8"
 #    - "3.9"
 install:
-    - pip install -r requirements.txt
+    - pip install -r requirements/dev.txt
 script:
     - pytest --cov=sla_cli --cov-report=term-missing
 after_success:
@@ -16,10 +16,10 @@ after_success:
 #    - py -m build
 deploy:
     provider: pypi
-    # Remove for deployment to official PyPi repo
-#    server: https://test.pypi.org/legacy/
     username: "__token__"
     password: $PYPI_TOKEN
-#    password: $PYPI_TEST_TOKEN
+    # Remove for deployment to official PyPi repo
+    #    server: https://test.pypi.org/legacy/
+    #    password: $PYPI_TEST_TOKEN
     on:
         branch: main
