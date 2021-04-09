@@ -5,7 +5,7 @@ Date:       09 April 2021
 
 import pytest
 
-from sla_cli.src.db.accessors import Datasets
+from src.db.accessors import Datasets
 
 
 @pytest.fixture

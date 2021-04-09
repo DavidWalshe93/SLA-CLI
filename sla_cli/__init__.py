@@ -1,8 +1,8 @@
 """
 Author:     David Walshe
-Date:       07 April 2021
+Date:       08 April 2021
 """
 
-import logging
+import src
 
-logger = logging.getLogger(__name__)
+__version__ = '0.0.16'

@@ -1,33 +1,26 @@
 """
 Author:     David Walshe
-Date:       08 April 2021
+Date:       09 April 2021
 """
 
 import logging
+import codecs
 import os
-import json
-from typing import Dict
+
+from .path import Path
 
 logger = logging.getLogger(__name__)
 
 
-def version_file_path() -> str:
-    """
-    Returns the version file path.
-    """
-    return os.path.join(os.path.dirname(__file__), "../../.versioning.json")
+def read_init():
+    with codecs.open(os.path.join(Path.root_dir(), "__init__.py"), 'r') as fh:
+        return fh.read()
 
 
-def read_versioning_file() -> Dict[str, any]:
-    """
-    Reads the version file contents.
-
-    :return: The contents of the version file.
-    """
-    with open(version_file_path()) as fh:
-        return json.load(fh)
-
-
-def __version__() -> str:
-    """Returns the current tool version"""
-    return read_versioning_file()["version"]
+def get_version():
+    for line in read_init().splitlines():
+        if line.startswith('__version__'):
+            delim = '"' if '"' in line else "'"
+            return line.split(delim)[1]
+    else:
+        raise RuntimeError("Unable to find version string.")

@@ -6,7 +6,7 @@ Date:       08 April 2021
 import logging
 from typing import List
 
-from sla_cli.src.db.accessors import AccessorFactory
+from src.db.accessors import AccessorFactory
 
 logger = logging.getLogger(__name__)
 

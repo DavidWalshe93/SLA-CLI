@@ -11,7 +11,7 @@ import attr
 from attr.validators import instance_of
 from colorama import Fore
 
-from sla_cli.src.common.path import Path
+from src.common.path import Path
 
 logger = logging.getLogger(__name__)
 

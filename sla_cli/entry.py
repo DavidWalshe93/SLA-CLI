@@ -3,6 +3,14 @@ Author:     David Walshe
 Date:       07 April 2021
 """
 
+import os
+import sys
+
+# Update PYTHONPATH for project imports.
+current_path = os.path.dirname(__file__)
+parent_path = os.path.dirname(current_path)
+sys.path.append(parent_path)
+
 import logging
 from dataclasses import dataclass
 
@@ -12,10 +20,10 @@ from click import Context
 from sla_cli.src.common.logger.init_logger import init_logger
 from sla_cli.src.cli.context import GROUP_CONTEXT_SETTINGS
 from sla_cli.src.cli.utils import kwargs_to_dataclass
-from sla_cli.src.common.versioning import __version__
+from sla_cli.src.common.versioning import get_version
 
 # Commands
-from sla_cli.src.cli.commands.ls import ls
+from src.cli.commands.ls import ls
 
 logger = logging.getLogger(__name__)
 
@@ -36,7 +44,7 @@ def cli(ctx: Context, params: CliParameters):
     init_logger()
     if not ctx.invoked_subcommand:
         if params.version:
-            print(f"Version: {__version__()}")
+            print(f"Version: {get_version()}")
 
 
 # ==================================================

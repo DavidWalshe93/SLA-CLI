@@ -5,7 +5,7 @@ Date:       09 April 2021
 
 import pytest
 
-import sla_cli.src.common.console as sut
+import src.common.console as sut
 
 
 @pytest.mark.parametrize("title, char",

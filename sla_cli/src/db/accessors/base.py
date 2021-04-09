@@ -5,7 +5,7 @@ Date:       08 April 2021
 
 import logging
 
-from sla_cli.src.db.schema import DB
+from sla_cli.src.db import DB
 
 logger = logging.getLogger(__name__)
 

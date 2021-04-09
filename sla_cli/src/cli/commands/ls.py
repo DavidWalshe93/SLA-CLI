@@ -8,7 +8,7 @@ from dataclasses import dataclass, asdict
 
 import click
 
-from sla_cli.src.common.console import init_colorama
+from src.common.console import init_colorama
 
 from sla_cli.src.cli.context import COMMAND_CONTEXT_SETTINGS
 from sla_cli.src.cli.utils import kwargs_to_dataclass

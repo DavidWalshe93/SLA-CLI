@@ -7,7 +7,7 @@ import pytest
 import logging
 
 from click.testing import CliRunner
-from sla_cli.cli import cli
+from entry import cli
 
 
 @pytest.fixture(autouse=True)
