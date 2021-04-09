@@ -69,5 +69,11 @@ def dataset_names_all_csv():
 
 @pytest.fixture
 def legend_print():
-    """Returns the distribution of images for each dataset"""
+    """Returns the label legend."""
     return resource_loader("legend_print.txt")
+
+
+@pytest.fixture
+def info_print():
+    """Returns the label legend."""
+    return resource_loader("info_print.txt")

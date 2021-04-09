@@ -129,9 +129,24 @@ def test_ls_legend(cli_runner, legend_print, tmpdir):
     :WHEN:  Using the 'ls' command to view the abbreviation legend.
     :THEN:  Verify the correct output is seen on the console.
     """
-    import os
-    with tmpdir.as_cwd():
-        res = cli_runner.invoke(cli, ["ls", "--legend"])
+    res = cli_runner.invoke(cli, ["ls", "--legend"])
 
-        assert res.output == legend_print
-        assert res.exit_code == 0
+    assert res.output == legend_print
+    assert res.exit_code == 0
+
+
+@pytest.mark.parametrize("verbose",
+                         [
+                             "-v",
+                             "--verbose"
+                         ])
+def test_ls_info(verbose, cli_runner, info_print):
+    """
+    :GIVEN: The '--legend' flag switch.
+    :WHEN:  Using the 'ls' command to view the abbreviation legend.
+    :THEN:  Verify the correct output is seen on the console.
+    """
+    res = cli_runner.invoke(cli, ["ls", verbose, "info"])
+
+    assert res.output == info_print
+    assert res.exit_code == 0
