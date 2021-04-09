@@ -10,9 +10,7 @@ import json
 import attr
 from attr.validators import instance_of
 from tabulate import tabulate
-
 import pandas as pd
-
 from colorama import Fore
 
 from src.common.path import Path
@@ -30,20 +28,23 @@ class Info(Schema):
     """
     Maps the meta information of a dataset object.
     """
-    type: str = attr.ib(validator=instance_of(str))
-    kind: str = attr.ib(validator=instance_of(str))
+    availability: str = attr.ib(validator=instance_of(str))
+    capture_method: str = attr.ib(validator=instance_of(str))
     references: Union[List[str]] = attr.ib(validator=instance_of(list))
     download: Union[List[str], None] = attr.ib(default=[""], converter=lambda config: [] if config is None else config)
 
+    def __getitem__(self, item):
+        """Allows for [] indexing."""
+        return self.__getattribute__(item)
+
     def __str__(self):
         indent = "\n       - "
-        return f"   Type: {Fore.LIGHTGREEN_EX if self.type.lower() == 'public' else Fore.LIGHTRED_EX}{self.type}{Fore.RESET}\n" \
-               f"   Kind: {Fore.LIGHTCYAN_EX if self.kind.lower() == 'dermoscopy' else Fore.LIGHTYELLOW_EX}{self.kind}{Fore.RESET}\n" \
+        return f"   Availability:   {Fore.LIGHTGREEN_EX if self.availability.lower() == 'public' else Fore.LIGHTRED_EX}{self.type}{Fore.RESET}\n" \
+               f"   Capture method: {Fore.LIGHTCYAN_EX if self.capture_method.lower() == 'dermoscopy' else Fore.LIGHTYELLOW_EX}{self.kind}{Fore.RESET}\n" \
                f"   References:\n" \
                f"       - {indent.join(self.references)}\n" \
-               f"   Data Source URL:\n" \
+               f"   Data source URL:\n" \
                f"       - {indent.join(self.download)}"
-
 
 
 @attr.s

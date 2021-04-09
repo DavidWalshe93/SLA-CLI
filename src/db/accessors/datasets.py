@@ -5,7 +5,7 @@ Date:       08 April 2021
 
 import logging
 from functools import wraps
-from typing import Union
+from typing import Union, List, Dict
 import re
 
 import pandas as pd
@@ -27,7 +27,57 @@ class Datasets(Accessor):
         """Helper reference to access database attribute."""
         return self.db.datasets
 
-    def names(self, tablefmt: str = "simple", output_file: str = None, regex: str = r".*") -> Union[str, None]:
+    @property
+    def private_datasets(self) -> List[str]:
+        """Returns only the private dataset names."""
+        return [dataset for dataset, info in self.datasets.info.items() if info["availability"] == "private"]
+
+    @property
+    def public_datasets(self) -> List[str]:
+        """Returns only the public dataset names."""
+        return [dataset for dataset, info in self.datasets.info.items() if info["availability"] == "public"]
+
+    @property
+    def dermoscopy_datasets(self) -> List[str]:
+        """Returns only the dataset names that are captured using dermoscopy."""
+        return [dataset for dataset, info in self.datasets.info.items() if info["capture_method"] == "dermoscopy"]
+
+    @property
+    def camera_datasets(self) -> List[str]:
+        """Returns only the dataset names that are captured using cameras."""
+        return [dataset for dataset, info in self.datasets.info.items() if info["capture_method"] == "camera"]
+
+    def filter_dataset(self, datasets: Union[List[str], Dict[str, any]], *, capture_method: str, availability: str, **kwargs) -> List:
+
+        if isinstance(datasets, dict):
+            default = list(datasets.keys())
+        else:
+            default = [dataset for dataset in datasets]
+
+        availability_filter = {
+            "private": self.private_datasets,
+            "public": self.public_datasets
+        }.get(availability, default)
+
+        capture_filter = {
+            "dermoscopy": self.dermoscopy_datasets,
+            "camera": self.camera_datasets
+        }.get(capture_method, default)
+
+        overall_filter = list([*availability_filter, *capture_filter])
+
+        print(len(datasets))
+
+        if isinstance(datasets, dict):
+            datasets = {dataset: item for dataset, item in datasets.items() if dataset in overall_filter}
+        else:
+            datasets = [dataset for dataset in datasets if dataset in overall_filter]
+
+        print(len(datasets))
+
+        return datasets
+
+    def names(self, tablefmt: str = "simple", output_file: str = None, regex: str = r".*", **kwargs) -> Union[str, None]:
         """
         Returns only the names of the datasets available.
 
@@ -38,7 +88,8 @@ class Datasets(Accessor):
                  saved to the specified file.
         """
         pattern = compile_regex(regex)
-        names = [[name] for name in list(self.datasets.as_dict.keys()) if bool(pattern.search(name))]
+        datasets = self.filter_dataset([name for name in list(self.datasets.as_dict.keys())], **kwargs)
+        names = [[name] for name in datasets if bool(pattern.search(name))]
 
         if output_file:
             df = pd.DataFrame(names, columns=["Dataset Name"])
@@ -105,7 +156,7 @@ class Datasets(Accessor):
         else:
             return tabulate(data, headers=headers, tablefmt=tablefmt, showindex=True)
 
-    def names_information(self, tablefmt: str = "simple", output_file: str = None, regex: str = r".*") -> str:
+    def names_information(self, regex: str = r".*", **kwargs) -> str:
         pattern = compile_regex(regex)
         dataset_info = {dataset: info for dataset, info in self.datasets.info.items() if bool(pattern.search(dataset))}
 

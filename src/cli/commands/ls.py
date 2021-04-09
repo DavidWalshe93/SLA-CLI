@@ -4,7 +4,7 @@ Date:       07 April 2021
 """
 
 import logging
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 
 import click
 
@@ -24,15 +24,18 @@ class LsParameters:
     output: str
     legend: bool
     tablefmt: str
+    capture_method: str
+    availability: str
     regex: str = ".*"
-
 
 
 @click.command(**COMMAND_CONTEXT_SETTINGS, short_help="Lists the available datasets.")
 @click.argument("regex", type=click.STRING, nargs=1, default=r".*")
 @click.option("-v", "--verbose", type=click.Choice(["totals", "all", "info"], case_sensitive=False), default=None, help="The level of verbosity of the output.")
 @click.option("-o", "--output", type=str, default=None, help="Saves the output to the file path specified, if unused contents are printed to the console.")
-@click.option("-t", "--tablefmt", default="simple", help="Any format available for tabulate, 'https://github.com/astanin/python-tabulate#table-format'")
+@click.option("-t", "--tablefmt", default="simple", help="Any format available for tabulate, details at: 'https://github.com/astanin/python-tabulate#table-format'")
+@click.option("-c", "--capture-method", type=click.Choice(["all", "dermoscopy", "camera"], case_sensitive=False), default="all", help="Filters the results by the capture method used in the dataset.")
+@click.option("-a", "--availability", type=click.Choice(["all", "private", "public"], case_sensitive=False), default="all", help="The availability of the dataset.")
 @click.option("--legend", is_flag=True, help="Shows the abbreviation legend for each diagnosis.")
 @kwargs_to_dataclass(LsParameters)
 @init_colorama
@@ -52,4 +55,4 @@ def ls(params: LsParameters):
             "info": datasets.names_information
         }.get(params.verbose, datasets.names)
 
-        print(func(tablefmt=params.tablefmt, output_file=params.output, regex=params.regex))
+        print(func(**asdict(params)))
