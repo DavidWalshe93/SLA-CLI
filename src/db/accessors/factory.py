@@ -17,8 +17,10 @@ class AccessorFactory:
 
     @staticmethod
     def create_datasets() -> Datasets:
+        """Returns a dataset object."""
         return Datasets()
 
     @staticmethod
     def create_abbreviation() -> Abbreviations:
+        """Returns an abbreviations object."""
         return Abbreviations()
