@@ -75,13 +75,17 @@ setup(
 
     # Python centric setup.
     packages=find_packages(),
-    package_dir={"": "."},
+    package_dir={"sla_cli": "."},
     python_requires=">=3.6",
     py_modules=["cli"],
     data_files=[("", ['LICENSE'])],
     include_package_data=True,
     install_requires=[
         "Click",
+        "PyYAML",
+        "Pandas",
+        "tabulate",
+        "attrs"
     ],
     entry_points='''
         [console_scripts]
