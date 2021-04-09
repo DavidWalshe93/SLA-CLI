@@ -33,7 +33,17 @@ class Info(Schema):
     type: str = attr.ib(validator=instance_of(str))
     kind: str = attr.ib(validator=instance_of(str))
     references: Union[List[str]] = attr.ib(validator=instance_of(list))
-    download: Union[List[str], None] = attr.ib()
+    download: Union[List[str], None] = attr.ib(default=[], converter=lambda config: [] if config is None else config)
+
+    def __str__(self):
+        indent = "\n       - "
+        return f"   Type: {self.type}\n" \
+               f"   Kind: {self.kind}\n" \
+               f"   References:\n" \
+               f"       - {indent.join(self.references)}\n" \
+               f"   Data Source URL:\n" \
+               f"       - {indent.join(self.download)}"
+
 
 
 @attr.s

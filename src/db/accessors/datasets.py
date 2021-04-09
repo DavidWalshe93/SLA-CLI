@@ -92,7 +92,7 @@ class Datasets(Accessor):
         pattern = compile_regex(regex)
         dataset_labels = {dataset: labels for dataset, labels in self.datasets.labels.items() if bool(pattern.search(dataset))}
 
-        data = []
+        data, headers = [], []
         # Begin to capture each row.
         for dataset, values in dataset_labels.items():
             row = [dataset]
@@ -116,3 +116,13 @@ class Datasets(Accessor):
             return f"Saved to '{output_file}'"
         else:
             return tabulate(data, headers=headers, tablefmt=tablefmt, showindex=True)
+
+    def names_information(self, tablefmt: str = "simple", output_file: str = None, regex: str = r".*") -> str:
+        pattern = compile_regex(regex)
+        dataset_info = {dataset: info for dataset, info in self.datasets.info.items() if bool(pattern.search(dataset))}
+
+        for dataset, info in dataset_info.items():
+            print("=" * 100)
+            print(f"{dataset}")
+            print("=" * 100)
+            print(info.__str__())

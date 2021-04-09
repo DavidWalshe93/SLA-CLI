@@ -27,7 +27,7 @@ class LsParameters:
 
 @click.command(**COMMAND_CONTEXT_SETTINGS, short_help="Lists the available datasets.")
 @click.argument("regex", type=click.STRING, nargs=1, default=r".*")
-@click.option("-v", "--verbose", type=click.Choice(["totals", "all", "url"], case_sensitive=False), default=None, help="The level of verbosity of the output.")
+@click.option("-v", "--verbose", type=click.Choice(["totals", "all", "info"], case_sensitive=False), default=None, help="The level of verbosity of the output.")
 @click.option("-o", "--output", type=str, default=None, help="Saves the output to the file path specified, if unused contents are printed to the console.")
 @click.option("-t", "--tablefmt", default="simple", help="Any format available for tabulate, 'https://github.com/astanin/python-tabulate#table-format'")
 @click.option("--legend", is_flag=True, help="Shows the abbreviation legend for each diagnosis.")
@@ -43,10 +43,9 @@ def ls(params: LsParameters):
     else:
         datasets = AccessorFactory.create_datasets()
         func = {
-
             "totals": datasets.names_and_overall_images,
             "all": datasets.names_and_distribution,
-
+            "info": datasets.names_information
         }.get(params.verbose, datasets.names)
 
         print(func(tablefmt=params.tablefmt, output_file=params.output, regex=params.regex))
