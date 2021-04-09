@@ -20,9 +20,9 @@ def read_readme() -> str:
     return open(os.path.join(os.path.dirname(__file__), "README.md")).read()
 
 
-def __version__() -> str:
+def get_version() -> str:
     """Returns the current tool version"""
-    version_file_path = os.path.join(os.path.dirname(__file__), ".versioning.json")
+    version_file_path = os.path.join(os.path.dirname(__file__), "sla_cli/.versioning.json")
 
     with open(version_file_path) as fh:
         content = json.load(fh)
@@ -32,7 +32,7 @@ def __version__() -> str:
 
 setup(
     name="sla-cli",  # Replace with your own username
-    version=__version__(),
+    version=get_version(),
     author="David Walshe",
     author_email="david.walshe93@gmail.com",
     description="A CLI tool designed to help source data for skin lesion research.",
@@ -75,7 +75,7 @@ setup(
 
     # Python centric setup.
     packages=find_packages(),
-    package_dir={"sla_cli": "."},
+    package_dir={"": "."},
     python_requires=">=3.6",
     py_modules=["cli"],
     data_files=[("", ['LICENSE'])],
@@ -85,10 +85,11 @@ setup(
         "PyYAML",
         "Pandas",
         "tabulate",
-        "attrs"
+        "attrs",
+        "colorama"
     ],
     entry_points='''
         [console_scripts]
-        sla-cli=src.sla_cli:cli
+        sla-cli=sla.cli.sla_cli:cli
     '''
 )

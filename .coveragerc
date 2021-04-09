@@ -1,6 +1,6 @@
 [run]
 branch=true
-source=src
+source=sla_cli
 
 [html]
 directory = htmlcov
