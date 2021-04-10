@@ -1,0 +1,11 @@
+# David Walshe
+# 10-Apr-2021
+
+# Template configuration file for sla-cli.
+
+
+isic:
+    # Number of images to download per batch, API upper limit is >> 300 <<.
+    batch_size: 300
+    # Number of concurrent download workers, setting this too high can have adverse effects.
+    max_workers: 5
