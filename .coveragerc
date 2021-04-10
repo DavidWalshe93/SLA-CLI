@@ -1,6 +1,4 @@
 [run]
-branch=true
-source=sla_cli
-
-[html]
-directory = htmlcov
+branch = true
+source = sla_cli
+omit = *migrations*, *tests*, *venv*

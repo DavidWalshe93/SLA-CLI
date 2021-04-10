@@ -10,7 +10,7 @@ python:
 install:
     - pip install -r requirements/dev.txt
 script:
-    - pytest --cov=sla_cli --cov-report=term-missing
+    - pytest --cov--cov-report=term-missing
 after_success:
     - coveralls
 #    - py -m build
