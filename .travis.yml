@@ -5,21 +5,15 @@ language: python
 cache: pip
 python:
     - "3.7"
-#    - "3.8"
-#    - "3.9"
 install:
     - pip install -r requirements/dev.txt
 script:
     - pytest --cov --cov-report=term-missing
 after_success:
     - coveralls
-#    - py -m build
-#deploy:
-#    provider: pypi
-#    username: "__token__"
-#    password: $PYPI_TOKEN
-#    # Remove for deployment to official PyPi repo
-#    #    server: https://test.pypi.org/legacy/
-#    #    password: $PYPI_TEST_TOKEN
-#    on:
-#        branch: main
+deploy:
+    provider: pypi
+    username: "__token__"
+    password: $PYPI_TOKEN
+    on:
+        branch: main
