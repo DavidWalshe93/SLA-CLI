@@ -17,7 +17,4 @@ deploy:
     password: $PYPI_TEST_TOKEN
     server: https://test.pypi.org/legacy/
     on:
-        repo: DavidWalshe93/SLA-CLI
-        branches:
-            only:
-                - dev
+        branch: dev
