@@ -25,6 +25,10 @@ class Datasets(Accessor):
         """Helper reference to access database attribute."""
         return self.db.datasets
 
+    def __getitem__(self, item):
+        """Allows [] indexing of Datasets."""
+        return self.datasets[item]
+
     @property
     def private_datasets(self) -> List[str]:
         """Returns only the private dataset names."""
@@ -71,7 +75,16 @@ class Datasets(Accessor):
             "camera": self.camera_datasets
         }.get(key, default)
 
-    def filter_dataset(self, datasets: Union[List[str], Dict[str, any]], *, capture_method: str, availability: str, **kwargs) -> List:
+    def filter_dataset(self, datasets: Union[List[str], Dict[str, any]], *, capture_method: str, availability: str,
+                       **kwargs) -> List:
+        """
+        Filters a dataset bases on it's capture method and availability.
+
+        :param datasets: The datasets to filter.
+        :param capture_method: The capture method filter.
+        :param availability: The availability filter.
+        :return: The remaining datasets, post filter.
+        """
 
         default = list(datasets.keys()) if isinstance(datasets, dict) else datasets
 
@@ -87,7 +100,8 @@ class Datasets(Accessor):
 
         return datasets
 
-    def names(self, tablefmt: str = "simple", output_file: str = None, regex: str = r".*", **kwargs) -> Union[str, None]:
+    def names(self, tablefmt: str = "simple", output_file: str = None, regex: str = r".*", **kwargs) -> Union[
+        str, None]:
         """
         Returns only the names of the datasets available.
 
@@ -129,7 +143,8 @@ class Datasets(Accessor):
         else:
             return tabulate(data, headers=["Dataset Name", "No. Images"], tablefmt=tablefmt, showindex=True)
 
-    def names_and_distribution(self, tablefmt: str = "simple", output_file: str = None, regex: str = r".*", **kwargs) -> str:
+    def names_and_distribution(self, tablefmt: str = "simple", output_file: str = None, regex: str = r".*",
+                               **kwargs) -> str:
         """
         Returns the names and number of each class in each dataset.
 

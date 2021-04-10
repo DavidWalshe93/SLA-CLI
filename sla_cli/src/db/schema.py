@@ -64,16 +64,21 @@ class Datasets(Schema):
     atlas_of_dermoscopy: Dataset = attr.ib(validator=instance_of(Dataset), converter=lambda config: Dataset(**config))
     bcn_20000: Dataset = attr.ib(validator=instance_of(Dataset), converter=lambda config: Dataset(**config))
     bcn_2020_challenge: Dataset = attr.ib(validator=instance_of(Dataset), converter=lambda config: Dataset(**config))
-    brisbane_isic_challenge_2020: Dataset = attr.ib(validator=instance_of(Dataset), converter=lambda config: Dataset(**config))
+    brisbane_isic_challenge_2020: Dataset = attr.ib(validator=instance_of(Dataset),
+                                                    converter=lambda config: Dataset(**config))
     dermofit: Dataset = attr.ib(validator=instance_of(Dataset), converter=lambda config: Dataset(**config))
     dermoscopedia_cc_by: Dataset = attr.ib(validator=instance_of(Dataset), converter=lambda config: Dataset(**config))
     dermis: Dataset = attr.ib(validator=instance_of(Dataset), converter=lambda config: Dataset(**config))
     dermquest: Dataset = attr.ib(validator=instance_of(Dataset), converter=lambda config: Dataset(**config))
     ham10000: Dataset = attr.ib(validator=instance_of(Dataset), converter=lambda config: Dataset(**config))
-    isic_2020_challenge_mskcc_contribution: Dataset = attr.ib(validator=instance_of(Dataset), converter=lambda config: Dataset(**config))
-    isic_2020_vienna_part_1: Dataset = attr.ib(validator=instance_of(Dataset), converter=lambda config: Dataset(**config))
-    isic_2020_vienna_part_2: Dataset = attr.ib(validator=instance_of(Dataset), converter=lambda config: Dataset(**config))
-    jid_editorial_images_2018: Dataset = attr.ib(validator=instance_of(Dataset), converter=lambda config: Dataset(**config))
+    isic_2020_challenge_mskcc_contribution: Dataset = attr.ib(validator=instance_of(Dataset),
+                                                              converter=lambda config: Dataset(**config))
+    isic_2020_vienna_part_1: Dataset = attr.ib(validator=instance_of(Dataset),
+                                               converter=lambda config: Dataset(**config))
+    isic_2020_vienna_part_2: Dataset = attr.ib(validator=instance_of(Dataset),
+                                               converter=lambda config: Dataset(**config))
+    jid_editorial_images_2018: Dataset = attr.ib(validator=instance_of(Dataset),
+                                                 converter=lambda config: Dataset(**config))
     mclass_d: Dataset = attr.ib(validator=instance_of(Dataset), converter=lambda config: Dataset(**config))
     mclass_nd: Dataset = attr.ib(validator=instance_of(Dataset), converter=lambda config: Dataset(**config))
     mednode: Dataset = attr.ib(validator=instance_of(Dataset), converter=lambda config: Dataset(**config))
@@ -85,7 +90,8 @@ class Datasets(Schema):
     pad_ufes_20: Dataset = attr.ib(validator=instance_of(Dataset), converter=lambda config: Dataset(**config))
     ph2: Dataset = attr.ib(validator=instance_of(Dataset), converter=lambda config: Dataset(**config))
     sonic: Dataset = attr.ib(validator=instance_of(Dataset), converter=lambda config: Dataset(**config))
-    sydney_mia_smdc_2020_isic_challenge_contribution: Dataset = attr.ib(validator=instance_of(Dataset), converter=lambda config: Dataset(**config))
+    sydney_mia_smdc_2020_isic_challenge_contribution: Dataset = attr.ib(validator=instance_of(Dataset),
+                                                                        converter=lambda config: Dataset(**config))
     uda_1: Dataset = attr.ib(validator=instance_of(Dataset), converter=lambda config: Dataset(**config))
     uda_2: Dataset = attr.ib(validator=instance_of(Dataset), converter=lambda config: Dataset(**config))
 
@@ -108,6 +114,10 @@ class Datasets(Schema):
     def names(self):
         """Returns a list of all dataset names."""
         return list(self.as_dict.keys())
+
+    def __getitem__(self, item) -> Dataset:
+        """Allows [] indexing of attributes."""
+        return self.__getattribute__(item)
 
 
 @attr.s

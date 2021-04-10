@@ -37,7 +37,6 @@ class LsParameters:
 @click.option("-a", "--availability", type=click.Choice(["all", "private", "public"], case_sensitive=False), default="all", help="The availability of the dataset.")
 @click.option("--legend", is_flag=True, help="Shows the abbreviation legend for each diagnosis.")
 @kwargs_to_dataclass(LsParameters)
-@init_colorama
 def ls(params: LsParameters):
     """
     Shows the available datasets in various forms of verbosity.

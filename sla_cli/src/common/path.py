@@ -27,6 +27,11 @@ class Path:
         return os.path.join(Path.project_root(), "src")
 
     @staticmethod
+    def db_dir():
+        """Returns the path to the DB file."""
+        return os.path.join(Path.project_root(), "db")
+
+    @staticmethod
     def db():
         """Returns the path to the DB file."""
-        return os.path.join(Path.project_root(), "db", "db.json")
+        return os.path.join(Path.db_dir(), "db.json")
