@@ -10,16 +10,16 @@ python:
 install:
     - pip install -r requirements/dev.txt
 script:
-    - pytest --cov-report=term-missing
+    - pytest --cov --cov-report=term-missing
 after_success:
     - coveralls
 #    - py -m build
-deploy:
-    provider: pypi
-    username: "__token__"
-    password: $PYPI_TOKEN
-    # Remove for deployment to official PyPi repo
-    #    server: https://test.pypi.org/legacy/
-    #    password: $PYPI_TEST_TOKEN
-    on:
-        branch: main
+#deploy:
+#    provider: pypi
+#    username: "__token__"
+#    password: $PYPI_TOKEN
+#    # Remove for deployment to official PyPi repo
+#    #    server: https://test.pypi.org/legacy/
+#    #    password: $PYPI_TEST_TOKEN
+#    on:
+#        branch: main
