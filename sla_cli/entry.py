@@ -25,6 +25,7 @@ from sla_cli.src.common.versioning import get_version
 
 # Commands
 from sla_cli.src.cli.commands.ls import ls
+from sla_cli.src.cli.commands.download import download
 
 logger = logging.getLogger(__name__)
 
@@ -62,7 +63,8 @@ for group in groups:
 # Add CLI commands
 # ==================================================
 commands = [
-    ls
+    ls,
+    download
 ]
 
 for command in commands:
