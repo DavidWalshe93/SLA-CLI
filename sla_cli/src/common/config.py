@@ -1,0 +1,113 @@
+"""
+Author:     David Walshe
+Date:       10 April 2021
+"""
+
+import logging
+import os
+from typing import Dict, Union
+
+import attr
+from attr.validators import instance_of
+import yaml
+
+logger = logging.getLogger(__name__)
+
+
+@attr.s
+class ConfigFile:
+
+    @staticmethod
+    def load(config_file: str = None):
+        """
+        Factory method to load the configuration from.
+
+        :param config_file: The configuration file to load if specified.
+        :return:
+        """
+        config_kwargs = None
+
+        # Read user argument first.
+        if config_file is None:
+            config_kwargs = ConfigFile._read_explicit_file(config_file)
+
+        # Environment variable loading.
+        if config_kwargs is None:
+            config_kwargs = ConfigFile._read_environment_variable()
+
+        # Current working directory.
+        if config_kwargs is None:
+            config_kwargs = ConfigFile._read_cwd_file()
+
+        # Default
+        if config_kwargs is None:
+            config_kwargs = {}
+
+        return ConfigFile(**config_kwargs)
+
+    @staticmethod
+    def _read_explicit_file(config_file: str) -> Union[Dict[str, any], None]:
+        """
+        Reads the configuration file from an explicit file path passed by the user.
+
+        :param config_file: The path to load the config from.
+        :return: The loaded config if the path existed, else None.
+        """
+        if os.path.exists(config_file):
+            logger.debug(f"Loading config from [ARG]: '{config_file}'.")
+            return ConfigFile._read(config_file)
+
+        return None
+
+    @staticmethod
+    def _read_environment_variable() -> Union[Dict[str, any], None]:
+        """
+        Reads the configuration file from the environment variable:
+
+            SLA_CLI_CONFIG_FILE
+
+        :return: The loaded config if the env path existed, else None.
+        """
+        config_file = os.environ.get("SLA_CLI_CONFIG_FILE", None)
+        if config_file is not None:
+            if os.path.exists(config_file):
+                logger.debug(f"Loading config from [ENV]: '{config_file}'.")
+                return ConfigFile._read(config_file)
+
+        return None
+
+    @staticmethod
+    def _read_cwd_file() -> Union[Dict[str, any], None]:
+        """
+        Reads the configuration file from the current working directory file:
+
+            .sla_cli_config.yml
+
+        :return: The loaded config if the file path existed, else None.
+        """
+        config_file = os.path.join(os.getcwd(), ".sla_cli_config.yml")
+        if os.path.exists(config_file):
+            logger.debug(f"Loading config from [CWD]: '{config_file}'.")
+            return ConfigFile._read(config_file)
+
+        return None
+
+    @staticmethod
+    def _read(config_file: str) -> Union[Dict[str, any], None]:
+        """
+        YAML configuration reader function.
+
+        Loads the configuration from the config file passed in.
+
+        :param config_file: The configuration file to read.
+        :return: The loaded configuration file or None if the file does not exist.
+        """
+        try:
+            with open(config_file) as fh:
+                return yaml.safe_load(fh)
+        except FileNotFoundError as e:
+            logger.error(f"{e.args[0]}")
+        except yaml.YAMLError as e:
+            logger.error(f"{e.args[0]}")
+
+        return None
