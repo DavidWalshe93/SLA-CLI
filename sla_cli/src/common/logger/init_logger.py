@@ -31,16 +31,3 @@ def init_logger(func):
         return func(*args, **kwargs)
 
     return init_logger_wrapper
-
-# def init_logger(debug: bool = False):
-#     """Initialised the logger from a configuration file."""
-#     # Get the logger config in the same directory as this file.
-#     config_file_path = os.path.join(os.path.dirname(__file__), "logger_config.yml")
-#
-#     with open(config_file_path, "r") as fh:
-#         config = yaml.safe_load(fh.read())
-#
-#         if debug:
-#             config["handlers"]["console"]["level"] = "DEBUG"
-#
-#         logging.config.dictConfig(config)
