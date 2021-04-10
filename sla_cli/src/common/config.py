@@ -6,12 +6,28 @@ Date:       10 April 2021
 import logging
 import os
 from typing import Dict, Union
+from functools import wraps
 
 import attr
 from attr.validators import instance_of
 import yaml
 
 logger = logging.getLogger(__name__)
+
+
+def flag_if_empty(func):
+    """Flags if the returned configuration is empty."""
+
+    @wraps(func)
+    def flag_if_empty_wrapper(*args, **kwargs):
+        res = func(*args, **kwargs)
+
+        if res is None:
+            logger.debug(f"[CONFIG] - Configuration file exists but is empty, continuing to look for valid configurations files...")
+
+        return res
+
+    return flag_if_empty_wrapper
 
 
 @attr.s
@@ -41,6 +57,7 @@ class ConfigFile:
 
         # Default
         if config_kwargs is None:
+            logger.debug(f"[CONFIG] - No valid file configuration found, loading defaults.")
             config_kwargs = {}
 
         return ConfigFile(**config_kwargs)
@@ -53,8 +70,8 @@ class ConfigFile:
         :param config_file: The path to load the config from.
         :return: The loaded config if the path existed, else None.
         """
-        if os.path.exists(config_file):
-            logger.debug(f"Loading config from [ARG]: '{config_file}'.")
+        if config_file is not None and os.path.exists(config_file):
+            logger.debug(f"[CONFIG] - Loading config from [ARG]: '{config_file}'.")
             return ConfigFile._read(config_file)
 
         return None
@@ -69,10 +86,9 @@ class ConfigFile:
         :return: The loaded config if the env path existed, else None.
         """
         config_file = os.environ.get("SLA_CLI_CONFIG_FILE", None)
-        if config_file is not None:
-            if os.path.exists(config_file):
-                logger.debug(f"Loading config from [ENV]: '{config_file}'.")
-                return ConfigFile._read(config_file)
+        if config_file is not None and os.path.exists(config_file):
+            logger.debug(f"[CONFIG] - Loading config from [ENV]: '{config_file}'.")
+            return ConfigFile._read(config_file)
 
         return None
 
@@ -86,13 +102,14 @@ class ConfigFile:
         :return: The loaded config if the file path existed, else None.
         """
         config_file = os.path.join(os.getcwd(), ".sla_cli_config.yml")
-        if os.path.exists(config_file):
-            logger.debug(f"Loading config from [CWD]: '{config_file}'.")
+        if config_file is not None and os.path.exists(config_file):
+            logger.debug(f"[CONFIG] - Loading config from [CWD]: '{config_file}'.")
             return ConfigFile._read(config_file)
 
         return None
 
     @staticmethod
+    @flag_if_empty
     def _read(config_file: str) -> Union[Dict[str, any], None]:
         """
         YAML configuration reader function.

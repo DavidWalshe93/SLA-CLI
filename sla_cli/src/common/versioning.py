@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 def read_init():
-    with codecs.open(os.path.join(Path.src_root(), "__init__.py"), 'r') as fh:
+    with codecs.open(os.path.join(Path.project_root(), "__init__.py"), 'r') as fh:
         return fh.read()
 
 
@@ -22,5 +22,3 @@ def get_version():
         if line.startswith('__version__'):
             delim = '"' if '"' in line else "'"
             return line.split(delim)[1]
-    else:
-        raise RuntimeError("Unable to find version string.")
