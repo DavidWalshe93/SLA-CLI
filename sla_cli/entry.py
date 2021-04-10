@@ -22,6 +22,7 @@ from sla_cli.src.common.logger.init_logger import init_logger
 from sla_cli.src.cli.context import GROUP_CONTEXT_SETTINGS
 from sla_cli.src.cli.utils import kwargs_to_dataclass
 from sla_cli.src.common.versioning import get_version
+from sla_cli.src.common.console import init_colorama
 
 # Commands
 from sla_cli.src.cli.commands.ls import ls
@@ -33,20 +34,24 @@ logger = logging.getLogger(__name__)
 @dataclass
 class CliParameters:
     version: bool = False
+    debug: bool = False
 
 
 @click.group(**GROUP_CONTEXT_SETTINGS)
 @click.option("-v", "--version", is_flag=True, help="Show the current version of the tool.")
+@click.option("-d", "--debug", is_flag=True, help="Runs the tool in debug mode.")
+@init_colorama
+@init_logger
 @kwargs_to_dataclass(CliParameters)
 @click.pass_context
 def cli(ctx: Context, params: CliParameters):
     """
     Base SL-CLI command.
     """
-    init_logger()
+    logger.debug(f"Running in debug mode.")
     if not ctx.invoked_subcommand:
         if params.version:
-            print(f"Version: {get_version()}")
+            logger.info(f"Version: {get_version()}")
 
 
 # ==================================================
@@ -69,6 +74,7 @@ commands = [
 
 for command in commands:
     cli.add_command(command)
+
 
 if __name__ == '__main__':
     cli()
