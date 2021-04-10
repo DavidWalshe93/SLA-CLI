@@ -28,5 +28,5 @@ for dataset in sorted_datasets:
     order_dict["datasets"].update({dataset_new: data["datasets"][dataset]})
 
 # Write out the json database file.
-with open("../src/sla_cli/db/db.json", "w") as fh:
+with open("../sla_cli/db/db.json", "w") as fh:
     json.dump(order_dict, fh, indent=4)

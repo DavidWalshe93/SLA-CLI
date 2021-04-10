@@ -37,6 +37,27 @@ their research efforts.
 - Data background information sources and links.
 - Preprocessing of datasets for *binary classification*.
 
+## Loading Configurations
+
+There are three ways to load configuration files when using the CLI interface.
+
+1) The first method is using an explicit YAML configuration file like so:
+
+    ```shell
+    sla-cli -f/--config-file <FILE_PATH> <COMMAND> ...
+    ```
+
+<br>
+
+2) The second method is referencing the **SLA_CLI_CONFIG_FILE** environment variable. Once the variable is set, it will
+   auto-reference the environment variables value, which should be a path to the configuration file you wish to load
+   into the tool.
+
+<br>
+
+3) The third and final method of loading a configuration with the tool is creating a "*.sla_cli_config.yml*" file in the
+   directory you plan to run the tool in. This method is helpful if you wish to check-in your configuration to SCM.
+
 ## Commands
 
 The following sub sections discuss the how to use the tool.
@@ -66,4 +87,3 @@ A sample of the **sla-cli ls -v all** output is shown below:
 
 ![img.png](docs/img.png)
 *Sample output of 'sla-cli ls -v all' command.*
-

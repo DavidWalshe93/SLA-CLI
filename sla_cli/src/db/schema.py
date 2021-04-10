@@ -28,6 +28,7 @@ class Info(Schema):
     """
     availability: str = attr.ib(validator=instance_of(str))
     capture_method: str = attr.ib(validator=instance_of(str))
+    size: float = attr.ib(validator=instance_of(float), converter=lambda size: round(float(size), 2))
     references: Union[List[str]] = attr.ib(validator=instance_of(list))
     download: Union[List[str], None] = attr.ib(default=[""], converter=lambda config: [] if config is None else config)
 
@@ -39,6 +40,7 @@ class Info(Schema):
         indent = "\n       - "
         return f"   Availability:   {Fore.LIGHTGREEN_EX if self.availability.lower() == 'public' else Fore.LIGHTRED_EX}{self.availability}{Fore.RESET}\n" \
                f"   Capture method: {Fore.LIGHTCYAN_EX if self.capture_method.lower() == 'dermoscopy' else Fore.LIGHTYELLOW_EX}{self.capture_method}{Fore.RESET}\n" \
+               f"   Size:           {'--' if self.size < 0 else round(self.size, 2)} MB\n" \
                f"   References:\n" \
                f"       - {indent.join(self.references)}\n" \
                f"   Data source URL:\n" \

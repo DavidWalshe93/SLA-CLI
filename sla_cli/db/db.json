@@ -4,6 +4,7 @@
             "info": {
                 "availability": "private",
                 "capture_method": "dermoscopy",
+                "size": -1,
                 "references": [
                     "http://www.dermoscopy.org/atlas/order_cd.asp"
                 ],
@@ -17,6 +18,7 @@
             "info": {
                 "availability": "public",
                 "capture_method": "dermoscopy",
+                "size": 6141,
                 "references": [
                     "https://arxiv.org/abs/1908.02288",
                     "https://challenge2019.isic-archive.com/data.html",
@@ -43,6 +45,7 @@
             "info": {
                 "availability": "public",
                 "capture_method": "dermoscopy",
+                "size": 4061,
                 "references": [
                     "https://arxiv.org/abs/1908.02288",
                     "https://challenge2019.isic-archive.com/data.html",
@@ -62,6 +65,7 @@
             "info": {
                 "availability": "public",
                 "capture_method": "dermoscopy",
+                "size": -1,
                 "references": [
                     "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive",
                     "https://isic-archive.com"
@@ -78,6 +82,7 @@
             "info": {
                 "availability": "private",
                 "capture_method": "dermoscopy",
+                "size": -1,
                 "references": [
                     "https://licensing.edinburgh-innovations.ed.ac.uk/i/software/dermofit-image-library.html"
                 ],
@@ -100,6 +105,7 @@
             "info": {
                 "availability": "public",
                 "capture_method": "dermoscopy",
+                "size": -1,
                 "references": [
                     "https://isic-archive.com"
                 ],
@@ -116,6 +122,7 @@
             "info": {
                 "availability": "public",
                 "capture_method": "camera",
+                "size": 2.55,
                 "references": [
                     "https://www.dermis.net/dermisroot/en/home/index.htm",
                     "https://uwaterloo.ca/vision-image-processing-lab/research-demos/skin-cancer-detection"
@@ -134,6 +141,7 @@
             "info": {
                 "availability": "public",
                 "capture_method": "camera",
+                "size": 28.2,
                 "references": [
                     "https://www.emailmeform.com/builder/form/Ne0j8da9bb7U4h6t1f",
                     "https://uwaterloo.ca/vision-image-processing-lab/research-demos/skin-cancer-detection"
@@ -152,6 +160,7 @@
             "info": {
                 "availability": "public",
                 "capture_method": "dermoscopy",
+                "size": 2662,
                 "references": [
                     "https://www.nature.com/articles/sdata2018161",
                     "https://challenge2019.isic-archive.com/data.html",
@@ -177,6 +186,7 @@
             "info": {
                 "availability": "public",
                 "capture_method": "dermoscopy",
+                "size": -1,
                 "references": [
                     "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive",
                     "https://isic-archive.com"
@@ -198,6 +208,7 @@
             "info": {
                 "availability": "public",
                 "capture_method": "dermoscopy",
+                "size": -1,
                 "references": [
                     "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive",
                     "https://isic-archive.com"
@@ -215,6 +226,7 @@
             "info": {
                 "availability": "public",
                 "capture_method": "dermoscopy",
+                "size": -1,
                 "references": [
                     "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive",
                     "https://isic-archive.com"
@@ -232,6 +244,7 @@
             "info": {
                 "availability": "public",
                 "capture_method": "dermoscopy",
+                "size": 92.4,
                 "references": [
                     "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive",
                     "https://isic-archive.com"
@@ -250,6 +263,7 @@
             "info": {
                 "availability": "public",
                 "capture_method": "dermoscopy",
+                "size": 61.8,
                 "references": [
                     "https://www.ejcancer.com/article/S0959-8049(18)31562-4/fulltext",
                     "https://skinclass.de/mclass/"
@@ -267,6 +281,7 @@
             "info": {
                 "availability": "public",
                 "capture_method": "camera",
+                "size": 10.1,
                 "references": [
                     "https://www.ejcancer.com/article/S0959-8049(18)31562-4/fulltext",
                     "https://skinclass.de/mclass/"
@@ -284,6 +299,7 @@
             "info": {
                 "availability": "public",
                 "capture_method": "camera",
+                "size": 25.5,
                 "references": [
                     "http://www.cs.rug.nl/~imaging/databases/melanoma_naevi/"
                 ],
@@ -300,6 +316,7 @@
             "info": {
                 "availability": "public",
                 "capture_method": "dermoscopy",
+                "size": 17358,
                 "references": [
                     "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive",
                     "https://challenge2019.isic-archive.com/data.html"
@@ -329,6 +346,7 @@
             "info": {
                 "availability": "public",
                 "capture_method": "dermoscopy",
+                "size": 246,
                 "references": [
                     "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive",
                     "https://challenge2019.isic-archive.com/data.html"
@@ -354,6 +372,7 @@
             "info": {
                 "availability": "public",
                 "capture_method": "dermoscopy",
+                "size": 755,
                 "references": [
                     "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive",
                     "https://challenge2019.isic-archive.com/data.html"
@@ -372,6 +391,7 @@
             "info": {
                 "availability": "public",
                 "capture_method": "dermoscopy",
+                "size": 3420,
                 "references": [
                     "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive",
                     "https://challenge2019.isic-archive.com/data.html"
@@ -390,6 +410,7 @@
             "info": {
                 "availability": "public",
                 "capture_method": "dermoscopy",
+                "size": 106,
                 "references": [
                     "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive",
                     "https://challenge2019.isic-archive.com/data.html"
@@ -407,6 +428,7 @@
             "info": {
                 "availability": "public",
                 "capture_method": "camera",
+                "size": 3427,
                 "references": [
                     "https://www.sciencedirect.com/science/article/pii/S235234092031115X"
                 ],
@@ -427,6 +449,7 @@
             "info": {
                 "availability": "public",
                 "capture_method": "dermoscopy",
+                "size": 11,
                 "references": [
                     "https://www.fc.up.pt/addi/ph2%20database.html"
                 ],
@@ -443,6 +466,7 @@
             "info": {
                 "availability": "public",
                 "capture_method": "dermoscopy",
+                "size": -1,
                 "references": [
                     "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive",
                     "https://isic-archive.com"
@@ -459,6 +483,7 @@
             "info": {
                 "availability": "public",
                 "capture_method": "dermoscopy",
+                "size": -1,
                 "references": [
                     "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive",
                     "https://isic-archive.com"
@@ -483,6 +508,7 @@
             "info": {
                 "availability": "public",
                 "capture_method": "dermoscopy",
+                "size": 223,
                 "references": [
                     "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive",
                     "https://isic-archive.com"
@@ -501,6 +527,7 @@
             "info": {
                 "availability": "public",
                 "capture_method": "dermoscopy",
+                "size": 37.7,
                 "references": [
                     "https://isic-archive.com",
                     "https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive"
