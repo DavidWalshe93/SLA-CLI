@@ -36,12 +36,11 @@ class UrlParams:
 class IsicMetadataDownloader(Downloader):
 
     @inject_http_session
-    def download(self, session: Session, destination_directory: str) -> None:
+    def download(self, session: Session, **kwargs) -> None:
         """
         Downloads all the ISIC Archive metadata from the ISIC archive API and saves it as a CSV file.
 
         :param session: The HTTP session to make all GET request for data with, auto-supplied via decorator.
-        :param destination_directory: The destination directory for the download.
         """
         limit = 5000
         offset = 0
@@ -72,8 +71,7 @@ class IsicMetadataDownloader(Downloader):
         records = self._merge_records(responses=responses)
         records = self._add_year_tags(records=records)
 
-        self._save_records(records=records,
-                           destination_directory=destination_directory)
+        self._save_records(records=records)
 
     def _make_request_url(self, params: UrlParams) -> str:
         """
@@ -156,23 +154,18 @@ class IsicMetadataDownloader(Downloader):
 
         return records
 
-    @staticmethod
-    def _save_records(records: pd.DataFrame, destination_directory: str) -> None:
+    def _save_records(self, records: pd.DataFrame) -> None:
         """
         Saves the downloaded ISIC records to CSV format.
 
         :param records: The records to expand.
-        :param destination_directory: The destination directory for the download.
         """
+        # Save dataset to user defined location.
+        output_file = os.path.join(self.destination_directory, "isic_metadata.csv")
+        records.to_csv(output_file, index=False)
+
         db_file = os.path.join(Path.db_dir(), "isic_metadata.csv")
         if not os.path.exists(db_file):
             # Save the isic_metadata to the DB folder on first download to
             # prevent re-downloading for every Dataset request.
             records.to_csv(db_file, index=False)
-
-        # Save dataset to user defined location.
-        output_file = os.path.join(destination_directory, "isic_metadata.csv")
-        records.to_csv(output_file, index=False)
-
-    def __call__(self, *args, **kwargs):
-        self.download(*args, **kwargs)

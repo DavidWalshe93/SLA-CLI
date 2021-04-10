@@ -2,13 +2,14 @@
 Author:     David Walshe
 Date:       10 April 2021
 """
+
 import os
+import json
 
 import pandas as pd
 import pytest
 import httpretty
 from httpretty import register_uri
-import json
 
 from requests import Session
 
@@ -33,7 +34,7 @@ def test_make_request_url(limit: int, offset: int):
 
     url_params = sut.UrlParams(limit, offset)
 
-    assert sut.IsicMetadataDownloader(expected_url)._make_request_url(url_params) == expected
+    assert sut.IsicMetadataDownloader(expected_url, "")._make_request_url(url_params) == expected
 
 
 @httpretty.activate
@@ -67,7 +68,7 @@ def test_merge_record(sample_isic_records, expected_column_names):
     :THEN:  Verify the conversion happens as expected.
     """
     records = [sample_isic_records]
-    actual = sut.IsicMetadataDownloader("")._merge_records(records)
+    actual = sut.IsicMetadataDownloader("", "")._merge_records(records)
 
     assert list(actual.columns) == expected_column_names
 
@@ -104,7 +105,7 @@ def test_save_records(already_downloaded, tmpdir, monkeypatch):
 
         records = pd.DataFrame(columns=["Test"])
 
-        sut.IsicMetadataDownloader._save_records(records, str(tmpdir))
+        sut.IsicMetadataDownloader("", str(tmpdir))._save_records(records)
 
         assert os.path.exists(os.path.join(str(tmpdir), "isic_metadata.csv")) == True
         assert os.path.exists(os.path.join(str(mock_db_dir), "isic_metadata.csv")) == True

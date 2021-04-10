@@ -36,8 +36,13 @@ class DownloadParameters:
 def download(ctx: Context, params: DownloadParameters):
     datasets = AccessorFactory.create_datasets()
     for dataset in params.datasets:
+        # Get the downloader object for the given dataset.
         downloader = {
-            "isic_meta": IsicMetadataDownloader(datasets.datasets["ham10000"].info.download[0])
-        }.get(dataset, lambda **kw: logger.warning(f"Dataset '{dataset}' does not exist, skipping..."))
+            "isic-meta": IsicMetadataDownloader(datasets.datasets["ham10000"].info.download[0], destination_directory=params.directory)
+        }.get(
+            dataset,
+            lambda **kw: logger.warning(f"Dataset '{dataset}' does not exist, skipping...")
+        )
 
-        downloader.download(destination_directory=params.directory)
+        # Download the dataset.
+        downloader.download()

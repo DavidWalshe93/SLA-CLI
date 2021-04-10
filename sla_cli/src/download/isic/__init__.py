@@ -3,6 +3,5 @@ Author:     David Walshe
 Date:       10 April 2021
 """
 
-import logging
-
-logger = logging.getLogger(__name__)
+from .download import IsicImageDownloader
+from .metadata import IsicMetadataDownloader

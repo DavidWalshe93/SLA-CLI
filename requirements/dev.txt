@@ -1,3 +1,4 @@
+alive-progress==1.6.2
 atomicwrites==1.4.0
 attrs==20.3.0
 build==0.3.1.post1
@@ -9,6 +10,7 @@ coverage==5.5
 coveralls==3.0.1
 cycler==0.10.0
 docopt==0.6.2
+httpretty==1.0.5
 idna==2.10
 importlib-metadata==3.10.0
 iniconfig==1.1.1
@@ -29,7 +31,6 @@ pytz==2021.1
 PyYAML==5.4.1
 requests==2.25.1
 six==1.15.0
--e git+https://github.com/DavidWalshe93/SL-CLI.git@787f3a279353a3f6bb5f1770d07a9c717ffd79c1#egg=sla_cli
 tabulate==0.8.9
 toml==0.10.2
 typing-extensions==3.7.4.3
