@@ -23,16 +23,16 @@ def greater_than(limit: float):
 
     def _is_greater(obj, attribute, value):
         if value <= limit:
-            raise ValueError(f"'{attribute.name}' in '{type(obj).__name__}' must be greater than {lower} and {upper}.")
+            raise ValueError(f"'{attribute.name}' in '{type(obj).__name__}' must be greater than {limit}.")
 
     return _is_greater
 
 
-def one_of(*options):
+def one_of(options):
     """Checks if a value is one of several options."""
 
     def _one_of(obj, attribute, value):
         if value not in options:
-            raise ValueError(f"'{attribute.name}' in '{type(obj).__name__}' must be one of '{[option.lower() for option in options]}'.")
+            raise ValueError(f"'{attribute.name}' in '{type(obj).__name__}' must be one of '{[str(option).lower() for option in options]}'.")
 
     return _one_of

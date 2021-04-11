@@ -5,7 +5,7 @@ Date:       10 April 2021
 
 import logging
 import os
-from typing import List
+from typing import List, Union
 import shutil
 from dataclasses import dataclass
 from concurrent.futures import ThreadPoolExecutor, as_completed, Future
@@ -55,22 +55,15 @@ class ResponseOptions:
 class IsicImageDownloader(Downloader):
     MAX_BATCH_SIZE = 300
 
-    @inject_config
-    def __init__(self, *args, dataset_name: str, config: Config, force: bool = False, **kwargs):
+    def __init__(self, *args, **kwargs):
         """
         Downloader class for the ISIC Archive API.
-
-        :param dataset_name: The ISIC archive dataset.
-        :param force: Forces the re-download of datasets already in the download destination.
         """
         super().__init__(*args, **kwargs)
-        self.dataset_name: str = dataset_name.upper()
         self.metadata: pd.DataFrame = self._get_metadata()
-        self.download_path = self.create_download_path(force=force)
-        self.batch_size = config.isic.batch_size
-        self.max_workers = config.isic.max_workers
-        self.unzip = config.unzip
-        self.convert = config
+        self.download_path = self._create_download_path(force=self.force)
+        self.batch_size = self.options.config.isic.batch_size
+        self.max_workers = self.options.config.isic.max_workers
 
     @requires_isic_metadata
     def _get_metadata(self) -> pd.DataFrame:
@@ -85,7 +78,7 @@ class IsicImageDownloader(Downloader):
 
         return df
 
-    def create_download_path(self, force: bool = False):
+    def _create_download_path(self, force: bool = False) -> Union[str, None]:
         """
         Returns the download path, create it if it does not already exist.
 
@@ -97,12 +90,12 @@ class IsicImageDownloader(Downloader):
             shutil.rmtree(path)
             logger.debug(f"Deletion successful.")
         elif os.path.exists(path) and not force:
-            logger.error(f"{self.dataset_name} already exists at the destination directory '{path}'")
-            logger.error(f"If you wish to re-download the dataset, try 'sla-cli download -f/--force <DATASET>'")
-            logger.error(f"Exiting...")
-            exit(-1)
+            logger.warning(f"{self.dataset_name} already exists at the destination directory '{path}'")
+            logger.warning(f"If you wish to re-download the dataset, try 'sla-cli download -f/--force <DATASET>'")
+            logger.warning(f"Skipping...")
+            return None
 
-        # Make the download path.
+            # Make the download path.
         os.mkdir(path)
         logger.info(f"Created the download directory at: '{path}'")
 
@@ -117,15 +110,20 @@ class IsicImageDownloader(Downloader):
         """
         Downloads the requested images from the ISIC archive.
         """
+        if self.download_path is None:
+            return None
+
         self._download()
         self._verify_download()
+        self._move_images()
+        self._save_metadata()
 
     @property
-    def default_download_options(self):
+    def _default_download_options(self):
         """Creates and returns the default download options."""
         return DownloadOptions(
             image_ids=self.image_ids,
-            title=f"SLA - INFO - - - Downloading {self.dataset_name}."
+            title=f"[SLA] - INFO - - - Downloading {self.dataset_name}."
         )
 
     @inject_http_session
@@ -135,7 +133,7 @@ class IsicImageDownloader(Downloader):
 
         :param session: The HTTP session to the ISIC Archive API.
         """
-        options = kwargs.get("options", self.default_download_options)
+        options = kwargs.get("options", self._default_download_options)
 
         batches = list(make_batches(options.image_ids, n=self.batch_size))
 
@@ -242,11 +240,16 @@ class IsicImageDownloader(Downloader):
         """Returns the isic image path."""
         return os.path.join(self.download_path, "ISIC-images", self.dataset_name)
 
+    @property
+    def isic_images(self) -> List[str]:
+        """Returns all the downloaded images, with non-image files removed."""
+        return [image.split(".")[0] for image in os.listdir(self.isic_image_path) if not image.endswith(".txt")]
+
     def _verify_download(self):
         """Verifies all images were correctly downloaded."""
         # Get the metadata and images file names and compare them
         # to see if any images were missed.
-        image_names = [image.split(".")[0] for image in os.listdir(self.isic_image_path) if not image.endswith(".txt")]
+        image_names = self.isic_images
         meta_names = list(self.metadata["image_name"])
 
         missing_images = sorted(list(set(meta_names) ^ set(image_names)))
@@ -271,3 +274,27 @@ class IsicImageDownloader(Downloader):
             title=f"Re-Downloading {len(missing_ids)} from {self.dataset_name}."
         )
         self._download(options=options)
+
+    @property
+    def image_dst_directory(self) -> str:
+        return os.path.join(self.download_path, "images")
+
+    def _move_images(self):
+        """Gather all images and move them to the root of the download folder."""
+        # Move all images to 'images' folder.
+        shutil.move(self.isic_image_path, self.image_dst_directory)
+        # Delete old parent folder.
+        os.rmdir(os.path.join(self.download_path, "ISIC-images"))
+        # Remove all .txt files.
+        [os.remove(os.path.join(self.image_dst_directory, file)) for file in os.listdir(self.image_dst_directory) if file.endswith(".txt")]
+
+    def _save_metadata(self):
+        """Saves the datasets metadata to a file."""
+        # Save the metadata name as the dataset name. Handy for opening in excel for review.
+        if self.options.metadata_as_name:
+            save_name = self.dataset_name.lower().replace(" ", "_").replace("-", "_") + ".csv"
+            self.metadata.to_csv(os.path.join(self.download_path, save_name))
+
+        # Save as "metadata.csv", easier to work with for ML input pipelines.
+        else:
+            self.metadata.to_csv(os.path.join(self.download_path, "metadata.csv"))

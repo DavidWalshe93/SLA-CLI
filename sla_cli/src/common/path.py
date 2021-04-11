@@ -16,7 +16,7 @@ class Path:
         """Returns the root project path."""
         current_dir = os.path.dirname(__file__)
 
-        for i in range(2):
+        for _ in range(2):
             current_dir = os.path.dirname(current_dir)
 
         return current_dir

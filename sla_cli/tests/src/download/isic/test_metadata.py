@@ -13,6 +13,7 @@ from httpretty import register_uri
 
 from requests import Session
 
+from sla_cli.src.download.downloader import DownloaderOptions
 import sla_cli.src.download.isic.metadata as sut
 
 
@@ -23,18 +24,20 @@ import sla_cli.src.download.isic.metadata as sut
                              (10, 100),
                              (10000, 1000),
                          ])
-def test_make_request_url(limit: int, offset: int):
+def test_make_request_url(limit: int, offset: int, downloader_options_factory):
     """
     :GIVEN: A limit and offset for a request.
     :WHEN:  Creating a request URL for metadata from the ISIC archive.
     :THEN:  Verify the correct URL structure is created.
     """
     expected_url = "https://isic-archive.com/api/v1"
+    downloader_options = downloader_options_factory(url=expected_url)
+
     expected = f"{expected_url}/image?limit={limit}&offset={offset}&sort=name&sortdir=1&detail=true"
 
     url_params = sut.UrlParams(limit, offset)
 
-    assert sut.IsicMetadataDownloader(expected_url, "")._make_request_url(url_params) == expected
+    assert sut.IsicMetadataDownloader(downloader_options)._make_request_url(url_params) == expected
 
 
 @httpretty.activate
@@ -68,7 +71,7 @@ def test_merge_record(sample_isic_records, expected_column_names):
     :THEN:  Verify the conversion happens as expected.
     """
     records = [sample_isic_records]
-    actual = sut.IsicMetadataDownloader("", "")._merge_records(records)
+    actual = sut.IsicMetadataDownloader(None)._merge_records(records)
 
     assert list(actual.columns) == expected_column_names
 
@@ -91,7 +94,7 @@ def test_add_year_tags():
                              True,
                              False
                          ])
-def test_save_records(already_downloaded, tmpdir, monkeypatch):
+def test_save_records(already_downloaded, downloader_options_factory, tmpdir, monkeypatch):
     """
     :GIVEN: A pandas dataframe.
     :WHEN:  Saving the ISIC metadata to disk.
@@ -105,7 +108,9 @@ def test_save_records(already_downloaded, tmpdir, monkeypatch):
 
         records = pd.DataFrame(columns=["Test"])
 
-        sut.IsicMetadataDownloader("", str(tmpdir))._save_records(records)
+        downloader_options = downloader_options_factory()
+
+        sut.IsicMetadataDownloader(downloader_options)._save_records(records)
 
         assert os.path.exists(os.path.join(str(tmpdir), "isic_metadata.csv")) == True
         assert os.path.exists(os.path.join(str(mock_db_dir), "isic_metadata.csv")) == True

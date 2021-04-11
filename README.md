@@ -25,16 +25,55 @@ their research efforts.
 
 **Available**
 
--  Dataset summaries and label distribution.
--  Console-based dashboards.
+- Dataset summaries and label distribution.
+- Console-based dashboards.
+- Full support for downloading datasets + metadata from the ISIC Archive API.
 
 **WIP**
 
--  Matplotlib integration for data distribution visualisation.
--  Dataset downloading (public datasets only).
--  Metadata extraction on applicable datasets.
--  Data background information sources and links.
--  Preprocessing of datasets for *binary classification*.
+- Matplotlib integration for data distribution visualisation.
+- Dataset downloading (public datasets only).
+- Metadata extraction on applicable datasets.
+- Data background information sources and links.
+- Preprocessing of datasets for *binary classification*.
+
+## Datasets Available
+
+The table below shows the dataset currently available to acquire via the tool.
+
+| Dataset                                          | Available |
+|--------------------------------------------------|:---------:|
+| Altlas of Dermoscopy                             |     ❌     |
+| BCN 20000                                        |     ✅     |
+| BCN 20000 Challenge                              |     ✅     |
+| Brisbane ISIC Challenge 2020                     |     ✅     |
+| DERMOFIT                                         |     ❌     |
+| Dermoscopedia (CC BY)                            |     ✅     |
+| DermIS                                           |     ⚠️     |
+| DermQuest                                        |     ⚠️     |
+| HAM10000                                         |     ✅     |
+| ISIC 2020 Challenge MSKCC Contribution           |     ✅     |
+| ISIC 2020 Vienna Part 1                          |     ✅     |
+| ISIC 2020 Vienna Part 2                          |     ✅     |
+| JID Editorial Images 2018                        |     ✅     |
+| MClass (Dermoscopy)                              |     ⚠️     |
+| MClass (Dermoscopy)                              |     ⚠️     |
+| MEDNODE                                          |     ⚠️     |
+| MSK-1                                            |     ✅     |
+| MSK-2                                            |     ✅     |
+| MSK-3                                            |     ✅     |
+| MSK-4                                            |     ✅     |
+| MSK-5                                            |     ✅     |
+| PAD-UFES-20                                      |     ⚠️     |
+| PH2                                              |     ⚠️     |
+| SONIC                                            |     ✅     |
+| Sydney MIA SMDC 2020 ISIC Challenge Contribution |     ✅     |
+| UDA-1                                            |     ✅     |
+| UDA-2                                            |     ✅     |
+
+- ✅ - Fully implemented
+- ⚠️- Work in progress.
+- ❌ - Private dataset
 
 ## Loading Configurations
 

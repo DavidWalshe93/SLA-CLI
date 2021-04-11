@@ -5,6 +5,8 @@ Date:       10 April 2021
 
 import pytest
 
+from sla_cli.src.download.downloader import DownloaderOptions
+
 
 @pytest.fixture
 def sample_isic_records():

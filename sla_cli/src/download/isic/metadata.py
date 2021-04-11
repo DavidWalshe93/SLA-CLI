@@ -24,6 +24,23 @@ from sla_cli.src.common.path import Path
 logger = logging.getLogger(__name__)
 
 
+def _download_isic_metadata(obj) -> None:
+    """
+    Downloads the ISIC Archive metadata if it doesnt already exist to the
+    'db' path.
+
+    :param obj: The Downloader object.
+    """
+    # Download metadata to DB folder before attempting image download.
+    meta_downloader = IsicMetadataDownloader(obj.options)
+    if not os.path.exists(Path.isic_metadata()):
+        logger.info(f"Could not find ISIC metadata locally which is required to download ISIC datasets.")
+        logger.info(f"Downloading ISIC metadata first, followed by images.")
+        meta_downloader.download()
+    else:
+        logger.debug(f"Found local ISIC metadata file at: '{Path.isic_metadata()}'.")
+
+
 def requires_isic_metadata(func):
     """
     Decorator to checks if the ISIC metadata is available locally.
@@ -37,14 +54,7 @@ def requires_isic_metadata(func):
         """
         :param obj: The IsicImageDownload object.
         """
-        # Download metadata to DB folder before attempting image download.
-        meta_downloader = IsicMetadataDownloader(obj.url, destination_directory=Path.db_dir())
-        if not os.path.exists(Path.isic_metadata()):
-            logger.info(f"Could not find ISIC metadata locally which is required to download ISIC datasets.")
-            logger.info(f"Downloading ISIC metadata first, followed by images.")
-            meta_downloader.download()
-        else:
-            logger.debug(f"Found local ISIC metadata file at: '{Path.isic_metadata()}'.")
+        _download_isic_metadata(obj)
 
         return func(obj, *args, **kwargs)
 
