@@ -12,7 +12,16 @@ import attr
 from attr.validators import instance_of
 import yaml
 
+from sla_cli.src.common.config.validators import is_between, greater_than
+
 logger = logging.getLogger(__name__)
+
+
+@attr.s
+class Isic:
+    """Maps the 'isic' options in the config file."""
+    batch_size: int = attr.ib(validator=[instance_of(int), is_between(0, 300)], default=300)
+    max_workers: int = attr.ib(validator=[instance_of(int), greater_than(0)], default=5)
 
 
 def flag_if_empty(func):
@@ -31,7 +40,10 @@ def flag_if_empty(func):
 
 
 @attr.s
-class ConfigFile:
+class Config:
+    isic: Isic = attr.ib(validator=instance_of(Isic), converter=lambda config: Isic(**config))
+    unzip: bool = attr.ib(validator=instance_of(bool), default=True)
+    convert: str = attr.ib(validator=instance_of(str), converter=lambda x: x.lower(), default="original")
 
     @staticmethod
     def load(config_file: str = None):
@@ -45,22 +57,29 @@ class ConfigFile:
 
         # Read user argument first.
         if config_file is None:
-            config_kwargs = ConfigFile._read_explicit_file(config_file)
+            config_kwargs = Config._read_explicit_file(config_file)
 
         # Environment variable loading.
         if config_kwargs is None:
-            config_kwargs = ConfigFile._read_environment_variable()
+            config_kwargs = Config._read_environment_variable()
 
         # Current working directory.
         if config_kwargs is None:
-            config_kwargs = ConfigFile._read_cwd_file()
+            config_kwargs = Config._read_cwd_file()
 
         # Default
         if config_kwargs is None:
             logger.debug(f"[CONFIG] - No valid file configuration found, loading defaults.")
-            config_kwargs = {}
+            config_kwargs = Config._defaults()
 
-        return ConfigFile(**config_kwargs)
+        return Config(**config_kwargs)
+
+    @staticmethod
+    def _defaults():
+        """Returns the Configuration defaults."""
+        return {
+            "isic": {}
+        }
 
     @staticmethod
     def _read_explicit_file(config_file: str) -> Union[Dict[str, any], None]:
@@ -72,7 +91,7 @@ class ConfigFile:
         """
         if config_file is not None and os.path.exists(config_file):
             logger.debug(f"[CONFIG] - Loading config from [ARG]: '{config_file}'.")
-            return ConfigFile._read(config_file)
+            return Config._read(config_file)
 
         return None
 
@@ -88,7 +107,7 @@ class ConfigFile:
         config_file = os.environ.get("SLA_CLI_CONFIG_FILE", None)
         if config_file is not None and os.path.exists(config_file):
             logger.debug(f"[CONFIG] - Loading config from [ENV]: '{config_file}'.")
-            return ConfigFile._read(config_file)
+            return Config._read(config_file)
 
         return None
 
@@ -104,7 +123,7 @@ class ConfigFile:
         config_file = os.path.join(os.getcwd(), ".sla_cli_config.yml")
         if config_file is not None and os.path.exists(config_file):
             logger.debug(f"[CONFIG] - Loading config from [CWD]: '{config_file}'.")
-            return ConfigFile._read(config_file)
+            return Config._read(config_file)
 
         return None
 

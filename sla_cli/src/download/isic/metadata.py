@@ -11,6 +11,7 @@ from itertools import chain
 from collections import OrderedDict
 import json
 from pprint import pprint
+from functools import wraps
 
 import pandas as pd
 from requests import Session
@@ -21,6 +22,33 @@ from sla_cli.src.download.utils import inject_http_session
 from sla_cli.src.common.path import Path
 
 logger = logging.getLogger(__name__)
+
+
+def requires_isic_metadata(func):
+    """
+    Decorator to checks if the ISIC metadata is available locally.
+
+    If it is not available, it downloads it to the db directory for local referencing before downloading
+    ISIC image datasets.
+    """
+
+    @wraps(func)
+    def requires_isic_metadata_wrapper(obj, *args, **kwargs):
+        """
+        :param obj: The IsicImageDownload object.
+        """
+        # Download metadata to DB folder before attempting image download.
+        meta_downloader = IsicMetadataDownloader(obj.url, destination_directory=Path.db_dir())
+        if not os.path.exists(Path.isic_metadata()):
+            logger.info(f"Could not find ISIC metadata locally which is required to download ISIC datasets.")
+            logger.info(f"Downloading ISIC metadata first, followed by images.")
+            meta_downloader.download()
+        else:
+            logger.debug(f"Found local ISIC metadata file at: '{Path.isic_metadata()}'.")
+
+        return func(obj, *args, **kwargs)
+
+    return requires_isic_metadata_wrapper
 
 
 @dataclass
@@ -161,11 +189,10 @@ class IsicMetadataDownloader(Downloader):
         :param records: The records to expand.
         """
         # Save dataset to user defined location.
-        output_file = os.path.join(self.destination_directory, "isic_metadata.csv")
-        records.to_csv(output_file, index=False)
+        output_path = os.path.join(self.destination_directory, "isic_metadata.csv")
+        records.to_csv(output_path, index=False)
 
-        db_file = os.path.join(Path.db_dir(), "isic_metadata.csv")
-        if not os.path.exists(db_file):
+        if not os.path.exists(Path.isic_metadata()):
             # Save the isic_metadata to the DB folder on first download to
             # prevent re-downloading for every Dataset request.
-            records.to_csv(db_file, index=False)
+            records.to_csv(Path.isic_metadata(), index=False)
