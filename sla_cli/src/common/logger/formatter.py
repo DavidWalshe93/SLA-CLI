@@ -13,7 +13,7 @@ class ColorFormatter(logging.Formatter):
     """Adds colored output to logger."""
 
     # log output format.
-    format = "%(message)s"
+    format = "[SLA] - %(levelname)-8s - %(message)-8s"
 
     FORMATS = {
         logging.DEBUG: Fore.CYAN + format + Fore.RESET,

@@ -13,7 +13,7 @@ from sla_cli.entry import cli
 @pytest.fixture(autouse=True)
 def set_log_level(caplog):
     """Set the log level for the test session."""
-    caplog.set_level(logging.INFO)
+    caplog.set_level(logging.DEBUG)
 
 
 @pytest.fixture

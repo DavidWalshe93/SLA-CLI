@@ -20,15 +20,15 @@ handlers:
     formatter: console
     stream: ext://sys.stdout
 
-  file:
-    class: logging.handlers.RotatingFileHandler
-    level: INFO
-    formatter: file
-    filename: .sla_cli.log
-    maxBytes: 10486760
-    backupCount: 20
-    encoding: utf8
-    mode: w
+#  file:
+#    class: logging.handlers.RotatingFileHandler
+#    level: INFO
+#    formatter: file
+#    filename: .sla_cli.log
+#    maxBytes: 10486760
+#    backupCount: 20
+#    encoding: utf8
+#    mode: w
 
 root:
   level: NOTSET

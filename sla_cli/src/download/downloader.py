@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 class Downloader(metaclass=ABCMeta):
 
-    def __init__(self, url: str, destination_directory: str):
+    def __init__(self, url: str, destination_directory: str, **kwargs):
         """
         Base class for downloaders.
 

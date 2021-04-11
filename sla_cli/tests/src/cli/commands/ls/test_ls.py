@@ -3,9 +3,12 @@ Author:     David Walshe
 Date:       07 April 2021
 """
 
+import os
 import pytest
 
 from sla_cli.entry import cli
+
+from sla_cli.src.common.path import Path
 
 
 def test_ls_print(cli_runner, dataset_names_print):
@@ -25,19 +28,20 @@ def test_ls_print(cli_runner, dataset_names_print):
                              "-o",
                              "--output-file"
                          ])
-def test_ls_save(output, cli_runner, read_actual_csv, dataset_names_csv, tmpdir):
+def test_ls_save(output, cli_runner, read_actual_csv, dataset_names_csv, tmpdir, caplog):
     """
     :GIVEN: Nothing.
     :WHEN:  Using the 'ls' command to view the available datasets.
     :THEN:  Verify the correct output is saved to disk.
     """
     with tmpdir.as_cwd():
-        res = cli_runner.invoke(cli, ["ls", output, "test.csv"])
+        res = cli_runner.invoke(cli, ["-d", "ls", "-o", "test.csv"])
+        print(res.exc_info)
 
         actual = read_actual_csv()
 
-        assert actual == dataset_names_csv
         assert res.exit_code == 0
+        assert actual == dataset_names_csv
 
 
 @pytest.mark.parametrize("switch",
@@ -72,7 +76,6 @@ def test_ls_totals_save(verbose, output, cli_runner, dataset_names_totals_csv, t
     """
     import os
     with tmpdir.as_cwd():
-        print(os.getcwd())
         res = cli_runner.invoke(cli, ["ls", verbose, "totals", output, "test.csv"])
 
         with open("./test.csv") as fh:

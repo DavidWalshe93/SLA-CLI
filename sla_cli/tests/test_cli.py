@@ -23,5 +23,5 @@ def test_version(switch, cli_runner, caplog):
     """
     res = cli_runner.invoke(cli, [switch])
 
-    assert res.output.strip() == f"Version: {get_version()}"
+    assert res.output.split("-")[-1].strip() == f"Version: {get_version()}"
     assert res.exit_code == 0

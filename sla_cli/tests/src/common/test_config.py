@@ -35,7 +35,7 @@ def test_read_explicit_file(config_file, config, tmpdir):
     :WHEN:  Loading an explicit config file.
     :THEN:  Verify the correct file is loaded.
     """
-    assert sut.ConfigFile._read_explicit_file(config_file) == config
+    assert sut.Config._read_explicit_file(config_file) == config
 
 
 def test_read_cwd_file(config_file, config, tmpdir):
@@ -45,7 +45,7 @@ def test_read_cwd_file(config_file, config, tmpdir):
     :THEN:  Verify the correct file is loaded.
     """
     with tmpdir.as_cwd():
-        assert sut.ConfigFile._read_cwd_file() == config
+        assert sut.Config._read_cwd_file() == config
 
 
 def test_environment_variable(config_file, config, monkeypatch):
@@ -55,4 +55,4 @@ def test_environment_variable(config_file, config, monkeypatch):
     :THEN:  Verify the correct file is loaded.
     """
     monkeypatch.setenv("SLA_CLI_CONFIG_FILE", config_file)
-    assert sut.ConfigFile._read_environment_variable() == config
+    assert sut.Config._read_environment_variable() == config

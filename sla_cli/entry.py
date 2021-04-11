@@ -21,7 +21,7 @@ if __name__ == '__main__':
 from sla_cli.src.common.logger.init_logger import init_logger
 from sla_cli.src.common.versioning import get_version
 from sla_cli.src.common.console import init_colorama
-from sla_cli.src.common.config import ConfigFile
+from sla_cli.src.common.config import Config
 
 from sla_cli.src.cli.context import GROUP_CONTEXT_SETTINGS
 from sla_cli.src.cli.utils import kwargs_to_dataclass
@@ -37,7 +37,7 @@ logger = logging.getLogger(__name__)
 class CliParameters:
     version: bool = False
     debug: bool = False
-    config_file: ConfigFile = None
+    config_file: Config = None
 
 
 @click.group(**GROUP_CONTEXT_SETTINGS)
@@ -53,7 +53,7 @@ def cli(ctx: Context, params: CliParameters):
     Base SL-CLI command.
     """
     logger.debug(f"Running in debug mode.")
-    ctx.obj = ConfigFile.load(config_file=params.config_file)
+    ctx.obj = Config.load(config_file=params.config_file)
 
     if not ctx.invoked_subcommand:
         if params.version:

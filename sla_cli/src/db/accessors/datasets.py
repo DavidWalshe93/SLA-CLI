@@ -100,8 +100,7 @@ class Datasets(Accessor):
 
         return datasets
 
-    def names(self, tablefmt: str = "simple", output_file: str = None, regex: str = r".*", **kwargs) -> Union[
-        str, None]:
+    def names(self, tablefmt: str = "simple", output_file: str = None, regex: str = r".*", **kwargs) -> Union[str, None]:
         """
         Returns only the names of the datasets available.
 
