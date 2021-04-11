@@ -8,7 +8,6 @@ Git Hook to update the micro version of the tool each time a push is made.
 import os
 import logging
 from packaging.version import parse, Version
-import json
 from typing import Dict
 from dataclasses import dataclass
 

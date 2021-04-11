@@ -1,0 +1,20 @@
+# David Walshe
+# 10-Apr-2021
+
+# Template configuration file for sla-cli.
+
+
+# Unzip archives as they are downloaded or leave them as an archive file.
+unzip: true
+
+# Converts images to a given format.
+# Options:
+#   jpeg
+#   original
+convert: jpeg
+
+isic:
+    # Number of images to download per batch, API upper limit is >> 300 <<.
+    batch_size: 300
+    # Number of concurrent download workers, setting this too high can have adverse effects.
+    max_workers: 5

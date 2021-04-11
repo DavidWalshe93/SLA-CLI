@@ -19,8 +19,12 @@ def read_actual_csv(tmpdir) -> callable:
         with _tmpdir.as_cwd():
             print(os.getcwd())
             print(os.listdir())
-            with open("./test.csv") as fh:
-                return fh.read()
+            path = os.path.join(os.getcwd(), "test.csv")
+            with open(path) as fh:
+                content = fh.read()
+            print(os.listdir())
+
+            return content
 
     return read
 

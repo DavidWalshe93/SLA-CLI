@@ -3,6 +3,7 @@ atlas_of_dermoscopy
 ====================================================================================================
    Availability:   private
    Capture method: dermoscopy
+   Size:           -- MB
    References:
        - http://www.dermoscopy.org/atlas/order_cd.asp
    Data source URL:
@@ -12,6 +13,7 @@ bcn_20000
 ====================================================================================================
    Availability:   public
    Capture method: dermoscopy
+   Size:           6141.0 MB
    References:
        - https://arxiv.org/abs/1908.02288
        - https://challenge2019.isic-archive.com/data.html
@@ -24,6 +26,7 @@ bcn_2020_challenge
 ====================================================================================================
    Availability:   public
    Capture method: dermoscopy
+   Size:           4061.0 MB
    References:
        - https://arxiv.org/abs/1908.02288
        - https://challenge2019.isic-archive.com/data.html
@@ -36,6 +39,7 @@ brisbane_isic_challenge_2020
 ====================================================================================================
    Availability:   public
    Capture method: dermoscopy
+   Size:           -- MB
    References:
        - https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive
        - https://isic-archive.com
@@ -46,6 +50,7 @@ dermofit
 ====================================================================================================
    Availability:   private
    Capture method: dermoscopy
+   Size:           -- MB
    References:
        - https://licensing.edinburgh-innovations.ed.ac.uk/i/software/dermofit-image-library.html
    Data source URL:
@@ -55,6 +60,7 @@ dermoscopedia_cc_by
 ====================================================================================================
    Availability:   public
    Capture method: dermoscopy
+   Size:           -- MB
    References:
        - https://isic-archive.com
    Data source URL:
@@ -65,6 +71,7 @@ dermis
 ====================================================================================================
    Availability:   public
    Capture method: camera
+   Size:           2.55 MB
    References:
        - https://www.dermis.net/dermisroot/en/home/index.htm
        - https://uwaterloo.ca/vision-image-processing-lab/research-demos/skin-cancer-detection
@@ -76,6 +83,7 @@ dermquest
 ====================================================================================================
    Availability:   public
    Capture method: camera
+   Size:           28.2 MB
    References:
        - https://www.emailmeform.com/builder/form/Ne0j8da9bb7U4h6t1f
        - https://uwaterloo.ca/vision-image-processing-lab/research-demos/skin-cancer-detection
@@ -87,6 +95,7 @@ ham10000
 ====================================================================================================
    Availability:   public
    Capture method: dermoscopy
+   Size:           2662.0 MB
    References:
        - https://www.nature.com/articles/sdata2018161
        - https://challenge2019.isic-archive.com/data.html
@@ -99,6 +108,7 @@ isic_2020_challenge_mskcc_contribution
 ====================================================================================================
    Availability:   public
    Capture method: dermoscopy
+   Size:           -- MB
    References:
        - https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive
        - https://isic-archive.com
@@ -109,6 +119,7 @@ isic_2020_vienna_part_1
 ====================================================================================================
    Availability:   public
    Capture method: dermoscopy
+   Size:           -- MB
    References:
        - https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive
        - https://isic-archive.com
@@ -119,6 +130,7 @@ isic_2020_vienna_part_2
 ====================================================================================================
    Availability:   public
    Capture method: dermoscopy
+   Size:           -- MB
    References:
        - https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive
        - https://isic-archive.com
@@ -129,6 +141,7 @@ jid_editorial_images_2018
 ====================================================================================================
    Availability:   public
    Capture method: dermoscopy
+   Size:           92.4 MB
    References:
        - https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive
        - https://isic-archive.com
@@ -139,6 +152,7 @@ mclass_d
 ====================================================================================================
    Availability:   public
    Capture method: dermoscopy
+   Size:           61.8 MB
    References:
        - https://www.ejcancer.com/article/S0959-8049(18)31562-4/fulltext
        - https://skinclass.de/mclass/
@@ -149,6 +163,7 @@ mclass_nd
 ====================================================================================================
    Availability:   public
    Capture method: camera
+   Size:           10.1 MB
    References:
        - https://www.ejcancer.com/article/S0959-8049(18)31562-4/fulltext
        - https://skinclass.de/mclass/
@@ -159,6 +174,7 @@ mednode
 ====================================================================================================
    Availability:   public
    Capture method: camera
+   Size:           25.5 MB
    References:
        - http://www.cs.rug.nl/~imaging/databases/melanoma_naevi/
    Data source URL:
@@ -168,6 +184,7 @@ msk_1
 ====================================================================================================
    Availability:   public
    Capture method: dermoscopy
+   Size:           17358.0 MB
    References:
        - https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive
        - https://challenge2019.isic-archive.com/data.html
@@ -178,6 +195,7 @@ msk_2
 ====================================================================================================
    Availability:   public
    Capture method: dermoscopy
+   Size:           246.0 MB
    References:
        - https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive
        - https://challenge2019.isic-archive.com/data.html
@@ -188,6 +206,7 @@ msk_3
 ====================================================================================================
    Availability:   public
    Capture method: dermoscopy
+   Size:           755.0 MB
    References:
        - https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive
        - https://challenge2019.isic-archive.com/data.html
@@ -198,6 +217,7 @@ msk_4
 ====================================================================================================
    Availability:   public
    Capture method: dermoscopy
+   Size:           3420.0 MB
    References:
        - https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive
        - https://challenge2019.isic-archive.com/data.html
@@ -208,6 +228,7 @@ msk_5
 ====================================================================================================
    Availability:   public
    Capture method: dermoscopy
+   Size:           106.0 MB
    References:
        - https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive
        - https://challenge2019.isic-archive.com/data.html
@@ -218,6 +239,7 @@ pad_ufes_20
 ====================================================================================================
    Availability:   public
    Capture method: camera
+   Size:           3427.0 MB
    References:
        - https://www.sciencedirect.com/science/article/pii/S235234092031115X
    Data source URL:
@@ -227,6 +249,7 @@ ph2
 ====================================================================================================
    Availability:   public
    Capture method: dermoscopy
+   Size:           11.0 MB
    References:
        - https://www.fc.up.pt/addi/ph2%20database.html
    Data source URL:
@@ -236,6 +259,7 @@ sonic
 ====================================================================================================
    Availability:   public
    Capture method: dermoscopy
+   Size:           -- MB
    References:
        - https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive
        - https://isic-archive.com
@@ -246,6 +270,7 @@ sydney_mia_smdc_2020_isic_challenge_contribution
 ====================================================================================================
    Availability:   public
    Capture method: dermoscopy
+   Size:           -- MB
    References:
        - https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive
        - https://isic-archive.com
@@ -256,6 +281,7 @@ uda_1
 ====================================================================================================
    Availability:   public
    Capture method: dermoscopy
+   Size:           223.0 MB
    References:
        - https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive
        - https://isic-archive.com
@@ -266,6 +292,7 @@ uda_2
 ====================================================================================================
    Availability:   public
    Capture method: dermoscopy
+   Size:           37.7 MB
    References:
        - https://isic-archive.com
        - https://www.isic-archive.com/#!/topWithHeader/tightContentTop/about/isicArchive

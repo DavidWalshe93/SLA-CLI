@@ -1,4 +1,4 @@
 [run]
 branch = true
-source = sla_cli
+source = sla_cli/src
 omit = *migrations*, *tests*, *venv*
