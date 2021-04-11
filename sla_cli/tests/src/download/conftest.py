@@ -31,7 +31,7 @@ def downloader_options_factory(tmpdir):
     def make(**kwargs):
         with tmpdir.as_cwd():
             return DownloaderOptions(
-                url=kwargs.get("url", "www.fake_url.test"),
+                url=kwargs.get("url", "http://www.fake_url.test"),
                 destination_directory=str(tmpdir),
                 config=config,
                 force=kwargs.get("force", False),
