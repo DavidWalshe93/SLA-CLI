@@ -8,7 +8,16 @@ import pandas as pd
 import pytest
 from unittest.mock import patch
 
+import httpretty
+from httpretty import register_uri
+
 import sla_cli.src.download.isic.download as sut
+
+
+@pytest.fixture
+def mock_get_metadata(monkeypatch):
+    """Mocks the '_get_metadata' method on IsicImageDownloader."""
+    monkeypatch.setattr(sut.IsicImageDownloader, "_get_metadata", lambda x: None)
 
 
 @pytest.fixture
@@ -82,7 +91,7 @@ def test_get_metadata(dataset, size, metadata_file, downloader_options_factory, 
                              "BCN_20000",
                              "MSK-1",
                          ])
-def test_create_download_path(dataset, downloader_options_factory, tmpdir, caplog):
+def test_create_download_path(dataset, downloader_options_factory, tmpdir, caplog, mock_get_metadata):
     """
     :GIVEN: A dataset name.
     :WHEN:  Creating the destination directory for downloads.
@@ -108,7 +117,7 @@ def test_create_download_path(dataset, downloader_options_factory, tmpdir, caplo
                              "BCN_20000",
                              "MSK-1",
                          ])
-def test_create_download_path_already_exists(dataset, downloader_options_factory, tmpdir, caplog):
+def test_create_download_path_already_exists(dataset, downloader_options_factory, tmpdir, caplog, mock_get_metadata):
     """
     :GIVEN: A dataset name.
     :WHEN:  Creating the destination directory for downloads when the destination already exists.
@@ -139,7 +148,7 @@ def test_create_download_path_already_exists(dataset, downloader_options_factory
                              "BCN_20000",
                              "MSK-1",
                          ])
-def test_create_download_path_already_exists_force(dataset, downloader_options_factory, tmpdir, caplog):
+def test_create_download_path_already_exists_force(dataset, downloader_options_factory, tmpdir, caplog, mock_get_metadata):
     """
     :GIVEN: A dataset name.
     :WHEN:  Creating the destination directory for downloads when the destination already exists with the force swithc set.
@@ -165,7 +174,7 @@ def test_create_download_path_already_exists_force(dataset, downloader_options_f
         assert caplog.messages[-1] == f"Created the download directory at: '{expected_path}'"
 
 
-def test_image_ids(metadata, downloader_options_factory):
+def test_image_ids(metadata, downloader_options_factory, mock_get_metadata):
     """
     :GIVEN: A metadata file.
     :WHEN:  Retrieving a list of the metadata 'isic_id' fields.
