@@ -20,6 +20,7 @@ from sla_cli.src.download import Downloader, DownloaderOptions, DummyDownloader
 
 from sla_cli.src.download.isic import IsicMetadataDownloader, IsicImageDownloader
 from sla_cli.src.download.ph2 import Ph2Downloader
+from sla_cli.src.download.pad_ufes_20 import PadUfes20Downloader
 
 logger = logging.getLogger(__name__)
 
@@ -29,6 +30,8 @@ class DownloadParameters:
     datasets: List[str]
     directory: str
     force: bool
+    clean: bool
+    skip: bool
     metadata_as_name: bool
     isic_meta: bool
 
@@ -37,6 +40,8 @@ class DownloadParameters:
 @click.argument("datasets", type=click.STRING, nargs=-1)
 @click.option("-d", "--directory", type=click.STRING, default=os.getcwd(), help="The destination directory for the download.")
 @click.option("-f", "--force", is_flag=True, help="Force download a dataset, even if it already exists on the filesystem.")
+@click.option("-c", "--clean", is_flag=True, help="Remove archive files directly after extraction.")
+@click.option("-s", "--skip", is_flag=True, help="Skip the download phase, useful for running builds on previously downloaded archives.")
 @click.option("--isic-meta", is_flag=True, help="Download the ISIC Archive metadata instead of a dataset.")
 @click.option("--metadata-as-name", is_flag=True, help="Saves the dataset metadata as the dataset name. Helpful for viewing in excel, not optimal for ML pipelines.")
 @kwargs_to_dataclass(DownloadParameters)
@@ -56,7 +61,9 @@ def download(ctx: Context, params: DownloadParameters):
         destination_directory=params.directory,
         config=ctx.obj,
         force=params.force,
-        metadata_as_name=params.metadata_as_name
+        metadata_as_name=params.metadata_as_name,
+        clean=params.clean,
+        skip=params.skip
     )
 
     # Download only the ISIC metadata.
@@ -74,6 +81,7 @@ def download(ctx: Context, params: DownloadParameters):
             # Add dataset to options.
             options.dataset = convert(dataset=dataset)
             options.url = datasets.datasets[dataset].info.download[0]
+            options.size = datasets.datasets[dataset].info.size
 
             # Download the dataset.
             downloader = downloader(options=options)
@@ -103,6 +111,7 @@ def downloader_factory(dataset) -> Downloader:
         "msk_3": IsicImageDownloader,
         "msk_4": IsicImageDownloader,
         "msk_5": IsicImageDownloader,
+        "pad_ufes_20": PadUfes20Downloader,
         "ph2": Ph2Downloader,
         "sonic": IsicImageDownloader,
         "sydney_mia_smdc_2020_isic_challenge_contribution": IsicImageDownloader,

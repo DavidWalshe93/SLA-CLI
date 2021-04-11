@@ -40,7 +40,7 @@ def test_download_file(url, tmpdir):
         dst_path = os.path.join(os.getcwd(), "test_file.zip")
         assert os.path.exists(dst_path) == False
 
-        sut.download_file(url, dst_path)
+        sut.download_file(url, dst_path, 10)
 
         assert os.path.exists(dst_path) == True
 

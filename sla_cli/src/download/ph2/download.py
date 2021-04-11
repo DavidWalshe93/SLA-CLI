@@ -20,31 +20,9 @@ logger = logging.getLogger(__name__)
 
 
 class Ph2Downloader(FileDownloader):
+    __title__ = "PH2"
     __archive_name__ = "ph2.rar"
     __extracted_name__ = "PH2"
-
-    def download(self, session: Session = None):
-        """Downloads and formats the PH2 dataset."""
-        # Check to see if the dataset already exists.
-        if self._does_not_exist_or_forced():
-            with alive_bar(None, "[SLA] - INFO - - - Acquiring PH2 Dataset", unknown="stars") as bar:
-                self.update_progress(bar, "Downloading dataset.")
-                self._download()
-
-                self.update_progress(bar, "Extracting archive.")
-                self._extract()
-
-                self.update_progress(bar, "Parsing metadata.")
-                self._parse_metadata()
-
-                self.update_progress(bar, "Collecting images.")
-                self._collect_images()
-
-                self.update_progress(bar, "Moving images.")
-                self._move_images()
-
-                self.update_progress(bar, "Cleaning up.")
-                self._clean_up()
 
     def _download(self):
         """
@@ -52,7 +30,7 @@ class Ph2Downloader(FileDownloader):
 
         :param session: The HTTP session for the download.
         """
-        download_file(self.url, self.archive_path)
+        download_file(self.url, self.archive_path, self.size)
 
     def _extract(self):
         """
@@ -68,8 +46,7 @@ class Ph2Downloader(FileDownloader):
             logger.error(f"Patoolib Documentation: http://wummel.github.io/patool/")
             raise err
 
-        # Clean-up
-        os.remove(self.archive_path)
+
 
     def _parse_metadata(self):
         """
@@ -107,13 +84,13 @@ class Ph2Downloader(FileDownloader):
     def _move_images(self):
         """Moves the images from the extracted archive layout to the 'images' folder."""
         # Create the destination.
-        os.makedirs(self._images_path)
+        os.makedirs(self.images_path)
 
         for image in self._collect_images():
             # Get the image name.
             image_name = image.split(os.sep)[-1]
             # Move the image to the destination folder.
-            shutil.move(image, os.path.join(self._images_path, image_name))
+            shutil.move(image, os.path.join(self.images_path, image_name))
 
     def _clean_up(self):
         """Clean up any stray files."""

@@ -20,7 +20,7 @@ if __name__ == '__main__':
 
 from sla_cli.src.common.logger.init_logger import init_logger
 from sla_cli.src.common.versioning import get_version
-from sla_cli.src.common.console import init_colorama
+from sla_cli.src.common.console import init_colorama, init_progress_bars
 from sla_cli.src.common.config import Config
 
 from sla_cli.src.cli.context import GROUP_CONTEXT_SETTINGS
@@ -45,6 +45,7 @@ class CliParameters:
 @click.option("-d", "--debug", is_flag=True, help="Runs the tool in debug mode.")
 @click.option("-f", "--config-file", type=click.STRING, help="Explicitly load a file configuration from a given path.")
 @init_colorama
+@init_progress_bars
 @init_logger
 @kwargs_to_dataclass(CliParameters)
 @click.pass_context

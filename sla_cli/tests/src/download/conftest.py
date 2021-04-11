@@ -36,7 +36,10 @@ def downloader_options_factory(tmpdir):
                 config=config,
                 force=kwargs.get("force", False),
                 dataset=kwargs.get("dataset", "fake_dataset"),
-                metadata_as_name=kwargs.get("metadata_as_name", False)
+                metadata_as_name=kwargs.get("metadata_as_name", False),
+                size=kwargs.get("size", False),
+                clean=kwargs.get("clean", False),
+                skip=kwargs.get("skip", False),
             )
 
     return make

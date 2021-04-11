@@ -10,6 +10,7 @@ from dataclasses import dataclass
 from functools import wraps
 import shutil
 
+from alive_progress import alive_bar
 from requests import Session
 
 from sla_cli.src.common.config import Config
@@ -24,9 +25,12 @@ class DownloaderOptions:
     destination_directory: str
     config: Config
     force: bool
+    clean: bool
+    skip: bool
     metadata_as_name: bool
     url: str = ""
     dataset: str = ""
+    size: float = 0
 
 
 class Downloader(metaclass=ABCMeta):
@@ -72,11 +76,70 @@ class Downloader(metaclass=ABCMeta):
     def config(self) -> Config:
         return self.options.config
 
+    @property
+    def size(self) -> float:
+        return self.options.size
+
+    @property
+    def skip_download(self) -> bool:
+        return self.options.skip
+
+    @property
+    def clean(self) -> bool:
+        return self.options.clean
+
+
+def unknown_progress(title: str) -> callable:
+    """
+    Returns a pre-made progress bar context manager.
+
+    :param title: The title of the progress bar.
+    :param type: The type of spinner to use in the progress bar.
+    :return: A progress bar context manager.
+    """
+    return alive_bar(None, f"[SLA] - INFO - - - {title}")
+
 
 class FileDownloader(Downloader, metaclass=ABCMeta):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+    def download(self, session: Session = None):
+        """Downloads and formats a file based dataset."""
+
+        def dont_skip_download():
+            return not self.skip_download
+
+        def archive_path_does_not_exist():
+            return not os.path.exists(self.archive_path)
+
+        # Check to see if the dataset already exists.
+        if self._does_not_exist_or_forced():
+            if dont_skip_download() or archive_path_does_not_exist():
+                self._download()
+            else:
+                logger.info(f"Download skipped.")
+
+            with unknown_progress(f"Extracting"):
+                self._extract()
+
+            # Clean-up archive file.
+            if self.clean:
+                logger.info(f"Removing archive file.")
+                os.remove(self.archive_path)
+
+            with unknown_progress(f"Parsing metadata"):
+                self._parse_metadata()
+
+            with unknown_progress(f"Collecting images"):
+                self._collect_images()
+
+            with unknown_progress(f"Moving images"):
+                self._move_images()
+
+            with unknown_progress(f"Cleaning up"):
+                self._clean_up()
 
     @property
     def archive_path(self):
@@ -141,7 +204,7 @@ class FileDownloader(Downloader, metaclass=ABCMeta):
         pass
 
     @property
-    def _images_path(self):
+    def images_path(self):
         """Returns the destination folder for images."""
         return os.path.join(self.extracted_path, "images")
 
