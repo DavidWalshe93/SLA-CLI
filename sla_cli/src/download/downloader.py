@@ -97,7 +97,7 @@ def unknown_progress(title: str) -> callable:
     :param type: The type of spinner to use in the progress bar.
     :return: A progress bar context manager.
     """
-    return alive_bar(None, f"[SLA] - INFO - - - {title}")
+    return alive_bar(None, f"[SLA] - INFO - - - {title}", unknown="stars")
 
 
 class FileDownloader(Downloader, metaclass=ABCMeta):
@@ -124,16 +124,13 @@ class FileDownloader(Downloader, metaclass=ABCMeta):
             with unknown_progress(f"Extracting"):
                 self._extract()
 
-            # Clean-up archive file.
+            # Clean-up archive file if -c/--clean is used.
             if self.clean:
                 logger.info(f"Removing archive file.")
                 os.remove(self.archive_path)
 
             with unknown_progress(f"Parsing metadata"):
-                self._parse_metadata()
-
-            with unknown_progress(f"Collecting images"):
-                self._collect_images()
+                self._save_metadata()
 
             with unknown_progress(f"Moving images"):
                 self._move_images()
@@ -150,13 +147,6 @@ class FileDownloader(Downloader, metaclass=ABCMeta):
     def extracted_path(self):
         """Returns the archive save path for the given dataset."""
         return os.path.join(self.destination_directory, self.__extracted_name__)
-
-    @staticmethod
-    def update_progress(bar: callable, text: str):
-        """Updates the alive bar progress and adds a new message."""
-        bar()
-        bar.text("." + " " * 100 + " ")
-        bar.text(text)
 
     def _does_not_exist_or_forced(self) -> bool:
         """
@@ -187,7 +177,7 @@ class FileDownloader(Downloader, metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def _parse_metadata(self):
+    def _save_metadata(self):
         pass
 
     @property

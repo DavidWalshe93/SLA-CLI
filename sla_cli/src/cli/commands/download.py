@@ -21,6 +21,7 @@ from sla_cli.src.download import Downloader, DownloaderOptions, DummyDownloader
 from sla_cli.src.download.isic import IsicMetadataDownloader, IsicImageDownloader
 from sla_cli.src.download.ph2 import Ph2Downloader
 from sla_cli.src.download.pad_ufes_20 import PadUfes20Downloader
+from sla_cli.src.download.mednode import MednodeDownloader
 
 logger = logging.getLogger(__name__)
 
@@ -106,6 +107,7 @@ def downloader_factory(dataset) -> Downloader:
         "isic_2020_vienna_part_1": IsicImageDownloader,
         "isic_2020_vienna_part_2": IsicImageDownloader,
         "jid_editorial_images_2018": IsicImageDownloader,
+        "mednode": MednodeDownloader,
         "msk_1": IsicImageDownloader,
         "msk_2": IsicImageDownloader,
         "msk_3": IsicImageDownloader,

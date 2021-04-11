@@ -12,7 +12,7 @@ import glob
 import pandas as pd
 from requests import Session
 
-from sla_cli.src.download import FileDownloader, download_file
+from sla_cli.src.download import FileDownloader, download_file, unzip_file
 
 logger = logging.getLogger(__name__)
 
@@ -28,11 +28,7 @@ class PadUfes20Downloader(FileDownloader):
 
     def _extract(self):
         """Extracts the PAD_UFES_20 zip archive."""
-        with ZipFile(self.archive_path, "r") as fh:
-            fh.extractall(self.extracted_path)
-
-        if self.clean:
-            os.remove(self.archive_path)
+        unzip_file(self.archive_path, self.extracted_path)
 
         # Unzip inner image archives.
         images_dir = os.path.join(self.extracted_path, "images")
@@ -45,7 +41,7 @@ class PadUfes20Downloader(FileDownloader):
             # Remove archive after extraction.
             os.remove(archive)
 
-    def _parse_metadata(self):
+    def _save_metadata(self):
         """Parse the metadata of the PAD-UFES-20 dataset."""
         self.metadata_path = os.path.join(self.extracted_path, "metadata.csv")
         if self.options.metadata_as_name:
@@ -70,7 +66,7 @@ class PadUfes20Downloader(FileDownloader):
 
     def _move_images(self):
         """Moves all images to the 'images' directory."""
-        for image in self._convert_images():
+        for image in self._collect_images():
             # Get the image name.
             image_name = image.split(os.sep)[-1]
             # Move the image to the destination folder.

@@ -14,7 +14,7 @@ import patoolib
 from requests import Session
 from alive_progress import alive_bar
 
-from sla_cli.src.download import FileDownloader, DownloaderOptions, download_file, inject_http_session
+from sla_cli.src.download import FileDownloader, download_file, move_images
 
 logger = logging.getLogger(__name__)
 
@@ -25,17 +25,11 @@ class Ph2Downloader(FileDownloader):
     __extracted_name__ = "PH2"
 
     def _download(self):
-        """
-        Downloads the PH2 dataset as a RAR archive.
-
-        :param session: The HTTP session for the download.
-        """
+        """Downloads the PH2 dataset as a RAR archive."""
         download_file(self.url, self.archive_path, self.size)
 
     def _extract(self):
-        """
-        Extracts the downloaded archive.
-        """
+        """Extracts the downloaded archive."""
         try:
             patoolib.extract_archive(self.archive_path, outdir=self.extracted_path, verbosity=-1)
         except Exception as err:
@@ -46,9 +40,7 @@ class Ph2Downloader(FileDownloader):
             logger.error(f"Patoolib Documentation: http://wummel.github.io/patool/")
             raise err
 
-
-
-    def _parse_metadata(self):
+    def _save_metadata(self):
         """
         Moves the metadata as is to the extracted directory.
         """
@@ -85,12 +77,8 @@ class Ph2Downloader(FileDownloader):
         """Moves the images from the extracted archive layout to the 'images' folder."""
         # Create the destination.
         os.makedirs(self.images_path)
-
-        for image in self._collect_images():
-            # Get the image name.
-            image_name = image.split(os.sep)[-1]
-            # Move the image to the destination folder.
-            shutil.move(image, os.path.join(self.images_path, image_name))
+        # Move images to destination folder.
+        move_images(self._collect_images(), self.images_path)
 
     def _clean_up(self):
         """Clean up any stray files."""
