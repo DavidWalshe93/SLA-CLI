@@ -4,9 +4,11 @@ Date:       10 April 2021
 """
 
 import logging
+import os
 from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass
 from functools import wraps
+import shutil
 
 from requests import Session
 
@@ -25,7 +27,6 @@ class DownloaderOptions:
     metadata_as_name: bool
     url: str = ""
     dataset: str = ""
-
 
 
 class Downloader(metaclass=ABCMeta):
@@ -72,7 +73,91 @@ class Downloader(metaclass=ABCMeta):
         return self.options.config
 
 
+class FileDownloader(Downloader, metaclass=ABCMeta):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    @property
+    def archive_path(self):
+        """Returns the archive save path for the given dataset."""
+        return os.path.join(self.destination_directory, self.__archive_name__)
+
+    @property
+    def extracted_path(self):
+        """Returns the archive save path for the given dataset."""
+        return os.path.join(self.destination_directory, self.__extracted_name__)
+
+    @staticmethod
+    def update_progress(bar: callable, text: str):
+        """Updates the alive bar progress and adds a new message."""
+        bar()
+        bar.text("." + " " * 100 + " ")
+        bar.text(text)
+
+    def _does_not_exist_or_forced(self) -> bool:
+        """
+        Checks if the given dataset already exists in the destination folder.
+
+        If it does then unless -f/--force is set, skip the download.
+
+        If -f/--force is set, delete the current contents and re-download.
+        """
+        if os.path.exists(self.extracted_path) and self.force:
+            logger.debug(f"'-f/--force' flag set, deleting directory: '{self.extracted_path}'")
+            shutil.rmtree(self.extracted_path)
+            logger.debug(f"Deletion successful.")
+        elif os.path.exists(self.extracted_path) and not self.force:
+            logger.warning(f"{self.dataset_name} already exists at the destination directory '{self.extracted_path}'")
+            logger.warning(f"If you wish to re-download the dataset, try 'sla-cli download -f/--force <DATASET>'")
+            logger.warning(f"Skipping...")
+            return False
+
+        return True
+
+    @abstractmethod
+    def _download(self):
+        pass
+
+    @abstractmethod
+    def _extract(self):
+        pass
+
+    @abstractmethod
+    def _parse_metadata(self):
+        pass
+
+    @property
+    @abstractmethod
+    def _image_ids(self):
+        pass
+
+    @abstractmethod
+    def _collect_images(self):
+        pass
+
+    @abstractmethod
+    def _convert_images(self):
+        pass
+
+    @property
+    def _images_path(self):
+        """Returns the destination folder for images."""
+        return os.path.join(self.extracted_path, "images")
+
+    @abstractmethod
+    def _move_images(self):
+        pass
+
+    @abstractmethod
+    def _clean_up(self):
+        pass
+
+
 class DummyDownloader(Downloader):
+    """
+    Dummy downloader to handle non implemented datasets gracefully.
+    """
 
     @inject_http_session
     def download(self, session: Session, **kwargs):

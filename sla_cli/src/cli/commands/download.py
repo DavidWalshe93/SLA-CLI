@@ -19,6 +19,7 @@ from sla_cli.src.db.accessors import AccessorFactory
 from sla_cli.src.download import Downloader, DownloaderOptions, DummyDownloader
 
 from sla_cli.src.download.isic import IsicMetadataDownloader, IsicImageDownloader
+from sla_cli.src.download.ph2 import Ph2Downloader
 
 logger = logging.getLogger(__name__)
 
@@ -102,6 +103,7 @@ def downloader_factory(dataset) -> Downloader:
         "msk_3": IsicImageDownloader,
         "msk_4": IsicImageDownloader,
         "msk_5": IsicImageDownloader,
+        "ph2": Ph2Downloader,
         "sonic": IsicImageDownloader,
         "sydney_mia_smdc_2020_isic_challenge_contribution": IsicImageDownloader,
         "uda_1": IsicImageDownloader,
