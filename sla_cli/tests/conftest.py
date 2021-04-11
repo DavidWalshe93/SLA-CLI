@@ -7,7 +7,7 @@ import pytest
 import logging
 
 from click.testing import CliRunner
-from sla_cli.entry import cli
+from sla_cli.entry import cli as _cli
 
 
 @pytest.fixture(autouse=True)
@@ -25,4 +25,4 @@ def cli_runner() -> CliRunner:
 @pytest.fixture
 def cli() -> callable:
     """Returns the root CLI callable command."""
-    return cli
+    return _cli
