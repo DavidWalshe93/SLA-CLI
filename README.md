@@ -9,7 +9,6 @@
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/sla-cli.svg)](https://pypi.python.org/pypi/sla-cli/)
 [![Downloads](https://pepy.tech/badge/sla-cli)](https://pepy.tech/project/sla-cli)
 
-
 > A Skin Lesion Acquisition (SLA) CLI tool designed to help source data for skin lesion research.
 
 ## Introduction
@@ -26,16 +25,16 @@ their research efforts.
 
 **Available**
 
-- Dataset summaries and label distribution.
-- Console-based dashboards.
+-  Dataset summaries and label distribution.
+-  Console-based dashboards.
 
 **WIP**
 
-- Matplotlib integration for data distribution visualisation.
-- Dataset downloading (public datasets only).
-- Metadata extraction on applicable datasets.
-- Data background information sources and links.
-- Preprocessing of datasets for *binary classification*.
+-  Matplotlib integration for data distribution visualisation.
+-  Dataset downloading (public datasets only).
+-  Metadata extraction on applicable datasets.
+-  Data background information sources and links.
+-  Preprocessing of datasets for *binary classification*.
 
 ## Loading Configurations
 
@@ -64,8 +63,8 @@ The following sub sections discuss the how to use the tool.
 
 The following conventions are used to describe tool usage.
 
-```
-<NAME>                ---> Required argument.
+```shell
+<NAME>                 ---> Required argument.
 
 [NAME: DEFAULT_VALUE]  ---> Optional argument showing default value. 
 ```

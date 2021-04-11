@@ -1,7 +1,5 @@
-import pandas as pd
 import yaml
 import json
-from pprint import pprint
 from collections import OrderedDict
 
 # Load schema to map.
