@@ -32,11 +32,12 @@ class OrganiseParameters:
 @click.command(**COMMAND_CONTEXT_SETTINGS, short_help="Organises datasets into train/validation/splits.")
 @click.argument("datasets", type=click.STRING, callback=match_datasets_cb, nargs=-1)
 @click.option("-d", "--directory", type=click.STRING, cls=default_from_context("data_directory"), help="The destination directory for the downloaded content. Default is the current work directory.")
-@click.option("-i", "--include", type=click.STRING, multiple=True, default=None, help="Used to exclude specific classes in the data. Option in mutually exclusive to '-e/--exclude'.")
-@click.option("-e", "--exclude", type=click.STRING, multiple=True, default=None, help="Used to include specific classes in the data. Option in mutually exclusive to '-i/--include'.")
+@click.option("-i", "--include", type=click.STRING, multiple=True, default=None, callback=match_datasets_cb, help="Used to exclude specific classes in the data. Option in mutually exclusive to '-e/--exclude'.")
+@click.option("-e", "--exclude", type=click.STRING, multiple=True, default=None, callback=match_datasets_cb, help="Used to include specific classes in the data. Option in mutually exclusive to '-i/--include'.")
 @kwargs_to_dataclass(OrganiseParameters)
 @click.pass_context
 def organise(ctx: Context, params: OrganiseParameters):
     if all([params.include, params.exclude]):
         raise BadOptionUsage("include", f"'-i/--include' and '-e/--exclude' switches cannot be used together.")
 
+    print(params.include)

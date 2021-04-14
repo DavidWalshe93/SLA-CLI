@@ -52,7 +52,16 @@ def match_datasets_cb(ctx, param, fuzzy_datasets: List[str]) -> List[str]:
                "uda_1",
                "uda_2"]
 
-    datasets = []
+    # Handles defaults=None or no arguments passed.
+    if fuzzy_datasets is None:
+        return None
+
+    # Remove fully matching choices.
+    datasets = [dataset for dataset in fuzzy_datasets if dataset.lower() in choices]
+    # Retain only non-perfect matches for fuzzy matching.
+    fuzzy_datasets = [dataset for dataset in fuzzy_datasets if dataset not in datasets]
+
+    # Perform fuzzy match for all non-perfect matches.
     for dataset in fuzzy_datasets:
         best_match = process.extractOne(dataset, choices)
         if best_match[1] != 100:
