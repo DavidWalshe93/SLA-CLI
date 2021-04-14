@@ -74,7 +74,7 @@ class IsicImageDownloader(Downloader):
         """
         df = pd.read_csv(Path.isic_metadata())
 
-        df = df[df["dataset"].str.upper() == self.dataset_name]
+        df = df[df["dataset"].str.upper() == convert(self.dataset_name)]
 
         return df
 
@@ -238,7 +238,7 @@ class IsicImageDownloader(Downloader):
     @property
     def isic_image_path(self) -> str:
         """Returns the isic image path."""
-        return os.path.join(self.download_path, "ISIC-images", self.dataset_name)
+        return os.path.join(self.download_path, "ISIC-images", name_converter(self.dataset_name))
 
     @property
     def isic_images(self) -> List[str]:
@@ -300,3 +300,39 @@ class IsicImageDownloader(Downloader):
         # Save as "metadata.csv", easier to work with for ML input pipelines.
         else:
             self.metadata.to_csv(os.path.join(self.download_path, "metadata.csv"))
+
+
+def convert(dataset: str) -> str:
+    """Translates the CLI argument name into the Metadata value for the ISIC archive."""
+    return {
+        "bcn_20000": "BCN_20000",
+        "bcn_2020_challenge": "BCN_2020_Challenge",
+        "brisbane_isic_challenge_2020": "Brisbane ISIC Challenge 2020",
+        "dermoscopedia_cc_by": "Dermoscopedia (CC-BY)",
+        "ham10000": "HAM10000",
+        "isic_2020_challenge_mskcc_contribution": "ISIC 2020 Challenge - MSKCC contribution",
+        "isic_2020_vienna_part_1": "ISIC_2020_Vienna_part_1",
+        "isic_2020_vienna_part_2": "ISIC_2020_Vienna_part2",
+        "jid_editorial_images_2018": "2018 JID Editorial Images",
+        "msk_1": "MSK-1",
+        "msk_2": "MSK-2",
+        "msk_3": "MSK-3",
+        "msk_4": "MSK-4",
+        "msk_5": "MSK-5",
+        "sonic": "SONIC",
+        "sydney_mia_smdc_2020_isic_challenge_contribution": "Sydney (MIA / SMDC) 2020 ISIC challenge contribution",
+        "uda_1": "UDA-1",
+        "uda_2": "UDA-2"
+    }.get(dataset, dataset).upper()
+
+
+def name_converter(name: str) -> str:
+    """
+    Returns the correct dataset name for datasets begining with numbers.
+
+    :param name: The name of the dataset to convert
+    :return: The converted dataset name if required, else passed in name is returned.
+    """
+    return {
+        "jid_editorial_images_2018": "2018 JID Editorial Images"
+    }.get(name, name)

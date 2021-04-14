@@ -86,10 +86,10 @@ def test_get_metadata(dataset, size, metadata_file, downloader_options_factory, 
 
 @pytest.mark.parametrize("dataset",
                          [
-                             "HAM10000",
-                             "UDA-1",
-                             "BCN_20000",
-                             "MSK-1",
+                             "ham10000",
+                             "uda-1",
+                             "bcn_20000",
+                             "msk-1",
                          ])
 def test_create_download_path(dataset, downloader_options_factory, tmpdir, caplog, mock_get_metadata):
     """
@@ -112,10 +112,10 @@ def test_create_download_path(dataset, downloader_options_factory, tmpdir, caplo
 
 @pytest.mark.parametrize("dataset",
                          [
-                             "HAM10000",
-                             "UDA-1",
-                             "BCN_20000",
-                             "MSK-1",
+                             "ham10000",
+                             "uda-1",
+                             "bcn_20000",
+                             "msk-1",
                          ])
 def test_create_download_path_already_exists(dataset, downloader_options_factory, tmpdir, caplog, mock_get_metadata):
     """
@@ -143,10 +143,10 @@ def test_create_download_path_already_exists(dataset, downloader_options_factory
 
 @pytest.mark.parametrize("dataset",
                          [
-                             "HAM10000",
-                             "UDA-1",
-                             "BCN_20000",
-                             "MSK-1",
+                             "ham10000",
+                             "uda-1",
+                             "bcn_20000",
+                             "msk-1",
                          ])
 def test_create_download_path_already_exists_force(dataset, downloader_options_factory, tmpdir, caplog, mock_get_metadata):
     """

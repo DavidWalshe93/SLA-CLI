@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 @dataclass
 class DownloadParameters:
     datasets: List[str]
-    data_directory: str
+    directory: str
     force: bool
     clean: bool
     skip: bool
@@ -59,7 +59,7 @@ def download(ctx: Context, params: DownloadParameters):
     params.datasets = keep
 
     options = DownloaderOptions(
-        destination_directory=params.data_directory,
+        destination_directory=params.directory,
         config=ctx.obj,
         force=params.force,
         metadata_as_name=params.metadata_as_name,
@@ -80,7 +80,7 @@ def download(ctx: Context, params: DownloadParameters):
             downloader = downloader_factory(dataset)
 
             # Add dataset to options.
-            options.dataset = convert(dataset=dataset)
+            options.dataset = dataset
             options.url = datasets.datasets[dataset].info.download[0]
             options.size = datasets.datasets[dataset].info.size
 
@@ -125,25 +125,4 @@ def downloader_factory(dataset) -> Downloader:
     )
 
 
-def convert(dataset: str) -> str:
-    """Translates the CLI argument name into the Metadata value."""
-    return dict(
-        bcn_20000="BCN_20000",
-        bcn_2020_challenge="BCN_2020_Challenge",
-        brisbane_isic_challenge_2020="Brisbane ISIC Challenge 2020",
-        dermoscopedia_cc_by="Dermoscopedia (CC-BY)",
-        ham10000="HAM10000",
-        isic_2020_challenge_mskcc_contribution="ISIC 2020 Challenge - MSKCC contribution",
-        isic_2020_vienna_part_1="ISIC_2020_Vienna_part_1",
-        isic_2020_vienna_part_2="ISIC_2020_Vienna_part2",
-        jid_editorial_images_2018="2018 JID Editorial Images",
-        msk_1="MSK-1",
-        msk_2="MSK-2",
-        msk_3="MSK-3",
-        msk_4="MSK-4",
-        msk_5="MSK-5",
-        sonic="SONIC",
-        sydney_mia_smdc_2020_isic_challenge_contribution="Sydney (MIA / SMDC) 2020 ISIC challenge contribution",
-        uda_1="UDA-1",
-        uda_2="UDA-2"
-    ).get(dataset, dataset)
+

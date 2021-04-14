@@ -54,7 +54,7 @@ class Downloader(metaclass=ABCMeta):
 
     @property
     def dataset_name(self) -> str:
-        return self.options.dataset.upper()
+        return self.options.dataset.lower()
 
     @property
     def destination_directory(self) -> str:
