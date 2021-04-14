@@ -42,8 +42,13 @@ def flag_if_empty(func):
 @attr.s
 class Config:
     isic: Isic = attr.ib(validator=instance_of(Isic), converter=lambda config: Isic(**config))
+    data_directory: str = attr.ib(validator=instance_of(str), default=os.getcwd())
     unzip: bool = attr.ib(validator=instance_of(bool), default=True)
     convert: str = attr.ib(validator=instance_of(str), converter=lambda x: x.lower(), default="original")
+
+    def __getitem__(self, item):
+        """Allows [] indexing"""
+        return self.__getattribute__(item)
 
     @staticmethod
     def load(config_file: str = None):

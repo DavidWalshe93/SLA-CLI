@@ -12,7 +12,7 @@ import click
 from click import Context
 
 from sla_cli.src.cli.context import COMMAND_CONTEXT_SETTINGS
-from sla_cli.src.cli.utils import kwargs_to_dataclass
+from sla_cli.src.cli.utils import kwargs_to_dataclass, default_from_context
 from sla_cli.src.db.accessors import AccessorFactory
 from sla_cli.src.download import Downloader, DownloaderOptions, DummyDownloader
 
@@ -37,12 +37,12 @@ class DownloadParameters:
 
 @click.command(**COMMAND_CONTEXT_SETTINGS, short_help="Downloads available datasets.")
 @click.argument("datasets", type=click.STRING, nargs=-1)
-@click.option("-d", "--directory", type=click.STRING, default=os.getcwd(), help="The destination directory for the download.")
-@click.option("-f", "--force", is_flag=True, help="Force download a dataset, even if it already exists on the filesystem.")
-@click.option("-c", "--clean", is_flag=True, help="Remove archive files directly after extraction.")
-@click.option("-s", "--skip", is_flag=True, help="Skip the download phase, useful for running builds on previously downloaded archives.")
-@click.option("--isic-meta", is_flag=True, help="Download the ISIC Archive metadata instead of a dataset.")
-@click.option("--metadata-as-name", is_flag=True, help="Saves the dataset metadata as the dataset name. Helpful for viewing in excel, not optimal for ML pipelines.")
+@click.option("-d", "--directory", type=click.STRING, cls=default_from_context("data_directory"), help="The destination directory for the downloaded content. Default is the current work directory.")
+@click.option("-f", "--force", type=click.BOOL, is_flag=True, help="Force download a dataset, even if it already exists on the filesystem.")
+@click.option("-c", "--clean", type=click.BOOL, is_flag=True, help="Remove archive files directly after extraction.")
+@click.option("-s", "--skip", type=click.BOOL, is_flag=True, help="Skip the download phase, useful for running builds on previously downloaded archives.")
+@click.option("--isic-meta", type=click.BOOL, is_flag=True, help="Download the ISIC Archive metadata instead of a dataset.")
+@click.option("--metadata-as-name", type=click.BOOL, is_flag=True, help="Saves the dataset metadata as the dataset name. Helpful for viewing in excel, not optimal for ML pipelines.")
 @kwargs_to_dataclass(DownloadParameters)
 @click.pass_context
 def download(ctx: Context, params: DownloadParameters):

@@ -8,6 +8,8 @@ import os
 from functools import wraps
 from typing import Dict
 
+import click
+
 logger = logging.getLogger(__name__)
 
 
@@ -28,3 +30,20 @@ def kwargs_to_dataclass(data_class):
         return _kwargs_to_dataclass_wrapper
 
     return _kwargs_to_dataclass
+
+
+def default_from_context(key: str):
+    """
+    Allows for a default option to reference the Click Context obj object for a default value.
+
+    :param key: The name of the value to reference.
+    :return: The context as default custom option class.
+    """
+
+    class OptionDefaultFromContext(click.Option):
+
+        def get_default(self, ctx):
+            self.default = ctx.obj[key]
+            return super(OptionDefaultFromContext, self).get_default(ctx)
+
+    return OptionDefaultFromContext

@@ -3,6 +3,8 @@
 
 # Template configuration file for sla-cli.
 
+# The path where data is to be downloaded and referenced off.
+data_directory: "./data/"
 
 # Unzip archives as they are downloaded or leave them as an archive file.
 unzip: true
