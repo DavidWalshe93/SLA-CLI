@@ -256,6 +256,7 @@ class IsicImageDownloader(Downloader):
 
         if len(missing_images) > 0:
             self._download_missing_images(missing_images)
+            self._verify_download()
         else:
             logger.info(f"All '{self.dataset_name}' images were downloaded successfully'")
 
@@ -271,7 +272,7 @@ class IsicImageDownloader(Downloader):
         missing_ids = sorted(list(df[df["image_name"].isin(missing_images)]["isic_id"]))
         options = DownloadOptions(
             image_ids=missing_ids,
-            title=f"Re-Downloading {len(missing_ids)} from {self.dataset_name}."
+            title=f"[SLA] - INFO - - - Re-Downloading {len(missing_ids)} from {self.dataset_name}."
         )
         self._download(options=options)
 
