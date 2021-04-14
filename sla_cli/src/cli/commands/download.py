@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 @dataclass
 class DownloadParameters:
     datasets: List[str]
-    directory: str
+    data_directory: str
     force: bool
     clean: bool
     skip: bool
@@ -59,7 +59,7 @@ def download(ctx: Context, params: DownloadParameters):
     params.datasets = keep
 
     options = DownloaderOptions(
-        destination_directory=params.directory,
+        destination_directory=params.data_directory,
         config=ctx.obj,
         force=params.force,
         metadata_as_name=params.metadata_as_name,

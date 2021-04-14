@@ -10,6 +10,7 @@ coverage==5.5
 coveralls==3.0.1
 cycler==0.10.0
 docopt==0.6.2
+fuzzywuzzy==0.18.0
 httpretty==1.0.5
 idna==2.10
 importlib-metadata==3.10.0
@@ -32,7 +33,7 @@ pytz==2021.1
 PyYAML==5.4.1
 requests==2.25.1
 six==1.15.0
--e git+https://github.com/DavidWalshe93/SL-CLI.git@e197984cf4cf7943ebe4b046750b48b148df7e35#egg=sla_cli
+-e git+https://github.com/DavidWalshe93/SL-CLI.git@f3b3213157d4fe9c4be9b5df39b292944b658df9#egg=sla_cli
 tabulate==0.8.9
 toml==0.10.2
 typing-extensions==3.7.4.3

@@ -33,8 +33,6 @@ from sla_cli.src.cli.commands.organise import organise
 
 logger = logging.getLogger(__name__)
 
-# Setup environment variables.
-# os.environ["PYTHONHASHSEED"] = "0"
 
 @dataclass
 class CliParameters:
