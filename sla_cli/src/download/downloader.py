@@ -148,6 +148,18 @@ class FileDownloader(Downloader, metaclass=ABCMeta):
         """Returns the archive save path for the given dataset."""
         return os.path.join(self.destination_directory, self.__extracted_name__)
 
+    def metadata_path(self, fmt: str = "csv"):
+        """
+        Returns the destination path to the metadata file.
+
+        :param fmt: The output format for the metadata.
+        """
+        if self.options.metadata_as_name:
+            save_name = self.dataset_name.lower().replace(" ", "_").replace("-", "_") + f".{fmt}"
+            return os.path.join(self.extracted_path, f"{save_name}")
+        else:
+            return os.path.join(self.extracted_path, f"metadata.{fmt}")
+
     def _does_not_exist_or_forced(self) -> bool:
         """
         Checks if the given dataset already exists in the destination folder.
@@ -177,12 +189,11 @@ class FileDownloader(Downloader, metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def _save_metadata(self):
+    def _format_metadata(self):
         pass
 
-    @property
     @abstractmethod
-    def _image_ids(self):
+    def _save_metadata(self):
         pass
 
     @abstractmethod

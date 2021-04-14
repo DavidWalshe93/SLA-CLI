@@ -291,6 +291,7 @@ class IsicImageDownloader(Downloader):
     def _save_metadata(self):
         """Saves the datasets metadata to a file."""
         # Save the metadata name as the dataset name. Handy for opening in excel for review.
+
         if self.options.metadata_as_name:
             save_name = self.dataset_name.lower().replace(" ", "_").replace("-", "_") + ".csv"
             self.metadata.to_csv(os.path.join(self.download_path, save_name))

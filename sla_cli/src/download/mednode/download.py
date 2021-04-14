@@ -69,6 +69,9 @@ class MednodeDownloader(FileDownloader):
                 "dx": [dx for _ in images_names]
             })
 
+    def _format_metadata(self):
+        pass
+
     def _save_metadata(self):
         """Creates metadata from MedNode file structure."""
         # Create a dataframe of [image_name, dx] for each dx.
@@ -83,15 +86,15 @@ class MednodeDownloader(FileDownloader):
         # Append all dx dataframes
         df = pd.concat(dfs)
 
-        # Save dataframes.s
-        if self.options.metadata_as_name:
-            df.to_csv(os.path.join(self.extracted_path, f"{self.dataset_name}.csv"), index=None)
-        else:
-            df.to_csv(os.path.join(self.extracted_path, f"metadata.csv"), index=None)
+        # Save dataframes.
+        df.to_csv(self.metadata_path(), index=None)
+        # if self.options.metadata_as_name:
+        #     df.to_csv(os.path.join(self.extracted_path, f"{self.dataset_name}.csv"), index=None)
+        # else:
+        #     df.to_csv(os.path.join(self.extracted_path, f"metadata.csv"), index=None)
 
-    @property
-    def _image_ids(self):
-        pass
+    def _label_metadata(self):
+        """Relabels the data into a common naming convention."""
 
     def _collect_images(self):
         """Collect all absolute image paths"""

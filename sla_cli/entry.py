@@ -29,9 +29,12 @@ from sla_cli.src.cli.utils import kwargs_to_dataclass
 # Commands
 from sla_cli.src.cli.commands.ls import ls
 from sla_cli.src.cli.commands.download import download
+from sla_cli.src.cli.commands.organise import organise
 
 logger = logging.getLogger(__name__)
 
+# Setup environment variables.
+# os.environ["PYTHONHASHSEED"] = "0"
 
 @dataclass
 class CliParameters:
@@ -76,7 +79,8 @@ for group in groups:
 # ==================================================
 commands = [
     ls,
-    download
+    download,
+    organise
 ]
 
 for command in commands:

@@ -40,23 +40,16 @@ class Ph2Downloader(FileDownloader):
             logger.error(f"Patoolib Documentation: http://wummel.github.io/patool/")
             raise err
 
+    def _format_metadata(self):
+        pass
+
     def _save_metadata(self):
         """
         Moves the metadata as is to the extracted directory.
         """
-        metadata_file = os.path.join(self.extracted_path, "PH2Dataset", "PH2_dataset.xlsx")
+        src_metadata_file = os.path.join(self.extracted_path, "PH2Dataset", "PH2_dataset.xlsx")
 
-        if self.options.metadata_as_name:
-            self.metadata_path = os.path.join(self.extracted_path, f"{self.dataset_name}.xlsx")
-        else:
-            self.metadata_path = os.path.join(self.extracted_path, f"ph2.xlsx")
-
-        shutil.move(metadata_file, self.metadata_path)
-
-    @property
-    def _image_ids(self):
-        """Returns the image names of the PH2 dataset."""
-        return list(pd.read_csv(self.metadata_path, header=12)["Image Name"])
+        shutil.move(src_metadata_file, self.metadata_path(".xlsx"))
 
     def _collect_images(self) -> List[str]:
         """

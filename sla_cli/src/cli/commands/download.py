@@ -11,8 +11,6 @@ from dataclasses import dataclass, asdict
 import click
 from click import Context
 
-from sla_cli.src.common.console import init_colorama
-
 from sla_cli.src.cli.context import COMMAND_CONTEXT_SETTINGS
 from sla_cli.src.cli.utils import kwargs_to_dataclass
 from sla_cli.src.db.accessors import AccessorFactory
@@ -50,13 +48,15 @@ class DownloadParameters:
 def download(ctx: Context, params: DownloadParameters):
     datasets = AccessorFactory.create_datasets()
 
-    removals = []
+    # Remove datasets that dont exist in the tool before continuing.
+    keep = []
     for dataset in params.datasets:
-        if dataset not in datasets.datasets.names:
+        if dataset in datasets.datasets.names:
+            keep.append(dataset)
+        else:
             logger.warning(f"'{dataset}' does not exist for download, removing...")
-            removals.append(dataset)
 
-    params.datasets = [dataset for dataset in params.datasets if dataset not in removals]
+    params.datasets = keep
 
     options = DownloaderOptions(
         destination_directory=params.directory,

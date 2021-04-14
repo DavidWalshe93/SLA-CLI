@@ -41,6 +41,9 @@ class PadUfes20Downloader(FileDownloader):
             # Remove archive after extraction.
             os.remove(archive)
 
+    def _format_metadata(self):
+        pass
+
     def _save_metadata(self):
         """Parse the metadata of the PAD-UFES-20 dataset."""
         self.metadata_path = os.path.join(self.extracted_path, "metadata.csv")
@@ -48,11 +51,6 @@ class PadUfes20Downloader(FileDownloader):
             new_path = os.path.join(self.extracted_path, "pad_ufes_20.csv")
             shutil.move(self.metadata_path, new_path)
             self.metadata_path = new_path
-
-    @property
-    def _image_ids(self):
-        """Returns the names of the images."""
-        return list(pd.read_csv(self.metadata_path)["patient_id"])
 
     def _collect_images(self):
         """Collects all the absolute image paths from the PAD-UFES-20 extracted archive."""
