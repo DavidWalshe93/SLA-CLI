@@ -249,7 +249,7 @@ ph2
 ====================================================================================================
    Availability:   public
    Capture method: dermoscopy
-   Size:           11.0 MB
+   Size:           112.0 MB
    References:
        - https://www.fc.up.pt/addi/ph2%20database.html
    Data source URL:

@@ -28,6 +28,9 @@ their research efforts.
 - Dataset summaries and label distribution.
 - Console-based dashboards.
 - Full support for downloading datasets + metadata from the ISIC Archive API.
+- Full support for downloading PH2 dataset.
+- Full support for downloading PAD-UFES-20 dataset.
+- Full support for downloading MEDNODE dataset.
 
 **WIP**
 
@@ -58,14 +61,14 @@ The table below shows the dataset currently available to acquire via the tool.
 | JID Editorial Images 2018                        |     ✅     |
 | MClass (Dermoscopy)                              |     ⚠️     |
 | MClass (Dermoscopy)                              |     ⚠️     |
-| MEDNODE                                          |     ⚠️     |
+| MEDNODE                                          |     ✅ ️     |
 | MSK-1                                            |     ✅     |
 | MSK-2                                            |     ✅     |
 | MSK-3                                            |     ✅     |
 | MSK-4                                            |     ✅     |
 | MSK-5                                            |     ✅     |
-| PAD-UFES-20                                      |     ⚠️     |
-| PH2                                              |     ⚠️     |
+| PAD-UFES-20                                      |     ✅ ️     |
+| PH2                                              |     ✅ ️     |
 | SONIC                                            |     ✅     |
 | Sydney MIA SMDC 2020 ISIC Challenge Contribution |     ✅     |
 | UDA-1                                            |     ✅     |
