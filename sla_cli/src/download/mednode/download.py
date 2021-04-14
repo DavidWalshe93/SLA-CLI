@@ -61,6 +61,8 @@ class MednodeDownloader(FileDownloader):
     @staticmethod
     def _get_dataframe_for(images_names: List[str], dx: str) -> pd.DataFrame:
         """Creates a DataFrame of the given image_name and diagnosis."""
+        # Convert name to for naevus -> nevus.
+        dx = "nevus" if dx == "naevus" else dx
         return pd.DataFrame(
             {
                 "image_name": images_names,
