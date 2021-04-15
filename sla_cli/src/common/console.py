@@ -33,7 +33,8 @@ def init_progress_bars(func):
             title_length=40,
             spinner="classic",
             unknown="classic",
-            bar="classic"
+            bar="classic",
+            enrich_print=False
         )
 
         return func(*args, **kwargs)

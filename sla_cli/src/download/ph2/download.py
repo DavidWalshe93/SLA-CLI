@@ -31,6 +31,8 @@ class Ph2Downloader(FileDownloader):
     def _extract(self):
         """Extracts the downloaded archive."""
         try:
+            if not os.path.exists(self.extracted_path):
+                os.makedirs(self.extracted_path)
             patoolib.extract_archive(self.archive_path, outdir=self.extracted_path, verbosity=-1)
         except Exception as err:
             logger.error(f"You may have to install a 3rd-party application to unpack '.rar' files.")

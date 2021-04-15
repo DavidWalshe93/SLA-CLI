@@ -85,4 +85,4 @@ for command in commands:
     cli.add_command(command)
 
 if __name__ == '__main__':
-    cli()
+    cli(prog_name="sla-cli")

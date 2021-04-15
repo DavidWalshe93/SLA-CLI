@@ -46,6 +46,30 @@ class DownloadParameters:
 @kwargs_to_dataclass(DownloadParameters)
 @click.pass_context
 def download(ctx: Context, params: DownloadParameters):
+    """Download
+
+    Responsible for downloading datasets from various endpoints using the dataset name as
+    a key.
+
+    \b
+    Command flow:
+        1) Dataset archives are downloaded from a data repository endpoint specific to a given dataset.
+        2) Once downloaded, archives are extracted and the contents are moved to the 'data' directory specified.
+        3) A custom wrapper, specific to the given dataset, is used to restructure and format the dataset content into a uniform layout.
+
+    \b
+    Available datasets:
+        bcn_20000 | bcn_2020_challenge | brisbane_isic_challenge_2020 | dermoscopedia_cc_by ham10000
+        isic_2020_challenge_mskcc_contribution | isic_2020_vienna_part_1 | isic_2020_vienna_part_2
+        jid_editorial_images_2018 | mclass_d | mclass_nd | mednode | msk_1 | msk_2 | msk_3 | msk_4
+        msk_5 | pad_ufes_20 | ph2 | sonic | sydney_mia_smdc_2020_isic_challenge_contribution
+        uda_1 | uda_2
+
+    \b
+    Example:
+        $ sla-cli download -d ./data/ mednode ph2 uda_1
+
+    """
     datasets = AccessorFactory.create_datasets()
 
     # Remove datasets that dont exist in the tool before continuing.

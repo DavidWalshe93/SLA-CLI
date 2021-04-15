@@ -55,7 +55,11 @@ INSTALL_REQUIRES = [
     "packaging",
     "pandas",
     "PyYAML",
-    "tabulate"
+    "tabulate",
+    "alive-progress",
+    "requests",
+    "patool",
+    "fuzzywuzzy"
 ]
 
 CWD = os.path.abspath(os.path.dirname(__file__))

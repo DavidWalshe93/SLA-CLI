@@ -38,9 +38,6 @@ class PadUfes20Downloader(FileDownloader):
             with ZipFile(archive, "r") as fh:
                 fh.extractall(images_dir)
 
-            # Remove archive after extraction.
-            os.remove(archive)
-
     def _format_metadata(self):
         pass
 
@@ -73,4 +70,4 @@ class PadUfes20Downloader(FileDownloader):
     def _clean_up(self):
         """Clean up any stray files."""
         for i in range(1, 4):
-            os.remove(os.path.join(self.images_path, f"imgs_part_{i}"))
+            shutil.rmtree(os.path.join(self.images_path, f"imgs_part_{i}"))
