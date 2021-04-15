@@ -18,10 +18,12 @@ def is_between(lower: float = 0.0, upper: float = 1.0):
     return _is_between
 
 
-def greater_than(limit: float):
+def greater_than(limit: float, skip_if_none: bool = False):
     """Checks if a value is greater than a set limit."""
 
     def _is_greater(obj, attribute, value):
+        if skip_if_none and value is None:
+            return
         if value <= limit:
             raise ValueError(f"'{attribute.name}' in '{type(obj).__name__}' must be greater than {limit}.")
 

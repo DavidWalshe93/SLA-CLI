@@ -14,6 +14,7 @@ import urllib.parse
 import json
 import glob
 from zipfile import ZipFile
+from queue import Queue
 
 import pandas as pd
 from requests import Session
@@ -24,7 +25,12 @@ from sla_cli.src.common.config import inject_config, Config
 from sla_cli.src.download import inject_http_session, Downloader
 from sla_cli.src.download.isic.metadata import IsicMetadataDownloader, requires_isic_metadata
 
+import concurrent.futures as concur
 logger = logging.getLogger(__name__)
+logging.getLogger(concur.__name__).setLevel(logging.ERROR)
+
+MB_QUEUE = Queue()
+GLOBAL_BAR = None
 
 
 def make_batches(data: List[any], n: int):
@@ -133,36 +139,21 @@ class IsicImageDownloader(Downloader):
 
         :param session: The HTTP session to the ISIC Archive API.
         """
+        global GLOBAL_BAR
         options = kwargs.get("options", self._default_download_options)
 
         batches = list(make_batches(options.image_ids, n=self.batch_size))
 
         with alive_bar(len(batches), title=options.title, enrich_print=False) as bar:
+            GLOBAL_BAR = bar
             with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
                 # Create a worker with a batch of image ids to request and download.
-                futures_to_request = {executor.submit(self._make_request, session, batch): idx for idx, batch in enumerate(batches)}
+                # futures_to_request = {executor.submit(self._make_request, session, batch): idx for idx, batch in enumerate(batches)}
+                futures_to_request = {executor.submit(self._process_response, session, batch, ResponseOptions(idx, self.download_path, self.unzip)): idx for idx, batch in enumerate(batches)}
 
                 # As the requests complete, process the responses
                 for index, future in enumerate(as_completed(futures_to_request)):
-                    try:
-                        options = ResponseOptions(index, self.download_path, self.unzip)
-                        # Process the downloaded batch.
-                        self._process_response(future, options)
-                        bar()
-                    except Exception as e:
-                        logger.warning(f"{e.__str__()}")
-
-    def _make_request(self, session: Session, batch: List[str]):
-        """
-        Request 300 images from the ISIC API.
-
-        :param session: The HTTP session object.
-        :param batch: The batch of images to download.
-        :return: The HTTP response.
-        """
-        url = self._make_url(image_ids=batch)
-
-        return session.get(url)
+                    bar()
 
     def _make_url(self, image_ids: List[str]) -> str:
         """
@@ -194,35 +185,42 @@ class IsicImageDownloader(Downloader):
 
         return image_ids
 
-    @staticmethod
-    def _process_response(future: Future, options: ResponseOptions):
+    def _process_response(self, session: Session, batch: List[str], options: ResponseOptions):
         """
         Saves the downloaded ISIC images to as ZIP archives and then unpacks them.
 
         :param future: The future to ask for the result off.
         :param options: The options to handle the response with.
         """
-        res = future.result()
+        try:
+            url = self._make_url(image_ids=batch)
+    
+            res = session.get(url, stream=True)
+    
+            res.raise_for_status()
+    
+            if not res:
+                logger.error(f"Download content is empty.")
+                raise ValueError("Issue downloading images.")
+            else:
+                # Save the downloaded data to a zip file.
+                archive_file = os.path.join(options.download_path, f"download_{options.index}.zip")
+                with open(archive_file, "wb") as stream:
+                    for KB, chunk in enumerate(res.iter_content(1024), start=1):
+                        stream.write(chunk)
+    
+                if options.unzip:
+                    # Unzip the archive to the save path.
+                    # Use threading lock to stop deadlocking on filesystem resources.
+                    with Lock():
+                        logger.debug(f"Unzipping {archive_file} to {options.download_path}")
+                        IsicImageDownloader._unzip_archive(archive_file, options.download_path)
+    
+                        logger.debug(f"Removing {archive_file}.")
+                        os.remove(archive_file)
+        except Exception as err:
+            logger.error(f"{err}")
 
-        if not res:
-            logger.error(f"Download content is empty.")
-            raise ValueError("Issue downloading images.")
-        else:
-            # Save the downloaded data to a zip file.
-            archive_file = os.path.join(options.download_path, f"download_{options.index}.zip")
-            with open(archive_file, "wb") as stream:
-                for chunk in res:
-                    stream.write(chunk)
-
-            if options.unzip:
-                # Unzip the archive to the save path.
-                # Use threading lock to stop deadlocking on filesystem resources.
-                with Lock():
-                    logger.debug(f"Unzipping {archive_file} to {options.download_path}")
-                    IsicImageDownloader._unzip_archive(archive_file, options.download_path)
-
-                    logger.debug(f"Removing {archive_file}.")
-                    os.remove(archive_file)
 
     @staticmethod
     def _unzip_archive(archive: str, download_path: str) -> None:

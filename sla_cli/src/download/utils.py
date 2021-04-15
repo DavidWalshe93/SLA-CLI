@@ -13,6 +13,7 @@ from typing import List
 
 from alive_progress import alive_bar
 import requests
+from requests.adapters import HTTPAdapter
 from requests import Session
 
 logger = logging.getLogger(__name__)
@@ -24,6 +25,10 @@ def inject_http_session(func):
     @wraps(func)
     def inject_http_session_wrapper(*args, **kwargs):
         with Session() as session:
+            # Expand the connection pool size for the session.
+            adapter = HTTPAdapter(pool_connections=100, pool_maxsize=100)
+            session.mount("", adapter)
+
             return func(*args, session=session, **kwargs)
 
     return inject_http_session_wrapper

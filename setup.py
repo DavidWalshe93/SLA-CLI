@@ -59,7 +59,8 @@ INSTALL_REQUIRES = [
     "alive-progress",
     "requests",
     "patool",
-    "fuzzywuzzy"
+    "fuzzywuzzy",
+    "sklearn"
 ]
 
 CWD = os.path.abspath(os.path.dirname(__file__))
