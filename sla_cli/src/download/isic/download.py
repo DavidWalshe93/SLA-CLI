@@ -238,7 +238,7 @@ class IsicImageDownloader(Downloader):
     @property
     def isic_image_path(self) -> str:
         """Returns the isic image path."""
-        return os.path.join(self.download_path, "ISIC-images", name_converter(self.dataset_name))
+        return os.path.join(self.download_path, "ISIC-images", convert(self.dataset_name))
 
     @property
     def isic_images(self) -> List[str]:

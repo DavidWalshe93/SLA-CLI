@@ -32,12 +32,28 @@ class OrganiseParameters:
 @click.command(**COMMAND_CONTEXT_SETTINGS, short_help="Organises datasets into train/validation/splits.")
 @click.argument("datasets", type=click.STRING, callback=match_datasets_cb, nargs=-1)
 @click.option("-d", "--directory", type=click.STRING, cls=default_from_context("data_directory"), help="The destination directory for the downloaded content. Default is the current work directory.")
-@click.option("-i", "--include", type=click.STRING, multiple=True, default=None, callback=match_datasets_cb, help="Used to exclude specific classes in the data. Option in mutually exclusive to '-e/--exclude'.")
-@click.option("-e", "--exclude", type=click.STRING, multiple=True, default=None, callback=match_datasets_cb, help="Used to include specific classes in the data. Option in mutually exclusive to '-i/--include'.")
+@click.option("-i", "--include", type=click.STRING, multiple=True, default=None, callback=match_datasets_cb,
+              help="Used to exclude specific classes in the data. Option in mutually exclusive to '-e/--exclude'.")
+@click.option("-e", "--exclude", type=click.STRING, multiple=True, default=None, callback=match_datasets_cb,
+              help="Used to include specific classes in the data. Option in mutually exclusive to '-i/--include'.")
 @kwargs_to_dataclass(OrganiseParameters)
 @click.pass_context
 def organise(ctx: Context, params: OrganiseParameters):
     if all([params.include, params.exclude]):
         raise BadOptionUsage("include", f"'-i/--include' and '-e/--exclude' switches cannot be used together.")
 
-    print(params.include)
+    # Filter archive files and an exclusion list.
+    # available_datasets = [dataset.lower(). for dataset in os.listdir(params.directory) if dataset.find(".") == -1]
+    print(available_datasets)
+
+    for dataset in params.datasets:
+        if dataset not in available_datasets:
+            logger.error(f"Missing data for '{dataset}', use 'sla-cli download <DATASET>' to continue.")
+            
+
+def keep_includes(params: OrganiseParameters) -> List[str]:
+    pass
+
+
+def remove_excludes(params: OrganiseParameters) -> List[str]:
+    pass

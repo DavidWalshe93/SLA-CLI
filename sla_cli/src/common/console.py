@@ -32,7 +32,7 @@ def init_progress_bars(func):
         config_handler.set_global(
             title_length=40,
             spinner="classic",
-            unknown="stars",
+            unknown="classic",
             bar="classic"
         )
 
