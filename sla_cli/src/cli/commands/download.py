@@ -13,6 +13,7 @@ from click import Context
 
 from sla_cli.src.cli.context import COMMAND_CONTEXT_SETTINGS
 from sla_cli.src.cli.utils import kwargs_to_dataclass, default_from_context
+from sla_cli.src.cli.converters import match_datasets_cb
 from sla_cli.src.db.accessors import AccessorFactory
 from sla_cli.src.download import Downloader, DownloaderOptions, DummyDownloader
 
@@ -36,7 +37,7 @@ class DownloadParameters:
 
 
 @click.command(**COMMAND_CONTEXT_SETTINGS, short_help="Downloads available datasets.")
-@click.argument("datasets", type=click.STRING, nargs=-1)
+@click.argument("datasets", type=click.STRING, nargs=-1, callback=match_datasets_cb)
 @click.option("-d", "--directory", type=click.STRING, cls=default_from_context("data_directory"), help="The destination directory for the downloaded content. Default is the current work directory.")
 @click.option("-f", "--force", type=click.BOOL, is_flag=True, help="Force download a dataset, even if it already exists on the filesystem.")
 @click.option("-c", "--clean", type=click.BOOL, is_flag=True, help="Remove archive files directly after extraction.")
@@ -147,6 +148,3 @@ def downloader_factory(dataset) -> Downloader:
         dataset,
         DummyDownloader
     )
-
-
-
