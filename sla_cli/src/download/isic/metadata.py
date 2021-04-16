@@ -85,7 +85,7 @@ class IsicMetadataDownloader(Downloader):
 
         responses = []
         records = 0
-        with alive_bar(0, title="Downloading ISIC metadata records", unknown="stars") as bar:
+        with alive_bar(0, title="[SLA] - INFO - - - Downloading ISIC metadata records", unknown="stars") as bar:
             while True:
                 # Make the request URL.
                 url = self._make_request_url(UrlParams(limit=limit, offset=offset))
