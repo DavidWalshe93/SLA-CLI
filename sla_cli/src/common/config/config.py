@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 @attr.s
 class Isic:
     """Maps the 'isic' options in the config file."""
-    batch_size: int = attr.ib(validator=[instance_of(int), is_between(0, 300)], default=300)
+    batch_size: int = attr.ib(validator=[instance_of(int), is_between(0, 300)], default=1)
     max_workers: int = attr.ib(validator=[greater_than(0, skip_if_none=True)], default=5)
 
 
