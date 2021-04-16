@@ -34,15 +34,16 @@ def inject_http_session(func):
     return inject_http_session_wrapper
 
 
-def download_file(url, destination_path: str, size: float):
+def download_file(url, destination_path: str, size: float, title: str):
     """
     Downloads a given dataset archive found at a URL endpoint.
 
     :param url: The URL to download the resource from.
     :param destination_path: The destination path for the download archive.
     :param size: The size of the download.
+    :param title: The name of the dataset to download.
     """
-    with alive_bar(total=math.ceil(size), title=f"[SLA] - INFO - - - Downloading {size} MB", manual=True) as bar:
+    with alive_bar(total=math.ceil(size), title=f"[SLA] - INFO - - - Downloading {title}.", manual=True) as bar:
         # Download the file.
         res = requests.get(url, stream=True)
 

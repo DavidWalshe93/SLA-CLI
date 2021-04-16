@@ -30,7 +30,7 @@ def init_progress_bars(func):
     @wraps(func)
     def init_progress_bars_wrapper(*args, **kwargs):
         config_handler.set_global(
-            title_length=40,
+            title_length=60,
             spinner="classic",
             unknown="classic",
             bar="classic",

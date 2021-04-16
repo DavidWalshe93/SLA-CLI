@@ -24,7 +24,7 @@ class PadUfes20Downloader(FileDownloader):
 
     def _download(self):
         """Downloads the PAD_UFES_20 zip archive."""
-        download_file(self.url, self.archive_path, self.size)
+        download_file(self.url, self.archive_path, self.size, title="PAD-UFES-20")
 
     def _extract(self):
         """Extracts the PAD_UFES_20 zip archive."""

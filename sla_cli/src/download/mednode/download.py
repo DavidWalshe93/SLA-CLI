@@ -23,7 +23,7 @@ class MednodeDownloader(FileDownloader):
 
     def _download(self):
         """Downloads the mednode dataset as a ZIP archive."""
-        download_file(self.url, self.archive_path, self.size)
+        download_file(self.url, self.archive_path, self.size, title="MEDNODE")
 
     def _extract(self):
         """Extracts the PAD_UFES_20 zip archive."""

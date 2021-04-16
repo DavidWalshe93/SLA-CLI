@@ -26,7 +26,7 @@ class Ph2Downloader(FileDownloader):
 
     def _download(self):
         """Downloads the PH2 dataset as a RAR archive."""
-        download_file(self.url, self.archive_path, self.size)
+        download_file(self.url, self.archive_path, self.size, title="PH2")
 
     def _extract(self):
         """Extracts the downloaded archive."""
