@@ -321,7 +321,7 @@ def convert(dataset: str) -> str:
         "sydney_mia_smdc_2020_isic_challenge_contribution": "Sydney (MIA / SMDC) 2020 ISIC challenge contribution",
         "uda_1": "UDA-1",
         "uda_2": "UDA-2"
-    }.get(dataset, dataset).upper()
+    }.get(dataset, dataset)
 
 
 def name_converter(name: str) -> str:
