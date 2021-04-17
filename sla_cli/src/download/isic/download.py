@@ -80,7 +80,7 @@ class IsicImageDownloader(Downloader):
         """
         df = pd.read_csv(Path.isic_metadata())
 
-        df = df[df["dataset"].str.upper() == convert(self.dataset_name)].upper()
+        df = df[df["dataset"].str.upper() == convert(self.dataset_name).upper()]
 
         return df
 
