@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 class Isic:
     """Maps the 'isic' options in the config file."""
     batch_size: int = attr.ib(validator=[instance_of(int), is_between(0, 300)], default=1)
-    max_workers: int = attr.ib(validator=[greater_than(0, skip_if_none=True)], default=5)
+    max_workers: int = attr.ib(validator=[greater_than(0, skip_if_none=True)], default=20)
 
 
 def flag_if_empty(func):
